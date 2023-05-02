@@ -1,0 +1,10 @@
+<mvc:View controllerName="zprojectteste1103.controller.HelloPanel"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <Panel headerText="Header" class="sapUiResponsiveMargin" width="auto">
+        <content> 
+            <Button text="Hello Button" press="onHelloPress"></Button>
+            <Input value="Input Value"></Input>
+        </content>
+    </Panel>
+</mvc:View>

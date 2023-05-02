@@ -1,0 +1,26 @@
+<core:FragmentDefinition 
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m">
+    <Dialog id="addDialog" title="ADD" type="Message" beforeOpen="onBeforeOpen">
+        <content>
+            <HBox height="60px" alignItems="Center" justifyContent="Center">
+                <Label text="Content" class="sapUiSmallMarginEnd"></Label>
+                <Input id="addInput" value="{root>/value}"></Input>
+            </HBox>
+        </content>
+        <!-- <beginButton>
+            <Button text="beginBtn" press="onCloseoo"></Button>
+        </beginButton> -->
+
+        <endButton>
+            <Button text="endBtn" press=".onClose" ></Button>
+        </endButton>
+        <!-- <buttons>
+            <Button text="buttons1" press=".onClose"></Button>
+            <Button text="buttons2" press=".onClose"></Button>
+            <Button text="buttons3" press=".onClose"></Button>
+            <Button text="buttons4" press=".onClose"></Button>
+            <Button text="buttons5" press=".onClose"></Button>
+        </buttons> -->
+    </Dialog>
+</core:FragmentDefinition>
