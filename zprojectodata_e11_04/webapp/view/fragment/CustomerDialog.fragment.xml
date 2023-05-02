@@ -1,0 +1,56 @@
+<core:FragmentDefinition 
+    xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+    xmlns:t="sap.ui.table"
+    xmlns="sap.m">
+    <Dialog id="customerDialog" title="Hello Title" draggable="true" resizable="true">
+        <content>
+            <Text text="Hello Dialog Text"></Text>
+			<t:Table
+				id="idCustomersTable"
+				rows="{/Customers}"
+				selectionMode="Single"
+				visibleRowCount="7"
+				paste="onPaste"
+				ariaLabelledBy="title"
+				rowSelectionChange="onRowSelectionChange">
+				<!-- <t:extension>
+					<OverflowToolbar style="Clear">
+						<Title text="Todo List"/>
+						<ToolbarSpacer ></ToolbarSpacer>
+						<Button text="Add" icon="sap-icon://add" press="onAdd"></Button>
+						<Button text="Delete" icon="sap-icon://delete" press="onDelete"></Button>
+					</OverflowToolbar>
+				</t:extension> -->
+				<t:columns>
+					<t:Column >
+						<Label text="CustomerID" />
+						<t:template>
+							<Text text="{CustomerID}" wrapping="false" /> 
+						</t:template>
+					</t:Column>
+					<t:Column >
+						<Label text="CompanyName" />
+						<t:template>
+							<Text text="{CompanyName}" wrapping="false" /> 
+						</t:template>
+					</t:Column>
+				</t:columns>
+				<!-- <t:rowActionTemplate>
+					<t:RowAction>
+						<t:RowActionItem type="Delete" press="onRowDelete" icon="sap-icon://decline" />
+						<t:RowActionItem type="Delete" press="onRowDelete" icon="sap-icon://decline" />
+						<t:RowActionItem type="Delete" press="onRowDelete" icon="sap-icon://decline" />
+					</t:RowAction>
+				</t:rowActionTemplate> -->
+			</t:Table>
+        </content>
+
+        <endButton>
+            <Button text="close" press=".onClose"></Button>
+        </endButton>
+
+    </Dialog>
+
+
+</core:FragmentDefinition>
