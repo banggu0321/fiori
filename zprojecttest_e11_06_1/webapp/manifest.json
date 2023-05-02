@@ -1,7 +1,7 @@
 {
   "_version": "1.49.0",
   "sap.app": {
-    "id": "zprojectodatae1104",
+    "id": "zprojectteste11061",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -13,18 +13,7 @@
     "sourceTemplate": {
       "id": "@sap/generator-fiori:basic",
       "version": "1.9.4",
-      "toolsId": "dc6462fe-2f8b-47a2-a491-bec8dd04ee90"
-    },
-    "dataSources": {
-      "mainService": {
-        "uri": "/v2/northwind/northwind.svc/",
-        "type": "OData",
-        "settings": {
-          "annotations": [],
-          "localUri": "localService/metadata.xml",
-          "odataVersion": "2.0"
-        }
-      }
+      "toolsId": "fcc0e5fc-a70a-4685-ba55-27d63226fe62"
     }
   },
   "sap.ui": {
@@ -44,7 +33,7 @@
     }
   },
   "sap.ui5": {
-    "flexEnabled": false,
+    "flexEnabled": true,
     "dependencies": {
       "minUI5Version": "1.113.0",
       "libs": {
@@ -66,13 +55,8 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "zprojectodatae1104.i18n.i18n"
+          "bundleName": "zprojectteste11061.i18n.i18n"
         }
-      },
-      "": {
-        "dataSource": "mainService",
-        "preload": true,
-        "settings": {}
       }
     },
     "resources": {
@@ -87,7 +71,7 @@
         "routerClass": "sap.m.routing.Router",
         "viewType": "XML",
         "async": true,
-        "viewPath": "zprojectodatae1104.view",
+        "viewPath": "zprojectteste11061.view",
         "controlAggregation": "pages",
         "controlId": "app",
         "clearControlAggregation": false
@@ -99,12 +83,6 @@
           "target": [
             "TargetMain"
           ]
-        },{
-          "name": "RouteDetail",
-          "pattern": "detail/{key}/:option:",
-          "target": [
-            "TargetDetail"
-          ]
         }
       ],
       "targets": {
@@ -114,18 +92,11 @@
           "clearControlAggregation": false,
           "viewId": "Main",
           "viewName": "Main"
-        },
-        "TargetDetail": {
-          "viewType": "XML",
-          "transition": "slide",
-          "clearControlAggregation": false,
-          "viewId": "Detail",
-          "viewName": "Detail"
         }
       }
     },
     "rootView": {
-      "viewName": "zprojectodatae1104.view.App",
+      "viewName": "zprojectteste11061.view.App",
       "type": "XML",
       "async": true,
       "id": "App"

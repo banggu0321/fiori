@@ -1,7 +1,7 @@
 {
   "_version": "1.49.0",
   "sap.app": {
-    "id": "zprojectodatae1104",
+    "id": "zprojectdatae1103",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -13,7 +13,7 @@
     "sourceTemplate": {
       "id": "@sap/generator-fiori:basic",
       "version": "1.9.4",
-      "toolsId": "dc6462fe-2f8b-47a2-a491-bec8dd04ee90"
+      "toolsId": "d853da9a-8e34-4b73-b619-8e40c0f07c4e"
     },
     "dataSources": {
       "mainService": {
@@ -66,7 +66,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "zprojectodatae1104.i18n.i18n"
+          "bundleName": "zprojectdatae1103.i18n.i18n"
         }
       },
       "": {
@@ -87,7 +87,7 @@
         "routerClass": "sap.m.routing.Router",
         "viewType": "XML",
         "async": true,
-        "viewPath": "zprojectodatae1104.view",
+        "viewPath": "zprojectdatae1103.view",
         "controlAggregation": "pages",
         "controlId": "app",
         "clearControlAggregation": false
@@ -99,12 +99,6 @@
           "target": [
             "TargetMain"
           ]
-        },{
-          "name": "RouteDetail",
-          "pattern": "detail/{key}/:option:",
-          "target": [
-            "TargetDetail"
-          ]
         }
       ],
       "targets": {
@@ -114,18 +108,11 @@
           "clearControlAggregation": false,
           "viewId": "Main",
           "viewName": "Main"
-        },
-        "TargetDetail": {
-          "viewType": "XML",
-          "transition": "slide",
-          "clearControlAggregation": false,
-          "viewId": "Detail",
-          "viewName": "Detail"
         }
       }
     },
     "rootView": {
-      "viewName": "zprojectodatae1104.view.App",
+      "viewName": "zprojectdatae1103.view.App",
       "type": "XML",
       "async": true,
       "id": "App"
