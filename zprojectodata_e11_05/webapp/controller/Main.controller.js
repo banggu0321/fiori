@@ -41,7 +41,8 @@ sap.ui.define([
                 var sFullPath = this.oModel.createKey("/Products",{
                     Productno : jsonData.Productno
                 });
-                
+                //sFullPath = "/Prducts(Productno="+변수+", ab="+변수+")"
+
                 this.oModel.update(sFullPath, jsonData,{
                     success:function(){
                         sap.m.MessageToast.show("success update");
@@ -75,13 +76,15 @@ sap.ui.define([
                 // debugger;
 
                 this.oModel.read(sPath,{
+                    //filters: [필터모델객체]
                     success: function(oReturn){
                         console.log("READ : ", oReturn);
+                        /*oReturn => { ProductNo:1, .....} */
                         this.oMainModel.setProperty("/", oReturn);
                         // this.oMainModel.setData(oReturn);
                         // debugger;
                     }.bind(this)
                 });
-            },
+            }
         });
     });
