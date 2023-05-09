@@ -14,7 +14,7 @@ sap.ui.define([
                 //     Customer : {},
                 //     Employee: {}
                 // };
-                this.getView().setModel(new JSONModel(),'DetailModel')
+                this.getView().setModel(new JSONModel(),'DetailModel');
 
                 var oRouter = this.getOwnerComponent().getRouter();
                 oRouter.getRoute("RouteDetail").attachPatternMatched(this._onPatternMatched, this); 

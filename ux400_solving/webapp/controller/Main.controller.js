@@ -95,6 +95,14 @@ sap.ui.define([
                     // this.byId("idInput").setValueStateText("1이상 100이하의 숫자를 입력하세요");
                     this.byId("idBtn").setEnabled(false);
                 }
+                // 강사님 풀이
+                // let oControl = this.byId("inInput");
+                // let iNum = Number(oControl.getValue());
+                // let isOK = iNum >= 1 && iNum <= 100;
+
+                // oControl.setValueState(isOK ? 'None' : 'Error');
+                // oControl.setValueStateText(isOK ? '' : '1~100사이의 숫자를 입력하세요');
+                // this.byId("id").setEnabled(isOK ? true : false);
 
                 // let isOK = iNum >= 1 && iNum <= 100;
 
