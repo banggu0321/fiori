@@ -1,20 +1,20 @@
 <mvc:View controllerName="zprojectdatae1103.controller.Main"
-    xmlns:mvc="sap.ui.core.mvc"
+	xmlns:mvc="sap.ui.core.mvc"
 	xmlns="sap.uxap"
 	xmlns:m="sap.m"
 	xmlns:core="sap.ui.core"
 	xmlns:l="sap.ui.layout"
 	height="100%">
-    <ObjectPageLayout id="ObjectPageLayout" upperCaseAnchorBar="false" useIconTabBar="true">
+	<ObjectPageLayout id="ObjectPageLayout" upperCaseAnchorBar="false" useIconTabBar="true">
 		<headerTitle>
 			<ObjectPageHeader objectTitle="Section sample">
 				<actions>
 					<ObjectPageHeaderActionButton
-					icon="sap-icon://search"
-					text="Search"
-					hideText="false"
-					press="onSearch"
-					type="Emphasized" >
+						icon="sap-icon://search"
+						text="Search"
+						hideText="false"
+						press="onSearch"
+						type="Emphasized">
 					</ObjectPageHeaderActionButton>
 				</actions>
 			</ObjectPageHeader>
@@ -22,8 +22,8 @@
 
 		<headerContent>
 			<l:Grid containerQuery="true" defaultSpan="XL2 L4 M6 S12">
-				<m:VBox >
-					<m:Label text= "OrderID"></m:Label>
+				<m:VBox>
+					<m:Label text="OrderID"></m:Label>
 					<m:Input id="idOrderID"></m:Input>
 					<!--
 					type="Number"
@@ -31,23 +31,23 @@
 					valueStateText="Error Message!"
 					  -->
 				</m:VBox>
-				<m:VBox >
-					<m:Label text= "OrderDate"></m:Label>
-					<m:DatePicker id="idOrderDate" 
-					displayFormat="yyyy-MM-dd"
-					valueFormat="yyyyMMdd"></m:DatePicker>
+				<m:VBox>
+					<m:Label text="OrderDate"></m:Label>
+					<m:DatePicker id="idOrderDate"
+						displayFormat="yyyy-MM-dd"
+						valueFormat="yyyyMMdd"></m:DatePicker>
 				</m:VBox>
-				<m:VBox >
-					<m:Label text= "label1"></m:Label>
-					<m:Input ></m:Input>
+				<m:VBox>
+					<m:Label text="label1"></m:Label>
+					<m:Input></m:Input>
 				</m:VBox>
-				<m:VBox >
-					<m:Label text= "label1"></m:Label>
-					<m:Input ></m:Input>
+				<m:VBox>
+					<m:Label text="label1"></m:Label>
+					<m:Input></m:Input>
 				</m:VBox>
-				<m:VBox >
-					<m:Label text= "label1"></m:Label>
-					<m:Input ></m:Input>
+				<m:VBox>
+					<m:Label text="label1"></m:Label>
+					<m:Input></m:Input>
 				</m:VBox>
 			</l:Grid>
 		</headerContent>

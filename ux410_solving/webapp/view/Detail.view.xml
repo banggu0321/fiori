@@ -1,0 +1,62 @@
+<mvc:View
+	height="100%"
+	controllerName="sap.btp.ux410solving.controller.Detail"
+	xmlns:mvc="sap.ui.core.mvc"
+    xmlns:uxap="sap.uxap"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core"
+	xmlns="sap.m">
+	<uxap:ObjectPageLayout id="ObjectPageLayout"
+		showTitleInHeaderContent="false"
+		showEditHeaderButton="false"
+		editHeaderButtonPress="handleEditBtnPress"
+		upperCaseAnchorBar="false">
+		<uxap:headerTitle>
+			<uxap:ObjectPageHeader objectTitle="OrderID : {OrderID}" />
+		</uxap:headerTitle>
+        <uxap:headerContent>
+            <!-- <Label text="Order Detail View Details"/> -->
+            <ObjectAttribute text="Order Detail View Details"/> 
+        </uxap:headerContent>
+        <uxap:sections>
+            <uxap:ObjectPageSection titleUppercase="false" id="goalsSection" title="Info">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection>
+						<uxap:blocks>
+							<f:SimpleForm id="SimpleFormChange354"
+                                editable="true"
+                                layout="ResponsiveGridLayout"
+                                labelSpanXL="3"
+                                labelSpanL="3"
+                                labelSpanM="3"
+                                labelSpanS="12"
+                                adjustLabelSpan="false"
+                                emptySpanXL="4"
+                                emptySpanL="4"
+                                emptySpanM="4"
+                                emptySpanS="0"
+                                columnsXL="1"
+                                columnsL="1"
+                                columnsM="1"
+                                singleContainerFullSize="false" >
+                                <f:content>
+                                    <Label text="OrderID" />
+                                    <Text text="{OrderID}" />
+                                    <Label text="ProductID" />
+                                    <Text text="{ProductID}" />
+                                    <Label text="UnitPrice" />
+                                    <Text text="{UnitPrice}" />
+                                    <Label text="Quantity" />
+                                    <Text text="{Quantity}" />
+                                    <Label text="Discount" />
+                                    <Text text="{Discount}" />
+                                </f:content>
+                            </f:SimpleForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+			</uxap:ObjectPageSection>
+        </uxap:sections>
+    </uxap:ObjectPageLayout>
+</mvc:View>
