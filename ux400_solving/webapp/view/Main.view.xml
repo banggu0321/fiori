@@ -1,0 +1,41 @@
+<mvc:View controllerName="sap.btp.ux400solving.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns:t="sap.ui.table"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+        <content>
+            <VBox class="sapUiLargeMargin">
+                <Text text="버튼을 클릭하면 아래 Input에 값이 랜덤으로 채워집니다."/>
+                <Input id="idInput" type="Number" change="onValueChange"
+                    valueStateText="1이상 100이하의 숫자를 입력하세요" />
+                <Button id="idBtn" text="Random" press="onRandomPress"/>
+            </VBox>
+            <VBox class="sapUiLargeMargin">
+                <t:Table id="idListTable"
+                    selectionMode="MultiToggle"
+                    rows="{list>/value}"
+                    width="60%"
+                    visibleRowCount="7"
+                    sort="sortDeliveryDate"
+                    ariaLabelledBy="title">
+                    <t:extension>
+                        <OverflowToolbar>
+                            <Title text="랜덤 목록 리스트" ></Title>
+                                <ToolbarSpacer />
+                        </OverflowToolbar>
+                    </t:extension>
+                    <t:columns>
+                        <t:Column>
+                            <Label text="value" />
+                            <t:template>
+                                <Text text="{list>num}" wrapping="false" />
+                                <!-- <Input value="{list>num}" editable="false"/> -->
+						    </t:template>
+					    </t:Column> 
+                    </t:columns>
+                </t:Table>
+                <Button text="open Product" press="onOpenProduct"/>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>
