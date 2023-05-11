@@ -1,0 +1,116 @@
+<mvc:View xmlns:table="sap.ui.table" controllerName="exprograme11.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Page id="page" title="{i18n>title}">
+        <content>
+            <HBox>
+                <VBox class="sapUiSmallMargin" width="20%">
+                    <Label text="Currency Code"></Label>
+                    <ComboBox
+                        id="idComboBoxCurrcode"
+                        showSecondaryValues="true"
+                        width="100%"
+                        items="{
+                            path: 'CurCode>/list',
+                            templateShareable: true
+                            }">
+                    <!-- <ComboBox
+                        id="idComboBox1"
+                        required="true"
+                        selectedKey="bar"
+                        showSecondaryValues="true"
+                        items="{
+                            path: 'typeList>/list',
+                            templateShareable: true
+                            }"> -->
+                        <!-- <core:ListItem key="{typeList>type}" text="{typeList>type}" /> -->
+                        <core:ListItem key="{CurCode>code}" text="{CurCode>code}" />
+                    </ComboBox>
+                    <Label text="Carrier Name" width="100%"></Label>
+                    <Input id="idInputCarrname" width="100%"/>
+                    <Button text="Search" type="Emphasized" width="100%" press="onPressSearchBtn"/>
+                </VBox>
+                <VBox width="70%">
+                    <Table id="idCarrierSetTable"
+						inset="false"
+						items="{
+							path: '/carrierSet',
+							sorter: {
+								path: 'Carrid'
+							},
+                            parameters: {
+                                'expand' : 'to_Item'
+                            }
+						}"
+					   class="sapFDynamicPageAlignContent"
+					   width="auto"
+                       mode="SingleSelectMaster"
+                       selectionChange="onselectionChange">
+                        <headerToolbar>
+                            <Toolbar>
+                                <Title text="Carrier List" level="H2"/>
+                            </Toolbar>
+                        </headerToolbar>
+                        <columns>
+                            <Column
+                                    width="12em">
+                                <Text text="Carrid" />
+                            </Column>
+                            <Column
+                                    minScreenWidth="Tablet"
+                                    demandPopin="true">
+                                <Text text="Carrname" />
+                            </Column>
+                            <Column
+                                    minScreenWidth="Tablet"
+                                    demandPopin="true"
+                                    hAlign="End">
+                                <Text text="Currcode" />
+                            </Column>
+                            <Column
+                                    hAlign="End">
+                                <Text text="Url" />
+                            </Column>
+                            <Column
+                                    hAlign="End">
+                                <Text text="Length" />
+                            </Column>
+                            <Column
+                                    hAlign="End">
+                                <Text text="Detail" />
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <!-- <ObjectIdentifier
+                                            title="{Name}"
+                                            text="{OrderID}"/> -->
+                                    <Text text="{Carrid}" />
+                                    <Text text="{Carrname}" />
+                                    <Text text="{Currcode}" />
+                                    <Text text="{Url}" />
+                                    <Text text="{= ${to_Item}.length}" />
+                                    <!-- <Text text="{= Math.TOTAL(${to_Item}})" /> -->
+                                    <Button text="예약 현황" 
+                                        enabled="{= ${to_Item}.length === 0 ? false : true}"
+                                        press="onPressDetailBtn"/>
+                                    <!-- <Text ${to_Item}.length != 
+                                            text="{Width} x {Depth} x {Height} {DimUnit}" /> -->
+                                    <!-- <ObjectNumber
+                                            number="{
+                                                parts:[{path:'Price'},{path:'CurrencyCode'}],
+                                                type: 'sap.ui.model.type.Currency',
+                                                formatOptions: {showMeasure: false}
+                                            }"
+                                            unit="{CurrencyCode}" /> -->
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </VBox>
+            </HBox>
+        </content>
+    </Page>
+</mvc:View>

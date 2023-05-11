@@ -10,6 +10,7 @@ sap.ui.define(
         onInit() {
             var oRouter = this.getOwnerComponent().getRouter();
             oRouter.getRoute("RouteDetail").attachPatternMatched(this._onPatternMatched, this);
+            // this.byId("goalsSection").setVisible(false);
         },
         _onPatternMatched : function(oEvent){
             
