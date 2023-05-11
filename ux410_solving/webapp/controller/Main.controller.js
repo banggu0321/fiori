@@ -76,7 +76,7 @@ sap.ui.define([
                 var oData = oEvent.getParameters().data[0].data;
                 var oVizFrame = this.byId("idViewChart");
 
-                // oVizFrame.vizSelection(oData, { clearSelection : true });  //차트 선택된거 초기화
+                oVizFrame.vizSelection(oData, { clearSelection : true });  //차트 선택된거 초기화
 
                 // debugger;
                 oRouter.navTo("RouteDetail",{  //detail로 이동

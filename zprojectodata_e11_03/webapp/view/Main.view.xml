@@ -53,7 +53,7 @@
 		</headerContent>
 
 		<sections>
-			<ObjectPageSection titleUppercase="false" title="Section 3">
+			<ObjectPageSection id="aa" titleUppercase="false" title="Section 3">
 				<subSections>
 					<ObjectPageSubSection titleUppercase="false">
 						<blocks>
