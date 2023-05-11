@@ -28,8 +28,7 @@
                                         path: '/Orders',
                                         templateShareable: true
                                     }">
-                                    <core:ListItem key="{OrderID}" text="{OrderID}"
-                                        additionalText="{CustomerID}" />
+                                    <core:ListItem key="{OrderID}" text="{OrderID}" additionalText="{CustomerID}" />
                                 </ComboBox>
                             </fb:control>
                         </fb:FilterGroupItem>

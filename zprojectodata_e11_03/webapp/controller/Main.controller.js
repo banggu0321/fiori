@@ -24,7 +24,7 @@ sap.ui.define([
                 }
             },
             onInit: function () {
-
+                // this.byId("aa").setVisible(false);
             },
             onSearch: function () {
                 let oOrderDate = this.byId("idOrderDate").getDateValue();
