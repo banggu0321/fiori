@@ -61,8 +61,18 @@ sap.ui.define([
                         oDetailModel.setProperty("/Carrname", oReturn.Carrname);
                         oDetailModel.setProperty("/Carrid", oReturn.Carrid);
                         oDetailModel.setProperty("/data", oReturn.to_Item.results);
+                        oDetailModel.setData(oReturn);
+                        debugger;
                     }.bind(this),
                 });
+
+                /*
+                var oSelectData = oEvent.getSource().getBindingContext()
+                        .getObject({ $expand: "to_Item" });
+                var aDetail = oSelectData.to_Item;
+                */
+
+                // debugger;
 
                 var oDialog = this.byId("DetailsDialog");
 

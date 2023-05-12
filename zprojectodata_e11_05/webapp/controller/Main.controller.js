@@ -11,14 +11,20 @@ sap.ui.define([
         return Controller.extend("zprojectodatae1105.controller.Main", {
             onInit: function () {
                 this.getView().setModel(new JSONModel(),"main");
-
+                    // Productname : "AAA",
+                    // Fname : ""
                 this._defaultSet();
+                
+                
+                // var today = new Date();
+                // debugger;
+                
             },
             _defaultSet: function(){
                 // odata model 변수 세팅
-                this.oModel = this.getOwnerComponent().getModel();
+                this.oModel = this.getOwnerComponent().getModel(); //oData
                 //json model 변수 세팅
-                this.oMainModel = this.getView().getModel("main");
+                this.oMainModel = this.getView().getModel("main"); //main
                 //table객체 
                 this.oTable = this.byId("idTable");
             },
