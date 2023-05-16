@@ -18,7 +18,7 @@ builder:
           client: "100"
         app:
           name: ZUI5APP_E11_02
-          description: ""
+          description: ux400
           package: $tmp
           transport: ""
         exclude:
