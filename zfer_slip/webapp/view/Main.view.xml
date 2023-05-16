@@ -1,7 +1,198 @@
 <mvc:View controllerName="ER.zferslip.controller.Main"
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+	xmlns:f="sap.f"
+	xmlns:layout="sap.ui.layout"
+    xmlns:fb="sap.ui.comp.filterbar" xmlns:core="sap.ui.core" 
     xmlns="sap.m">
-    <Page id="page" title="{i18n>title}">
-        <content />
-    </Page>
+    <!-- <Page id="page" title="{i18n>title}"> -->
+    <f:DynamicPage id="idDynamicPage" headerExpanded="{/headerExpanded}" toggleHeaderOnTitleClick="{/titleClickable}">
+			<!-- DynamicPage Title -->
+			<f:title>
+				<f:DynamicPageTitle >
+					<f:heading >
+						<Title text="전표생성"/>
+					</f:heading>
+					<f:expandedContent>
+						<ObjectAttribute id="idAtUserName" title="사용자명 " text="{/employeeSet/0/Deptid}"/>
+						<ObjectAttribute id="idAtDept"  title="소속부서 " text="회계팀"/>
+					</f:expandedContent>
+					<f:snappedContent>
+						<Label id="idLabeluname" text="회계팀 방근영(201200011)"/>
+					</f:snappedContent>
+					<f:snappedTitleOnMobile>
+						<!-- <ObjectAttribute title="사용자명" text="Warehouse A"/>
+						<ObjectAttribute title="소속부서" text="23L"/> -->
+					</f:snappedTitleOnMobile>
+					<f:content>
+						<OverflowToolbar>
+							<GenericTag text="미생성"
+								status="Error"
+								press="onPressOpenPopover"
+								design="StatusIconHidden">
+								<ObjectNumber 
+                                    id="idObjNum"
+                                    number="2"
+									unit="개"
+									emphasized="false"
+									state="Error"/>
+							</GenericTag>
+						</OverflowToolbar>
+					</f:content>
+					<!-- <f:actions>
+						<Button
+								text="조회"
+								type="Emphasized"
+								press="toggleAreaPriority"/>
+					</f:actions> -->
+				</f:DynamicPageTitle>
+			</f:title>
+			<!-- DynamicPage Header -->
+			<f:header>
+				<f:DynamicPageHeader pinnable="true">
+					<layout:HorizontalLayout allowWrapping="true">
+						<layout:VerticalLayout class="sapUiMediumMarginEnd">
+							<!-- <ObjectAttribute title="사용자명" text="Warehouse A"/>
+							<ObjectAttribute title="소속부서" text="23L"/> -->
+                            <fb:FilterBar id="filterBar" header="Search Filters" useToolbar="false"
+                                search="onSearch" filterContainerWidth="10rem">
+                                <fb:filterGroupItems>
+                                    <fb:FilterGroupItem groupName="__$INTERNAL$" name="sliptype" label="전표 유형"
+                                        visibleInFilterBar="true">
+                                        <fb:control>
+                                            <ComboBox
+                                                id="idComboBox1"
+                                                showSecondaryValues="true"
+                                                items="{
+                                                    path: 'typeList>/list',
+                                                    templateShareable: true
+                                                }">
+                                                <core:ListItem key="{typeList>type}" text="{typeList>type}" additionalText="{CustomerID}" />
+                                            </ComboBox>
+                                        </fb:control>
+                                    </fb:FilterGroupItem>
+                                    <fb:FilterGroupItem groupName="__$INTERNAL$" name="slipdate" label="증빙일자"
+                                        visibleInFilterBar="true">
+                                        <fb:control>
+                                            <DateRangeSelection
+                                                id="idDateRangeSelection"
+                                                class="DRS1"
+                                                value= "{
+                                                    'type': 'sap.ui.model.type.DateInterval',
+                                                    'formatOptions': {
+                                                        'pattern': 'yyyy/MM/dd'
+                                                    },
+                                                    'parts': [
+                                                        {
+                                                            'type': 'sap.ui.model.type.Date',
+                                                            'path': '/start'
+                                                        },
+                                                        {
+                                                            'type': 'sap.ui.model.type.Date',
+                                                            'path': '/end'
+                                                        }
+                                                    ]
+                                                }"/>
+                                        </fb:control>
+                                    </fb:FilterGroupItem>
+                                </fb:filterGroupItems>
+                            </fb:FilterBar>
+						</layout:VerticalLayout>
+					</layout:HorizontalLayout>
+				</f:DynamicPageHeader>
+			</f:header>
+			<f:content>
+				<Table id="idSlipbeforeTable"
+						sticky="HeaderToolbar,ColumnHeaders"
+						inset="false"
+						items="{
+							path: 'slipBefore>/list'
+						}"
+					   class="sapFDynamicPageAlignContent"
+					   width="auto">
+					<headerToolbar>
+						<Toolbar>
+							<Title text="Products" level="H2"/>
+						</Toolbar>
+					</headerToolbar>
+					<columns>
+						<Column
+								width="12em">
+							<Text text="상태" />
+						</Column>
+						<Column
+								minScreenWidth="Tablet"
+								demandPopin="true">
+							<Text text="문서번호" />
+						</Column>
+						<Column
+								minScreenWidth="Tablet"
+								demandPopin="true"
+								hAlign="End">
+							<Text text="전표상세" />
+						</Column>
+						<Column
+								hAlign="End">
+							<Text text="협력사ID" />
+						</Column>
+						<Column
+								hAlign="End">
+							<Text text="전표유형" />
+						</Column>
+						<Column
+								hAlign="End">
+							<Text text="증빙일자" />
+						</Column>
+						<Column
+								hAlign="End">
+							<Text text="금액/단위" />
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem>
+							<cells>
+								<!-- <ObjectIdentifier
+										title="{Name}"
+										text="{ProductId}"/> -->
+								<!-- <Text
+										text="{Width} x {Depth} x {Height} {DimUnit}" /> -->
+								<Text text="{slipBefore>status}" />
+								<Text text="{slipBefore>docnum}" />
+								<Button text="상세보기" press="onDetailBtn"></Button>
+								<Text text="{slipBefore>partid}" />
+								<Text text="{slipBefore>sliptype}" />
+								<Text 
+                                    text="{
+												path: 'slipBefore>prfdate',
+												formatter: '.formatter.dateTime'
+											}" />
+                                <!-- text="{slipBefore>prfdate}" /> -->
+                                <!-- <Text text="{slipBefore>amount}" /> -->
+								<!-- <Text text="{amount}" />
+								<Text text="{curkey}" /> -->
+								<ObjectNumber
+										number="{
+											parts:[{path:'slipBefore>amount'},{path:'slipBefore>curkey'}],
+											type: 'sap.ui.model.type.Currency',
+											formatOptions: {showMeasure: false}
+										}"
+										unit="{slipBefore>curkey}" />
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</f:content>
+			<!-- DynamicPage Footer toggle footer클릭시-->
+			<f:footer> 
+				<OverflowToolbar>
+					<Button icon="sap-icon://message-popup"
+							text="{/messagesLength}"
+							type="Emphasized"
+							press="onMessageButtonPress"
+							visible="{= !!${/messagesLength}}"/>
+					<ToolbarSpacer/>
+					<Button type="Accept" text="Accept"/>
+					<Button type="Reject" text="Reject"/>
+				</OverflowToolbar>
+			</f:footer>
+		</f:DynamicPage>
 </mvc:View>
