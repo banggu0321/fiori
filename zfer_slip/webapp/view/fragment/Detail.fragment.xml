@@ -7,7 +7,7 @@
     xmlns="sap.m">
     <Dialog id="DetailDialog" draggable="true" resizable="true" title="전표상세보기">
         <content>
-            <VBox class="sapUiSmallMargin">
+            <VBox>
                 <f:SimpleForm id="SimpleFormChange354"
                         editable="true"
                         layout="ResponsiveGridLayout"
@@ -15,31 +15,45 @@
                         adjustLabelSpan="false"
                         singleContainerFullSize="false" >
                         <f:content>
-                            <l:Grid containerQuery="true" defaultSpan="XL1 L2 M3 S4">
-                                <!-- <VBox > -->
+                            <l:Grid containerQuery="true" >
+                                <!-- <VBox > defaultSpan="XL1 L2 M3 S4" -->
                                     <HBox >
-                                        <Label text="OrderID" />
-                                        <Input id="idOrderID" value="{}" enabled="false" />
+                                        <Label text="증빙문서번호" labelFor="idDocnum" />
+                                        <Text id="idDocnum" text="{slipH>/select/docnum}" textAlign="Center"/>
                                     </HBox>
                                     <HBox >
-                                        <Label text="OrderDate" />
-                                        <Input value="{}" enabled="false"/>
+                                        <Label text="전표유형" />
+                                        <Input value="{slipH>/select/sliptype}" enabled="false"/>
                                     </HBox>
                                     <HBox >
-                                        <Label text="OrderDate" />
-                                        <Input value="{}" enabled="false"/>
+                                        <Label text="증빙일자" />
+                                        <Input
+											value="{
+												path : 'slipH>/select/prfdate',
+												formatter : '.formatter.dateTime'
+												}"   
+											enabled="false"/>
                                     </HBox>
                                     <HBox >
-                                        <Label text="OrderDate" />
-                                        <Input value="{}" enabled="false"/>
+                                        <Label text="전기일자" />
+                                        <Input 
+											value="{
+												path : 'slipH>/select/pdtdate',
+												formatter : '.formatter.dateTime2'
+												}"  
+											enabled="false"/>
+                                    </HBox>
+                                    <!-- <HBox >
+                                        <Label text="담당자id" />
+                                        <Input value="{slipH>/select/docnum}" enabled="false"/>
+                                    </HBox> -->
+                                    <HBox >
+                                        <Label text="협력사" />
+                                        <Input value="{slipH>/select/partid}" enabled="false"/>
                                     </HBox>
                                     <HBox >
-                                        <Label text="OrderDate" />
-                                        <Input value="{}" enabled="false"/>
-                                    </HBox>
-                                    <HBox >
-                                        <Label text="OrderDate" />
-                                        <Input value="{}" enabled="false"/>
+                                        <Label text="총금액" />
+                                        <Input value="{slipH>/selectBefore/amount}" enabled="false"/>
                                     </HBox>
                                 <!-- </VBox> -->
                                 <!-- <VBox>
@@ -58,10 +72,82 @@
                                     <Label text="label1"/>
                                     <Input value="{}" enabled="false"/>
                                 </VBox> -->
+								<!-- </VBox> -->
                             </l:Grid>
                     </f:content>
                 </f:SimpleForm>
             </VBox>
+			<t:Table
+					id="idSlipDetailTable"
+					rows="{slipI>/select}"
+					selectionMode="MultiToggle"
+					visibleRowCount="7"
+					paste="onPaste"
+					ariaLabelledBy="title">
+					<t:extension>
+						<OverflowToolbar style="Clear">
+							<Title id="deailtitle" text="Products" level="H2"/>
+						</OverflowToolbar>
+					</t:extension>
+					<t:columns>
+						<!-- <t:Column width="11rem">
+							<Label text="slipid" />
+							<t:template>
+								<Text text="{slipI>slipid}" wrapping="false" />
+							</t:template>
+						</t:Column> -->
+						<t:Column width="11rem">
+							<Label text="순번" />
+							<t:template>
+								<Text text="{slipI>prnum}" wrapping="false" />
+							</t:template>
+						</t:Column>
+						<t:Column width="9rem">
+							<Label text="계정코드" />
+							<t:template>
+								<Text text="{slipI>accocode}" wrapping="false" />
+							</t:template>
+						</t:Column>
+						<!-- <t:Column width="9rem">
+							<Label text="차/대변" />
+							<t:template>
+								<Text text="{slipI>dcindicator}" wrapping="false" />
+							</t:template>
+						</t:Column> -->
+						<t:Column width="11rem">
+							<Label text="차변" />
+							<t:template>
+								<Text text="{
+									parts: [
+										{ path: 'slipI>dcindicator' },
+										{ path: 'slipI>amt' },
+										{ path: 'slipI>tax' }
+									],
+									formatter: '.formatter.dcindicator3Text'
+									}" wrapping="false" />
+							</t:template>
+						</t:Column>
+						<t:Column width="11rem">
+							<Label text="대변" />
+							<t:template>
+								<Text text="{
+									parts: [
+										{ path: 'slipI>dcindicator' },
+										{ path: 'slipI>amt' },
+										{ path: 'slipI>tax' }
+									],
+									formatter: '.formatter.dcindicator4Text'
+									}" wrapping="false" />
+							</t:template>
+						</t:Column>
+						<t:Column width="11rem">
+							<Label text="통화" />
+							<t:template>
+								<Text text="{slipI>curkey}" wrapping="false" />
+							</t:template>
+						</t:Column>
+					</t:columns>
+			</t:Table> 
 			<!-- <t:Table
 				id="idProductsTable"
 				rows="{/Products}"
