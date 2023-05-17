@@ -3,6 +3,7 @@
 	xmlns:f="sap.f"
 	xmlns:layout="sap.ui.layout"
     xmlns:fb="sap.ui.comp.filterbar" xmlns:core="sap.ui.core" 
+	xmlns:t="sap.ui.table" xmlns:u="sap.ui.unified"
     xmlns="sap.m">
     <!-- <Page id="page" title="{i18n>title}"> -->
     <f:DynamicPage id="idDynamicPage" headerExpanded="{/headerExpanded}" toggleHeaderOnTitleClick="{/titleClickable}">
@@ -101,13 +102,14 @@
 				</f:DynamicPageHeader>
 			</f:header>
 			<f:content>
-				<Table id="idSlipbeforeTable"
+				<!-- <Table id="idSlipbeforeTable"
+                        mode="MultiSelect"
 						sticky="HeaderToolbar,ColumnHeaders"
-						inset="false"
 						items="{
 							path: 'slipBefore>/list'
 						}"
 					   class="sapFDynamicPageAlignContent"
+                       
 					   width="auto">
 					<headerToolbar>
 						<Toolbar>
@@ -150,14 +152,9 @@
 					<items>
 						<ColumnListItem>
 							<cells>
-								<!-- <ObjectIdentifier
-										title="{Name}"
-										text="{ProductId}"/> -->
-								<!-- <Text
-										text="{Width} x {Depth} x {Height} {DimUnit}" /> -->
-								<Text text="{slipBefore>status}" />
+                                <Text text="{slipBefore>status}" />
 								<Text text="{slipBefore>docnum}" />
-								<Button text="상세보기" press="onDetailBtn"></Button>
+								<Button text="상세보기" press="onDetailBtn" ></Button>
 								<Text text="{slipBefore>partid}" />
 								<Text text="{slipBefore>sliptype}" />
 								<Text 
@@ -165,10 +162,6 @@
 												path: 'slipBefore>prfdate',
 												formatter: '.formatter.dateTime'
 											}" />
-                                <!-- text="{slipBefore>prfdate}" /> -->
-                                <!-- <Text text="{slipBefore>amount}" /> -->
-								<!-- <Text text="{amount}" />
-								<Text text="{curkey}" /> -->
 								<ObjectNumber
 										number="{
 											parts:[{path:'slipBefore>amount'},{path:'slipBefore>curkey'}],
@@ -179,7 +172,76 @@
 							</cells>
 						</ColumnListItem>
 					</items>
-				</Table>
+				</Table> -->
+				<t:Table
+					id="idSlipbeforeTable"
+					rows="{slipBefore>/blist}"
+                                rowActionCount="1"
+					selectionMode="MultiToggle"
+					visibleRowCount="7"
+					paste="onPaste"
+					ariaLabelledBy="title">
+					<t:extension>
+						<OverflowToolbar style="Clear">
+							<Title id="title" text="Products" level="H2"/>
+						</OverflowToolbar>
+					</t:extension>
+					<t:columns>
+						<t:Column width="11rem">
+							<Label text="상태" />
+							<t:template>
+								<Text text="{slipBefore>status}" wrapping="false" />
+							</t:template>
+						</t:Column>
+						<t:Column width="11rem">
+							<Label text="문서번호" />
+							<t:template>
+								<Text text="{slipBefore>docnum}" wrapping="false" />
+							</t:template>
+						</t:Column>
+						<t:Column width="9rem">
+							<Label text="전표상세" />
+							<t:template>
+								<Button text="Show Details" press="onDetailBtn"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="11rem">
+							<Label text="협력사ID" />
+							<t:template>
+								<Text text="{slipBefore>partid}" wrapping="false" />
+							</t:template>
+						</t:Column>
+						<t:Column width="11rem">
+							<Label text="전표유형" />
+							<t:template>
+								<Text text="{slipBefore>sliptype}" wrapping="false" />
+							</t:template>
+						</t:Column>
+						<t:Column width="11rem">
+							<Label text="증빙일자" />
+							<t:template>
+								<Text text="{
+										path : 'slipBefore>prfdate',
+										formatter : '.formatter.dateTime'
+										}" 
+									wrapping="false" />
+							</t:template>
+						</t:Column>
+						<t:Column width="9rem">
+							<Label text="금액" />
+							<t:template>
+								<ObjectNumber
+									number="{
+										parts:[{path:'slipBefore>amount'},{path:'slipBefore>curkey'}],
+										type: 'sap.ui.model.type.Currency',
+										formatOptions: {showMeasure: false}
+									}"
+									unit="{slipBefore>curkey}" />
+								
+							</t:template>
+						</t:Column>
+					</t:columns>
+				</t:Table>           
 			</f:content>
 			<!-- DynamicPage Footer toggle footer클릭시-->
 			<f:footer> 

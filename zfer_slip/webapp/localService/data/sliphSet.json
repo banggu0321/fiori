@@ -1,0 +1,182 @@
+[
+    {
+        "Slipid": "PPiWOuJfmQLF",
+        "Docnum": "Docnum1",
+        "Sliptype": "S1",
+        "Prfdate": "/Date(219824892000)/",
+        "Pstdate": "/Date(276290867000)/",
+        "Managerid": "Manager1",
+        "Partid": "Part1"
+    },
+    {
+        "Slipid": "oZPZVPxcTrNQ",
+        "Docnum": "Docnum2",
+        "Sliptype": "S2",
+        "Prfdate": "/Date(631322477000)/",
+        "Pstdate": "/Date(1416149784000)/",
+        "Managerid": "Manager2",
+        "Partid": "Part2"
+    },
+    {
+        "Slipid": "jMCuiMFRnSTj",
+        "Docnum": "Docnum3",
+        "Sliptype": "S3",
+        "Prfdate": "/Date(239588387000)/",
+        "Pstdate": "/Date(1439790040000)/",
+        "Managerid": "Manager3",
+        "Partid": "Part3"
+    },
+    {
+        "Slipid": "sGoDmchHMApZ",
+        "Docnum": "Docnum4",
+        "Sliptype": "S4",
+        "Prfdate": "/Date(1446742510000)/",
+        "Pstdate": "/Date(1350163505000)/",
+        "Managerid": "Manager4",
+        "Partid": "Part4"
+    },
+    {
+        "Slipid": "SOgRtdQPCvWu",
+        "Docnum": "Docnum5",
+        "Sliptype": "S5",
+        "Prfdate": "/Date(355616161000)/",
+        "Pstdate": "/Date(552328336000)/",
+        "Managerid": "Manager5",
+        "Partid": "Part5"
+    },
+    {
+        "Slipid": "xfSPjBeZGWdU",
+        "Docnum": "Docnum6",
+        "Sliptype": "S6",
+        "Prfdate": "/Date(1394696140000)/",
+        "Pstdate": "/Date(469476537000)/",
+        "Managerid": "Manager6",
+        "Partid": "Part6"
+    },
+    {
+        "Slipid": "mOZJWObZTDlL",
+        "Docnum": "Docnum7",
+        "Sliptype": "S7",
+        "Prfdate": "/Date(1105960619000)/",
+        "Pstdate": "/Date(1352212971000)/",
+        "Managerid": "Manager7",
+        "Partid": "Part7"
+    },
+    {
+        "Slipid": "nRKdZAMrwwOX",
+        "Docnum": "Docnum8",
+        "Sliptype": "S8",
+        "Prfdate": "/Date(599581109000)/",
+        "Pstdate": "/Date(1317469969000)/",
+        "Managerid": "Manager8",
+        "Partid": "Part8"
+    },
+    {
+        "Slipid": "gstjInwmsqhs",
+        "Docnum": "Docnum9",
+        "Sliptype": "S9",
+        "Prfdate": "/Date(277988879000)/",
+        "Pstdate": "/Date(351729130000)/",
+        "Managerid": "Manager9",
+        "Partid": "Part9"
+    },
+    {
+        "Slipid": "dZorYWUzQZhh",
+        "Docnum": "Docnum10",
+        "Sliptype": "10",
+        "Prfdate": "/Date(1343414002000)/",
+        "Pstdate": "/Date(252602392000)/",
+        "Managerid": "Manage10",
+        "Partid": "Par10"
+    },
+    {
+        "Slipid": "wUyzDJgZonib",
+        "Docnum": "Docnum11",
+        "Sliptype": "11",
+        "Prfdate": "/Date(986719259000)/",
+        "Pstdate": "/Date(677208357000)/",
+        "Managerid": "Manage11",
+        "Partid": "Par11"
+    },
+    {
+        "Slipid": "CpOpBvjxDVlR",
+        "Docnum": "Docnum12",
+        "Sliptype": "12",
+        "Prfdate": "/Date(506706095000)/",
+        "Pstdate": "/Date(288228422000)/",
+        "Managerid": "Manage12",
+        "Partid": "Par12"
+    },
+    {
+        "Slipid": "vxxXUtnWvRJW",
+        "Docnum": "Docnum13",
+        "Sliptype": "13",
+        "Prfdate": "/Date(270226829000)/",
+        "Pstdate": "/Date(794232643000)/",
+        "Managerid": "Manage13",
+        "Partid": "Par13"
+    },
+    {
+        "Slipid": "TngGojeYNSxw",
+        "Docnum": "Docnum14",
+        "Sliptype": "14",
+        "Prfdate": "/Date(926466710000)/",
+        "Pstdate": "/Date(1127826225000)/",
+        "Managerid": "Manage14",
+        "Partid": "Par14"
+    },
+    {
+        "Slipid": "wzImZGkWTFfX",
+        "Docnum": "Docnum15",
+        "Sliptype": "15",
+        "Prfdate": "/Date(58035292000)/",
+        "Pstdate": "/Date(1237797074000)/",
+        "Managerid": "Manage15",
+        "Partid": "Par15"
+    },
+    {
+        "Slipid": "nedbYbfjgCTg",
+        "Docnum": "Docnum16",
+        "Sliptype": "16",
+        "Prfdate": "/Date(67546509000)/",
+        "Pstdate": "/Date(36890594000)/",
+        "Managerid": "Manage16",
+        "Partid": "Par16"
+    },
+    {
+        "Slipid": "yMHMsSBPmEqh",
+        "Docnum": "Docnum17",
+        "Sliptype": "17",
+        "Prfdate": "/Date(17632413000)/",
+        "Pstdate": "/Date(1145851396000)/",
+        "Managerid": "Manage17",
+        "Partid": "Par17"
+    },
+    {
+        "Slipid": "ukRXzttnnCBx",
+        "Docnum": "Docnum18",
+        "Sliptype": "18",
+        "Prfdate": "/Date(541443722000)/",
+        "Pstdate": "/Date(1212222392000)/",
+        "Managerid": "Manage18",
+        "Partid": "Par18"
+    },
+    {
+        "Slipid": "dGuTcivGRZkL",
+        "Docnum": "Docnum19",
+        "Sliptype": "19",
+        "Prfdate": "/Date(165915160000)/",
+        "Pstdate": "/Date(568179415000)/",
+        "Managerid": "Manage19",
+        "Partid": "Par19"
+    },
+    {
+        "Slipid": "XLPgLoQEmtSP",
+        "Docnum": "Docnum20",
+        "Sliptype": "20",
+        "Prfdate": "/Date(1331263697000)/",
+        "Pstdate": "/Date(822889113000)/",
+        "Managerid": "Manage20",
+        "Partid": "Par20"
+    }
+]

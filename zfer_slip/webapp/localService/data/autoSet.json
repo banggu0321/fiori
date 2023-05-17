@@ -1,0 +1,202 @@
+[
+    {
+        "Mandt": "oaJ",
+        "Autonum": "UhhQnXpdyRcj",
+        "Branch": "Bra1",
+        "Partid": "Part1",
+        "Autodat": "/Date(471214287000)/",
+        "Amount": 37183793.098,
+        "Curkey": "Curk1",
+        "Staflag": true
+    },
+    {
+        "Mandt": "WIZ",
+        "Autonum": "WvnibOARwxKW",
+        "Branch": "Bra2",
+        "Partid": "Part2",
+        "Autodat": "/Date(630435353000)/",
+        "Amount": 95354677.48,
+        "Curkey": "Curk2",
+        "Staflag": false
+    },
+    {
+        "Mandt": "hLg",
+        "Autonum": "RaemARdOIGmU",
+        "Branch": "Bra3",
+        "Partid": "Part3",
+        "Autodat": "/Date(748024246000)/",
+        "Amount": 71643993.258,
+        "Curkey": "Curk3",
+        "Staflag": false
+    },
+    {
+        "Mandt": "SDO",
+        "Autonum": "FzbhRXuFxWDu",
+        "Branch": "Bra4",
+        "Partid": "Part4",
+        "Autodat": "/Date(219947829000)/",
+        "Amount": 89649680.093,
+        "Curkey": "Curk4",
+        "Staflag": false
+    },
+    {
+        "Mandt": "tBH",
+        "Autonum": "cZImloGGhbjT",
+        "Branch": "Bra5",
+        "Partid": "Part5",
+        "Autodat": "/Date(382959522000)/",
+        "Amount": 20147620.001,
+        "Curkey": "Curk5",
+        "Staflag": false
+    },
+    {
+        "Mandt": "XBF",
+        "Autonum": "UMraCcQMHcbL",
+        "Branch": "Bra6",
+        "Partid": "Part6",
+        "Autodat": "/Date(772973251000)/",
+        "Amount": 26383561.943,
+        "Curkey": "Curk6",
+        "Staflag": false
+    },
+    {
+        "Mandt": "ixc",
+        "Autonum": "XtEDiuTTgbmv",
+        "Branch": "Bra7",
+        "Partid": "Part7",
+        "Autodat": "/Date(693714340000)/",
+        "Amount": 98855055.682,
+        "Curkey": "Curk7",
+        "Staflag": false
+    },
+    {
+        "Mandt": "YvS",
+        "Autonum": "JVhxQRjWblRZ",
+        "Branch": "Bra8",
+        "Partid": "Part8",
+        "Autodat": "/Date(896737205000)/",
+        "Amount": 64001015.806,
+        "Curkey": "Curk8",
+        "Staflag": false
+    },
+    {
+        "Mandt": "DUX",
+        "Autonum": "iHhtIPhtAJyX",
+        "Branch": "Bra9",
+        "Partid": "Part9",
+        "Autodat": "/Date(789094949000)/",
+        "Amount": 8782682.335,
+        "Curkey": "Curk9",
+        "Staflag": true
+    },
+    {
+        "Mandt": "toc",
+        "Autonum": "ifDDwxGePdze",
+        "Branch": "Br10",
+        "Partid": "Par10",
+        "Autodat": "/Date(1136455339000)/",
+        "Amount": 73754375.078,
+        "Curkey": "Cur10",
+        "Staflag": false
+    },
+    {
+        "Mandt": "OcY",
+        "Autonum": "ZieuJsonUpCF",
+        "Branch": "Br11",
+        "Partid": "Par11",
+        "Autodat": "/Date(232276212000)/",
+        "Amount": 70039674.313,
+        "Curkey": "Cur11",
+        "Staflag": false
+    },
+    {
+        "Mandt": "Rzz",
+        "Autonum": "uWDcHTZznJRI",
+        "Branch": "Br12",
+        "Partid": "Par12",
+        "Autodat": "/Date(1102797445000)/",
+        "Amount": 1363000.529,
+        "Curkey": "Cur12",
+        "Staflag": false
+    },
+    {
+        "Mandt": "UIa",
+        "Autonum": "TUGOofKkNiKE",
+        "Branch": "Br13",
+        "Partid": "Par13",
+        "Autodat": "/Date(966708542000)/",
+        "Amount": 61572414.496,
+        "Curkey": "Cur13",
+        "Staflag": true
+    },
+    {
+        "Mandt": "xII",
+        "Autonum": "lGvjZGIdZgqe",
+        "Branch": "Br14",
+        "Partid": "Par14",
+        "Autodat": "/Date(700379980000)/",
+        "Amount": 44425954.273,
+        "Curkey": "Cur14",
+        "Staflag": false
+    },
+    {
+        "Mandt": "jQt",
+        "Autonum": "jHbBrFrvaSHd",
+        "Branch": "Br15",
+        "Partid": "Par15",
+        "Autodat": "/Date(1013341049000)/",
+        "Amount": 79914968.693,
+        "Curkey": "Cur15",
+        "Staflag": false
+    },
+    {
+        "Mandt": "czD",
+        "Autonum": "cJjVFhbzvNFz",
+        "Branch": "Br16",
+        "Partid": "Par16",
+        "Autodat": "/Date(831510826000)/",
+        "Amount": 3087625.652,
+        "Curkey": "Cur16",
+        "Staflag": true
+    },
+    {
+        "Mandt": "CpL",
+        "Autonum": "Lazhegrgibwy",
+        "Branch": "Br17",
+        "Partid": "Par17",
+        "Autodat": "/Date(429719734000)/",
+        "Amount": 43214775.784,
+        "Curkey": "Cur17",
+        "Staflag": false
+    },
+    {
+        "Mandt": "ZBy",
+        "Autonum": "pHYTfXmOCjEF",
+        "Branch": "Br18",
+        "Partid": "Par18",
+        "Autodat": "/Date(579505366000)/",
+        "Amount": 82985261.059,
+        "Curkey": "Cur18",
+        "Staflag": true
+    },
+    {
+        "Mandt": "glY",
+        "Autonum": "WfvtuTtFRsjb",
+        "Branch": "Br19",
+        "Partid": "Par19",
+        "Autodat": "/Date(1421276774000)/",
+        "Amount": 24652879.382,
+        "Curkey": "Cur19",
+        "Staflag": true
+    },
+    {
+        "Mandt": "LKI",
+        "Autonum": "ScyKwweCZWiJ",
+        "Branch": "Br20",
+        "Partid": "Par20",
+        "Autodat": "/Date(868016261000)/",
+        "Amount": 19610978.15,
+        "Curkey": "Cur20",
+        "Staflag": true
+    }
+]
