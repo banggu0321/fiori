@@ -19,17 +19,18 @@
                                 <!-- <VBox > defaultSpan="XL1 L2 M3 S4" -->
                                     <HBox >
                                         <Label text="증빙문서번호" labelFor="idDocnum" />
-                                        <Text id="idDocnum" text="{slipH>/select/docnum}" textAlign="Center"/>
+                                        <Text id="idDocnum" text="{slipH>/select/Docnum}" textAlign="Center"/>
                                     </HBox>
                                     <HBox >
                                         <Label text="전표유형" />
-                                        <Input value="{slipH>/select/sliptype}" enabled="false"/>
+                                        <Input value="{slipH>/select/Sliptype}({slipH>/select/Sliptypedesc})" enabled="false"/>
+                                        <!-- <Input value="" enabled="false"/> -->
                                     </HBox>
                                     <HBox >
                                         <Label text="증빙일자" />
                                         <Input
 											value="{
-												path : 'slipH>/select/prfdate',
+												path : 'slipH>/select/Prfdate',
 												formatter : '.formatter.dateTime'
 												}"   
 											enabled="false"/>
@@ -38,7 +39,7 @@
                                         <Label text="전기일자" />
                                         <Input 
 											value="{
-												path : 'slipH>/select/pdtdate',
+												path : 'slipH>/select/Pdtdate',
 												formatter : '.formatter.dateTime2'
 												}"  
 											enabled="false"/>
@@ -49,11 +50,11 @@
                                     </HBox> -->
                                     <HBox >
                                         <Label text="협력사" />
-                                        <Input value="{slipH>/select/partid}" enabled="false"/>
+                                        <Input value="{slipH>/select/Partid}({slipH>/select/Partname})" enabled="false"/>
                                     </HBox>
                                     <HBox >
                                         <Label text="총금액" />
-                                        <Input value="{slipH>/selectBefore/amount}" enabled="false"/>
+                                        <Input value="{slipH>/selectBefore/Amount}" enabled="false"/>
                                     </HBox>
                                 <!-- </VBox> -->
                                 <!-- <VBox>
@@ -83,29 +84,31 @@
 					selectionMode="MultiToggle"
 					visibleRowCount="7"
 					paste="onPaste"
-					ariaLabelledBy="title">
+                    selectionBehavior="RowOnly"
+					ariaLabelledBy="title"
+                    rowSelectionChange="onSelectionChange">
 					<t:extension>
 						<OverflowToolbar style="Clear">
 							<Title id="deailtitle" text="Products" level="H2"/>
 						</OverflowToolbar>
 					</t:extension>
 					<t:columns>
-						<!-- <t:Column width="11rem">
+						<t:Column width="11rem" visible="false"> 
 							<Label text="slipid" />
 							<t:template>
 								<Text text="{slipI>slipid}" wrapping="false" />
 							</t:template>
-						</t:Column> -->
+						</t:Column>
 						<t:Column width="11rem">
 							<Label text="순번" />
 							<t:template>
-								<Text text="{slipI>prnum}" wrapping="false" />
+								<Text text="{slipI>Prnum}" wrapping="false" />
 							</t:template>
 						</t:Column>
 						<t:Column width="9rem">
 							<Label text="계정코드" />
 							<t:template>
-								<Text text="{slipI>accocode}" wrapping="false" />
+								<Text text="{slipI>Accocode}" wrapping="false" />
 							</t:template>
 						</t:Column>
 						<!-- <t:Column width="9rem">
@@ -117,33 +120,53 @@
 						<t:Column width="11rem">
 							<Label text="차변" />
 							<t:template>
-								<Text text="{
+								<Input id="idDetailTableInput1" 
+										value="{
+											parts: [
+												{ path: 'slipI>Dcindicator' },
+												{ path: 'slipI>Amt' },
+												{ path: 'slipI>Tax' }
+											],
+											formatter: '.formatter.dcindicator3Text'
+											}" 
+										enabled="false" />
+								<!-- <Text text="{
 									parts: [
-										{ path: 'slipI>dcindicator' },
-										{ path: 'slipI>amt' },
-										{ path: 'slipI>tax' }
+										{ path: 'slipI>Dcindicator' },
+										{ path: 'slipI>Amt' },
+										{ path: 'slipI>Tax' }
 									],
 									formatter: '.formatter.dcindicator3Text'
-									}" wrapping="false" />
+									}" wrapping="false" /> -->
 							</t:template>
 						</t:Column>
 						<t:Column width="11rem">
 							<Label text="대변" />
 							<t:template>
-								<Text text="{
+								<Input id="idDetailTableInput2" 
+										value="{
+											parts: [
+												{ path: 'slipI>Dcindicator' },
+												{ path: 'slipI>Amt' },
+												{ path: 'slipI>Tax' }
+											],
+											formatter: '.formatter.dcindicator4Text'
+											}" 
+										enabled="false" />
+								<!-- <Text text="{
 									parts: [
-										{ path: 'slipI>dcindicator' },
-										{ path: 'slipI>amt' },
-										{ path: 'slipI>tax' }
+										{ path: 'slipI>Dcindicator' },
+										{ path: 'slipI>Amt' },
+										{ path: 'slipI>Tax' }
 									],
 									formatter: '.formatter.dcindicator4Text'
-									}" wrapping="false" />
+									}" wrapping="false" /> -->
 							</t:template>
 						</t:Column>
 						<t:Column width="11rem">
 							<Label text="통화" />
 							<t:template>
-								<Text text="{slipI>curkey}" wrapping="false" />
+								<Text text="{slipI>Curkey}" wrapping="false" />
 							</t:template>
 						</t:Column>
 					</t:columns>
@@ -250,6 +273,9 @@
 				</t:rowActionTemplate>
 			</t:Table> -->
         </content>
+		<beginButton>
+			<Button text="변경사항 저장" press=".onSave"></Button>
+		</beginButton>
 
         <endButton>
             <Button text="close" press=".onClose"></Button>

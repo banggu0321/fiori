@@ -110,7 +110,7 @@ sap.ui.define([
                 var slipidatas = [];
                 var snum = 0;
 
-                var sPath = "/wbatsoSet";   // '/auto'
+                var sPath = "/wbatsofSet";   // '/auto'
                 this.oModel.read(sPath,{ 
                     success:function(oReturn){
                         // debugger;
@@ -118,51 +118,58 @@ sap.ui.define([
                         for(var i = 0 ; i < oReturn.results.length; i++){
                             // debugger;
                             tabledatas.push({
-                                status : "미완료",
-                                docnum : oReturn.results[i].Batterysoid,
-                                partid : oReturn.results[i].Partnerid,
-                                sliptype : "SP",
-                                prfdate : oReturn.results[i].Indate,
-                                amount : oReturn.results[i].Price,
-                                curkey : oReturn.results[i].Curkey
+                                Status : "미완료",
+                                Docnum : oReturn.results[i].Batterysoid,
+                                Partid : oReturn.results[i].Partnerid,
+                                Partname : oReturn.results[i].Partname,
+                                Sliptype : oReturn.results[i].Sliptype,
+                                Sliptypedesc : oReturn.results[i].Sliptypedesc,
+                                Prfdate : oReturn.results[i].Indate,
+                                Amount : oReturn.results[i].Amt,
+                                Curkey : oReturn.results[i].Curkey
                             });
                             sliphdatas.push({
-                                slipid : 'BON'+i,
-                                docnum : oReturn.results[i].Batterysoid,
-                                sliptype : "SP",
-                                prfdate : oReturn.results[i].Indate,
-                                pdtdate : this.todaydate,
-                                managerid : this.empid,
-                                partid : oReturn.results[i].Partnerid
+                                Slipid : 'BON'+i,
+                                Docnum : oReturn.results[i].Batterysoid,
+                                Sliptype : oReturn.results[i].Sliptype,
+                                Sliptypedesc : oReturn.results[i].Sliptypedesc,
+                                Prfdate : oReturn.results[i].Indate,
+                                Pdtdate : this.todaydate,
+                                Managerid : this.empid,
+                                Partid : oReturn.results[i].Partnerid,
+                                Partname : oReturn.results[i].Partname
                             });
                             this.oslipH.setProperty("/hlist",sliphdatas);
                             
                             slipidatas.push({
-                                slipid : 'BON'+i,
-                                prnum : '01',
-                                accocode : '101',
-                                dcindicator : '3',
-                                amt : Number(oReturn.results[i].Price),
-                                tax : 0,
-                                curkey : oReturn.results[i].Curkey
+                                Slipid : 'BON'+i,
+                                Prnum : '01',
+                                Accocode : '101',
+                                Acconm : 'aa',
+                                Dcindicator : '3',
+                                Amt : Number(oReturn.results[i].Amt),
+                                Tax : 0,
+                                Curkey : oReturn.results[i].Curkey
                             });
                             slipidatas.push({
-                                slipid : 'BON'+i,
-                                prnum : '02',
-                                accocode : '401',
-                                dcindicator : '4',
-                                amt : Number(oReturn.results[i].Price) * 0.9,
-                                tax : 0,
-                                curkey : oReturn.results[i].Curkey
+                                Slipid : 'BON'+i,
+                                Prnum : '02',
+                                Accocode : '401',
+                                Acconm : 'aa',
+                                Dcindicator : '4',
+                                Amt : Number(oReturn.results[i].Amt) * 0.9,
+                                Tax : 0,
+                                Curkey : oReturn.results[i].Curkey
                             });
                             slipidatas.push({
-                                slipid : 'BON'+i,
-                                prnum : '03',
-                                accocode : '225',
-                                dcindicator : '4',
-                                amt : 0,
-                                tax : Number(oReturn.results[i].Price) * 0.1,
-                                curkey : oReturn.results[i].Curkey
+                                Slipid : 'BON'+i,
+                                Prnum : '03',
+                                Accocode : '225',
+                                Acconm : 'aa',
+                                Dcindicator : '4',
+                                Amt : 0,
+                                Tax : Number(oReturn.results[i].Amt) * 0.1,
+                                Curkey : oReturn.results[i].Curkey
                             });
                             this.oslipI.setProperty("/ilist",slipidatas);
                             snum += 1;
@@ -172,7 +179,7 @@ sap.ui.define([
                     }.bind(this)
                 });
 
-                var sPath = "/rentalSet";
+                var sPath = "/rentalfSet";
                 tabledatas = [];
                 sliphdatas = [];
                 slipidatas = [];
@@ -183,52 +190,59 @@ sap.ui.define([
                         for(var i = 0 ; i < oReturn.results.length; i++){
                             // debugger;
                             tabledatas.push({
-                                status : "미완료",
-                                docnum : oReturn.results[i].Rentalid,
-                                partid : "PAT00",
-                                sliptype : "SS",
-                                prfdate : oReturn.results[i].Fdate,
-                                amount : Number(oReturn.results[i].Retfee) + Number(oReturn.results[i].Drivfee),
-                                curkey : oReturn.results[i].Curkey
+                                Status : "미완료",
+                                Docnum : oReturn.results[i].Rentalid,
+                                Partid : oReturn.results[i].Partnerid,
+                                Partname : oReturn.results[i].Partname,
+                                Sliptype : oReturn.results[i].Sliptype,
+                                Sliptypedesc : oReturn.results[i].Sliptypedesc,
+                                Prfdate : oReturn.results[i].Fdate,
+                                Amount : Number(oReturn.results[i].Retfee) + Number(oReturn.results[i].Drivfee),
+                                Curkey : oReturn.results[i].Curkey
                             });
                             
                             sliphdatas.push({
-                                slipid : 'REN'+i,
-                                docnum : oReturn.results[i].Rentalid,
-                                sliptype : "SS",
-                                prfdate : oReturn.results[i].Fdate,
-                                pdtdate : this.todaydate,
-                                managerid : this.empid,
-                                partid : "PAT00"
+                                Slipid : 'REN'+i,
+                                Docnum : oReturn.results[i].Rentalid,
+                                Sliptype : oReturn.results[i].Sliptype,
+                                Sliptypedesc : oReturn.results[i].Sliptypedesc,
+                                Prfdate : oReturn.results[i].Fdate,
+                                Pdtdate : this.todaydate,
+                                Managerid : this.empid,
+                                Partid : oReturn.results[i].Partnerid,
+                                Partname : oReturn.results[i].Partname
                             });
                             this.oslipH.setProperty("/hlist",sliphdatas);
                             
                             slipidatas.push({
-                                slipid : 'REN'+i,
-                                prnum : '01',
-                                accocode : '102',
-                                dcindicator : '3',
-                                amt : Number(oReturn.results[i].Retfee) + Number(oReturn.results[i].Drivfee),
-                                tax : 0,
-                                curkey : oReturn.results[i].Curkey
+                                Slipid : 'REN'+i,
+                                Prnum : '01',
+                                Accocode : '102',
+                                Acconm : 'aa',
+                                Dcindicator : '3',
+                                Amt : Number(oReturn.results[i].Retfee) + Number(oReturn.results[i].Drivfee),
+                                Tax : 0,
+                                Curkey : oReturn.results[i].Curkey
                             });
                             slipidatas.push({
-                                slipid : 'REN'+i,
-                                prnum : '02',
-                                accocode : '830',
-                                dcindicator : '4',
-                                amt : ( Number(oReturn.results[i].Retfee) + Number(oReturn.results[i].Drivfee) ) * 0.9,
-                                tax : 0,
-                                curkey : oReturn.results[i].Curkey
+                                Slipid : 'REN'+i,
+                                Prnum : '02',
+                                Accocode : '830',
+                                Acconm : 'aa',
+                                Dcindicator : '4',
+                                Amt : ( Number(oReturn.results[i].Retfee) + Number(oReturn.results[i].Drivfee) ) * 0.9,
+                                Tax : 0,
+                                Curkey : oReturn.results[i].Curkey
                             });
                             slipidatas.push({
-                                slipid : 'REN'+i,
-                                prnum : '03',
-                                accocode : '135',
-                                dcindicator : '4',
-                                amt : 0,
-                                tax : ( Number(oReturn.results[i].Retfee) + Number(oReturn.results[i].Drivfee) ) * 0.1,
-                                curkey : oReturn.results[i].Curkey
+                                Slipid : 'REN'+i,
+                                Prnum : '03',
+                                Accocode : '135',
+                                Acconm : 'aa',
+                                Dcindicator : '4',
+                                Amt : 0,
+                                Tax : ( Number(oReturn.results[i].Retfee) + Number(oReturn.results[i].Drivfee) ) * 0.1,
+                                Curkey : oReturn.results[i].Curkey
                             });
                             this.oslipI.setProperty("/ilist",slipidatas);
                             snum += 1;
@@ -238,7 +252,7 @@ sap.ui.define([
                     }.bind(this)
                 });
                 
-                var sPath = "/autoSet";   // '/auto'
+                var sPath = "/autofSet";   // '/auto'
                 tabledatas = [];
                 sliphdatas = [];
                 slipidatas = [];
@@ -249,52 +263,59 @@ sap.ui.define([
                         for(var i = 0 ; i < oReturn.results.length; i++){
                             // debugger;
                             tabledatas.push({
-                                status : "미완료",
-                                docnum : oReturn.results[i].Autonum,
-                                partid : oReturn.results[i].Partid,
-                                sliptype : "KZ",
-                                prfdate : oReturn.results[i].Autodat,
-                                amount : oReturn.results[i].Amount,
-                                curkey : oReturn.results[i].Curkey
+                                Status : "미완료",
+                                Docnum : oReturn.results[i].Autonum,
+                                Partid : oReturn.results[i].Partid,
+                                Partname : oReturn.results[i].Partname,
+                                Sliptype : oReturn.results[i].Sliptype,
+                                Sliptypedesc : oReturn.results[i].Sliptypedesc,
+                                Prfdate : oReturn.results[i].Autodat,
+                                Amount : oReturn.results[i].Amount,
+                                Curkey : oReturn.results[i].Curkey
                             });
                             
                             sliphdatas.push({
-                                slipid : 'MON'+i,
-                                docnum : oReturn.results[i].Autonum,
-                                sliptype : "KZ",
-                                prfdate : oReturn.results[i].Autodat,
-                                pdtdate : this.todaydate,
-                                managerid : this.empid,
-                                partid : oReturn.results[i].Partid
+                                Slipid : 'MON'+i,
+                                Docnum : oReturn.results[i].Autonum,
+                                Sliptype : oReturn.results[i].Sliptype,
+                                Sliptypedesc : oReturn.results[i].Sliptypedesc,
+                                Prfdate : oReturn.results[i].Autodat,
+                                Pdtdate : this.todaydate,
+                                Managerid : this.empid,
+                                Partid : oReturn.results[i].Partid,
+                                Partname : oReturn.results[i].Partname
                             });
                             this.oslipH.setProperty("/hlist",sliphdatas);
                             
                             slipidatas.push({
-                                slipid : 'MON'+i,
-                                prnum : '01',
-                                accocode : '102',
-                                dcindicator : '4',
-                                amt : Number(oReturn.results[i].Amount),
-                                tax : 0,
-                                curkey : oReturn.results[i].Curkey
+                                Slipid : 'MON'+i,
+                                Prnum : '01',
+                                Accocode : '102',
+                                Acconm : 'aa',
+                                Dcindicator : '4',
+                                Amt : Number(oReturn.results[i].Amount),
+                                Tax : 0,
+                                Curkey : oReturn.results[i].Curkey
                             });
                             slipidatas.push({
-                                slipid : 'MON'+i,
-                                prnum : '02',
-                                accocode : '830',
-                                dcindicator : '3',
-                                amt : Number(oReturn.results[i].Amount) * 0.9,
-                                tax : 0,
-                                curkey : oReturn.results[i].Curkey
+                                Slipid : 'MON'+i,
+                                Prnum : '02',
+                                Accocode : '830',
+                                Acconm : 'aa',
+                                Dcindicator : '3',
+                                Amt : Number(oReturn.results[i].Amount) * 0.9,
+                                Tax : 0,
+                                Curkey : oReturn.results[i].Curkey
                             });
                             slipidatas.push({
-                                slipid : 'MON'+i,
-                                prnum : '03',
-                                accocode : '135',
-                                dcindicator : '3',
-                                amt : 0,
-                                tax : Number(oReturn.results[i].Amount) * 0.1,
-                                curkey : oReturn.results[i].Curkey
+                                Slipid : 'MON'+i,
+                                Prnum : '03',
+                                Accocode : '135',
+                                Acconm : 'aa',
+                                Dcindicator : '3',
+                                Amt : 0,
+                                Tax : Number(oReturn.results[i].Amount) * 0.1,
+                                Curkey : oReturn.results[i].Curkey
                             });
                             this.oslipI.setProperty("/ilist",slipidatas);
                             snum += 1;
@@ -361,13 +382,14 @@ sap.ui.define([
                     };
 
                     if (sFilter1) {
-                        aFilter.push(new Filter("docnum", "Contains", sFilter1));
+                        aFilter.push(new Filter("Docnum", "Contains", sFilter1));
                         // debugger;
-                    }
+                    };
+                    // debugger;
                     if (oDateRange.getValue()){
-                        aFilter.push(new Filter("prfdate", "BT", oDateRange.getFrom(), oDateRange.getTo()));
+                        aFilter.push(new Filter("Prfdate", "BT", oDateRange.getFrom(), oDateRange.getTo()));
                         // debugger;
-                    }
+                    };
                     
                     oTable.getBinding("rows").filter(aFilter);
                    
@@ -397,12 +419,12 @@ sap.ui.define([
                 var aSlipBeforeData = this.oSlipBefore.getData().blist;
                 var aSlipidatas = [];
                 for(var i = 0; i < aSlipHData.length; i++){
-                    if(aSlipHData[i].docnum == oSelectData.docnum){
+                    if(aSlipHData[i].Docnum == oSelectData.Docnum){
                         this.oslipH.setProperty("/select",aSlipHData[i]);
                         this.oslipH.setProperty("/selectBefore",aSlipBeforeData[i]);
 
                         for(var j = 0; j < aSlipIData.length ; j++){
-                            if(aSlipIData[j].slipid == aSlipHData[i].slipid){
+                            if(aSlipIData[j].Slipid == aSlipHData[i].Slipid){
                                 aSlipidatas.push(aSlipIData[j]);
                             }
                         }
@@ -428,9 +450,85 @@ sap.ui.define([
                 },this);
             },
             onClose: function(oEvent){
+                var oDialog = oEvent.getSource().getParent(); //Dialog    
+                var oTable = this.byId("idSlipDetailTable");
+                let index = oTable.getSelectedIndices();
+
+                for(var j = index.length - 1 ; j >= 0 ; j--){
+                    oTable.getRows()[index[j]].getCells()[2].setEnabled(false);
+                    oTable.getRows()[index[j]].getCells()[3].setEnabled(false);
+                };
+                
+                oDialog.close();
+                oTable.clearSelection();
+                
+                // debugger;
+            },
+            onSelectionChange :function(oEvent){
+                var oTable = oEvent.getSource();
+                var aSelectedIndices = oTable.getSelectedIndices();
+                var aRows = oTable.getRows();
+                var aSelectidata = this.oslipI.getData().select;
+
+                // debugger;
+
+                // Table 내에서 선택된 Row 일괄 enabled = true 설정
+                aSelectedIndices.forEach(function (item) {
+                    if(aSelectidata[item].Dcindicator === '3'){
+                        aRows[item].getCells()[2].setEnabled(true);
+                    } else{
+                        aRows[item].getCells()[3].setEnabled(true);
+                    }
+                });
+
+                // 만약 Check를 풀었을 때, Table 선택된 Indices 에 포함되어 있지 않으면 풀었다는 거니까 enabled = false 설정
+                var rowIndex = oEvent.getParameters().rowIndex;
+                if (aSelectedIndices.indexOf(rowIndex) < 0) {
+                    for(var i = 2 ; i <= 3 ; i++){
+                        aRows[rowIndex].getCells()[i].setEnabled(false);
+                        // var ocell = this.oTable.getRows()[rowIndex].getCells()[i];  //aRows[rowIndex].getCells()[4].setEnabled(false);
+                        // var sAmountValue = ocell.getValue(); 
+                        //  = sAmountValue
+                    }
+                };
+            },
+            onSave : function(oEvent){
+                var oTable = this.byId("idSlipDetailTable");
+                var aSelectidata = this.oslipI.getData().select;
+                var aSlipIData = this.oslipI.getData().ilist;
+                let index = oTable.getSelectedIndices();
+
+                for(var i = 0; i < aSelectidata.length; i++){
+                    for(var j = 0 ; j < aSlipIData.length ; j++){
+                        if(aSlipIData[j].Slipid === aSelectidata[i].Slipid && aSlipIData[j].Prnum === aSelectidata[i].Prnum){
+                            for(var k = 2 ; k <= 3 ; k++){
+                                // aRows[rowIndex].getCells()[i].setEnabled(false);
+                                // debugger;
+                                var ocell = oTable.getRows()[i].getCells()[k];  //aRows[rowIndex].getCells()[4].setEnabled(false);
+                                var sAmountValue = ocell.getValue(); 
+                                if(sAmountValue != 0){
+                                    // console.log(i, j, k);
+                                    // console.log(sAmountValue);
+                                    // aSelectidata = sAmountValue
+                                    if(aSlipIData[j].Amt == 0 ){ ///tax
+                                        aSlipIData[j].Tax = sAmountValue;
+                                    } else {
+                                        aSlipIData[j].Amt = sAmountValue;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                };
                 var oDialog = oEvent.getSource().getParent(); //Dialog        
                 // var oDialog = this.byId("ProductsDialog");      
+                for(var j = index.length - 1 ; j >= 0 ; j--){
+                    oTable.getRows()[index[j]].getCells()[2].setEnabled(false);
+                    oTable.getRows()[index[j]].getCells()[3].setEnabled(false);
+                };
                 oDialog.close();
+                oTable.clearSelection();
+                
             }
         });
     });
