@@ -176,7 +176,7 @@
 				<t:Table
 					id="idSlipbeforeTable"
 					rows="{slipBefore>/blist}"
-                                rowActionCount="1"
+                    rowActionCount="1"
 					selectionMode="MultiToggle"
 					visibleRowCount="7"
 					paste="onPaste"
@@ -190,13 +190,13 @@
 						<t:Column width="11rem">
 							<Label text="상태" />
 							<t:template>
-								<Text text="{slipBefore>status}" wrapping="false" />
+								<Text text="{slipBefore>Status}" wrapping="false" />
 							</t:template>
 						</t:Column>
 						<t:Column width="11rem">
 							<Label text="문서번호" />
 							<t:template>
-								<Text text="{slipBefore>docnum}" wrapping="false" />
+								<Text text="{slipBefore>Docnum}" wrapping="false" />
 							</t:template>
 						</t:Column>
 						<t:Column width="9rem">
@@ -206,22 +206,22 @@
 							</t:template>
 						</t:Column>
 						<t:Column width="11rem">
-							<Label text="협력사ID" />
+							<Label text="협력사" />
 							<t:template>
-								<Text text="{slipBefore>partid}" wrapping="false" />
+								<ObjectIdentifier  title="{slipBefore>Partid}" text="{slipBefore>Partname}"/>
 							</t:template>
 						</t:Column>
 						<t:Column width="11rem">
 							<Label text="전표유형" />
 							<t:template>
-								<Text text="{slipBefore>sliptype}" wrapping="false" />
+								<ObjectIdentifier  title="{slipBefore>Sliptype}" text="{slipBefore>Sliptypedesc}"/>
 							</t:template>
 						</t:Column>
 						<t:Column width="11rem">
 							<Label text="증빙일자" />
 							<t:template>
 								<Text text="{
-										path : 'slipBefore>prfdate',
+										path : 'slipBefore>Prfdate',
 										formatter : '.formatter.dateTime'
 										}" 
 									wrapping="false" />
@@ -232,12 +232,11 @@
 							<t:template>
 								<ObjectNumber
 									number="{
-										parts:[{path:'slipBefore>amount'},{path:'slipBefore>curkey'}],
+										parts:[{path:'slipBefore>Amount'},{path:'slipBefore>Curkey'}],
 										type: 'sap.ui.model.type.Currency',
 										formatOptions: {showMeasure: false}
 									}"
-									unit="{slipBefore>curkey}" />
-								
+									unit="{slipBefore>Curkey}" />
 							</t:template>
 						</t:Column>
 					</t:columns>
