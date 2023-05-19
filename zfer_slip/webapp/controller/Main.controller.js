@@ -144,6 +144,7 @@ sap.ui.define([
                             
                             slipidatas.push({
                                 Slipid : 'BON'+i,
+                                Docnum : oReturn.results[i].Batterysoid,
                                 Prnum : '01',
                                 Accocode : '101',
                                 Acconm : 'aa',
@@ -154,6 +155,7 @@ sap.ui.define([
                             });
                             slipidatas.push({
                                 Slipid : 'BON'+i,
+                                Docnum : oReturn.results[i].Batterysoid,
                                 Prnum : '02',
                                 Accocode : '401',
                                 Acconm : 'aa',
@@ -164,6 +166,7 @@ sap.ui.define([
                             });
                             slipidatas.push({
                                 Slipid : 'BON'+i,
+                                Docnum : oReturn.results[i].Batterysoid,
                                 Prnum : '03',
                                 Accocode : '225',
                                 Acconm : 'aa',
@@ -217,6 +220,7 @@ sap.ui.define([
                             
                             slipidatas.push({
                                 Slipid : 'REN'+i,
+                                Docnum : oReturn.results[i].Rentalid,
                                 Prnum : '01',
                                 Accocode : '102',
                                 Acconm : 'aa',
@@ -227,6 +231,7 @@ sap.ui.define([
                             });
                             slipidatas.push({
                                 Slipid : 'REN'+i,
+                                Docnum : oReturn.results[i].Rentalid,
                                 Prnum : '02',
                                 Accocode : '830',
                                 Acconm : 'aa',
@@ -237,6 +242,7 @@ sap.ui.define([
                             });
                             slipidatas.push({
                                 Slipid : 'REN'+i,
+                                Docnum : oReturn.results[i].Rentalid,
                                 Prnum : '03',
                                 Accocode : '135',
                                 Acconm : 'aa',
@@ -290,6 +296,7 @@ sap.ui.define([
                             
                             slipidatas.push({
                                 Slipid : 'MON'+i,
+                                Docnum : oReturn.results[i].Autonum,
                                 Prnum : '01',
                                 Accocode : '102',
                                 Acconm : 'aa',
@@ -300,6 +307,7 @@ sap.ui.define([
                             });
                             slipidatas.push({
                                 Slipid : 'MON'+i,
+                                Docnum : oReturn.results[i].Autonum,
                                 Prnum : '02',
                                 Accocode : '830',
                                 Acconm : 'aa',
@@ -310,6 +318,7 @@ sap.ui.define([
                             });
                             slipidatas.push({
                                 Slipid : 'MON'+i,
+                                Docnum : oReturn.results[i].Autonum,
                                 Prnum : '03',
                                 Accocode : '135',
                                 Acconm : 'aa',
@@ -524,44 +533,69 @@ sap.ui.define([
                     if (bConfirm) {
                         var oTable = this.byId("idSlipDetailTable");
                         var aSelectidata = this.oslipI.getData().select;
+                        // var aSelecthdata = this.oslipH.getData().select;
+                        // var aSlipHData = this.oslipH.getData().blist;
                         var aSlipIData = this.oslipI.getData().ilist;
                         let index = oTable.getSelectedIndices();
-        
-                        for(var i = 0; i < aSelectidata.length; i++){
-                            for(var j = 0 ; j < aSlipIData.length ; j++){
-                                if(aSlipIData[j].Slipid === aSelectidata[i].Slipid && aSlipIData[j].Prnum === aSelectidata[i].Prnum){
-                                    for(var k = 2 ; k <= 3 ; k++){
-                                        // aRows[rowIndex].getCells()[i].setEnabled(false);
-                                        // debugger;
-                                        var ocell = oTable.getRows()[i].getCells()[k];  //aRows[rowIndex].getCells()[4].setEnabled(false);
-                                        var sAmountValue = ocell.getValue(); 
-                                        if(sAmountValue != 0){
-                                            // console.log(i, j, k);
-                                            // console.log(sAmountValue);
-                                            // aSelectidata = sAmountValue
-                                            if(aSlipIData[j].Amt == 0 ){ ///tax
-                                                aSlipIData[j].Tax = sAmountValue;
-                                            } else {
-                                                aSlipIData[j].Amt = sAmountValue;
+                        var sError = 0;
+
+                        for(var i = 0; i < oTable.getRows().length; i++){
+                            for(var j = 2; j <= 3; j++){
+                                var sState = oTable.getRows()[i].getCells()[j].getValueState();
+                                if(sState === 'Error'){
+                                    sError += 1;
+                                    // debugger;
+                                }
+                            }
+                        }
+                        // debugger;
+
+                        if(sError > 0){
+                            MessageToast.show("총액을 확인하세요");
+                        }else{
+                            for(var i = 0; i < aSelectidata.length; i++){
+                                for(var j = 0 ; j < aSlipIData.length ; j++){
+                                    if(aSlipIData[j].Slipid === aSelectidata[i].Slipid && aSlipIData[j].Prnum === aSelectidata[i].Prnum){
+                                        for(var k = 2 ; k <= 3 ; k++){
+                                            // aRows[rowIndex].getCells()[i].setEnabled(false);
+                                            // debugger;
+                                            var ocell = oTable.getRows()[i].getCells()[k];  //aRows[rowIndex].getCells()[4].setEnabled(false);
+                                            var sAmountValue = ocell.getValue(); 
+                                            if(sAmountValue != 0){
+                                                // console.log(i, j, k);
+                                                // console.log(sAmountValue);
+                                                // aSelectidata = sAmountValue
+                                                if(aSlipIData[j].Amt == 0 ){ ///tax
+                                                    aSlipIData[j].Tax = sAmountValue;
+                                                } else {
+                                                    aSlipIData[j].Amt = sAmountValue;
+                                                }
                                             }
                                         }
                                     }
                                 }
-                            }
-                        };
-                        var oDialog = this.byId("DetailDialog"); //Dialog        
-                        // var oDialog = this.byId("ProductsDialog");      
-                        for(var j = index.length - 1 ; j >= 0 ; j--){
-                            oTable.getRows()[index[j]].getCells()[2].setEnabled(false);
-                            oTable.getRows()[index[j]].getCells()[3].setEnabled(false);
-                        };
-                        oDialog.close();
-                        MessageToast.show("변경 저장");
-                        oTable.clearSelection();
+                            };
+                            // wow head엔 총액이 안들어가!
+                            // for(var l = 0; l < aSlipHData.length; l++){
+                            //     if(aSlipHData[l].slip === aSelecthdata.Slipid){
+                            //         aSelecthdata.Amt = 
+                            //     }
+                            // }
+
+                            var oDialog = this.byId("DetailDialog"); //Dialog        
+                            // var oDialog = this.byId("ProductsDialog");      
+                            for(var j = index.length - 1 ; j >= 0 ; j--){
+                                oTable.getRows()[index[j]].getCells()[2].setEnabled(false);
+                                oTable.getRows()[index[j]].getCells()[3].setEnabled(false);
+                            };
+                            oDialog.close();
+                            MessageToast.show("변경 저장");
+                            oTable.clearSelection();
+                            this.byId("idSlipbeforeTable").unbindRows();
+                            this.byId("idSlipbeforeTable").bindRows("slipBefore>/blist");
+                        }
                     }
                 }.bind(this));
-
-                
             },
             // _popupconfirm : function(sSaveCancel){
             //     new sap.m.Dialog({
@@ -658,12 +692,105 @@ sap.ui.define([
                     // debugger;
                     oEvent.getSource().setValueState('Error');
                     oEvent.getSource().setValueStateText("금액을 맞춰주세요");
-                    // oEvent
                     // this.byId("idTotalAmt").setEnabled(true);
                     // this.byId("idTotalAmt").setValueState('Error');
                     // this.byId("idTotalAmt").setValueStateText("금액을 맞춰주세요");
                     // this.byId("idTotalAmt").setEnabled("false");
                 }
-              }
+            },
+            onPressAcceptBtn : function(){
+                var oTable = this.byId("idSlipbeforeTable");
+                // var aSlipBData = this.oSlipBefore.getData().blist;
+                var aSlipHData = this.oslipH.getData().hlist;
+                var aSlipIData = this.oslipI.getData().ilist;
+                var oSlipCreateHData , oSlipCreateIData;
+                var oSlipReadHData ;
+
+                debugger;
+                let index = oTable.getSelectedIndices(); // [0,4,7]
+                for(var i = 0; i < index.length; i++){
+                    let sPath = oTable.getContextByIndex(index[i]).getPath();
+                    let skey = Number(sPath.substr(7));
+
+                    oSlipCreateHData = aSlipHData[skey];
+                    // oSlipCreateHData.Pdtdate = oSlipCreateHData.Prfdate;
+                    // oSlipCreateHData.Pdtdate = "";
+                    // oSlipCreateHData.Prfdate = "";
+                    debugger;
+
+                    // //디버깅 부분 그냥 다 안되고 있음 - prfdate type문제(문자열일때) + pdtdate type문제(T00타입일떄)
+                    // // ***살ㄹ줘 
+                    // 나머지 create넣고,, 로직상에서 날짜 찾아야하는건 아니지......
+
+                    // var date = new Date(oSlipCreateHData.Prfdate);
+                    // var month = String(date.getMonth() + 1).padStart(2, '0');
+                    // var day = String(date.getDate()).padStart(2, '0');
+                    // var year = String(date.getFullYear());
+                    // var formattedDate = year +'-'+ month +'-'+ day;
+                    // console.log(formattedDate);
+
+                    // oSlipCreateHData.Prfdate = formattedDate;
+
+                    // // oSlipCreateHData.Prfdate = new Date(oSlipCreateHData.Prfdate).toISOString().slice(0, -5);
+                    // oSlipCreateHData.Pdtdate = 
+                    //     oSlipCreateHData.Pdtdate.substr(0, 4) + '-' 
+                    //     + oSlipCreateHData.Pdtdate.substr(4, 2) + '-' 
+                    //     + oSlipCreateHData.Pdtdate.substr(6, 2);
+                    // debugger;
+
+                    // create head
+                    this.oModel.create("/sliphfSet", oSlipCreateHData, {
+                        success: function(oReturn){
+                            sap.m.MessageToast.show("Create Success!!");
+                            oSlipReadHData = oReturn;
+                            debugger;
+                        },
+                        error : function(){
+                            sap.m.MessageToast.show("Error~!");
+                        }
+                    });
+                    debugger;
+
+                    //안해도 될까???????
+                    // var sFullPath = this.oModel.createKey("/sliphfSet",{
+                    //     Slipid : oSlipCreateHData.Docnum
+                    // }); // "/Products(2)" 과 동일함
+
+                    // this.oModel.read(sFullPath,{
+                    //     //filters: [필터모델객체]
+                    //     success: function(oReturn){
+                    //         console.log("READ : ", oReturn);
+                    //         /*oReturn => { ProductNo:1, .....} */
+                    //         oSlipReadHData = oReturn;
+                    //         // this.oMainModel.setProperty("/", oReturn);
+                    //         // this.oMainModel.setData(oReturn);
+                    //         // debugger;
+                    //     }.bind(this)
+                    // });
+                    
+                    for(var j = 0; i < aSlipIData.length; i++){
+                        if(oSlipCreateHData.Slipid === aSlipIData[j].Slipid){
+                            oSlipCreateIData = aSlipIData[j];
+                            // oSlipCreateIData.Slipid = oSlipReadHData.Slipid;
+                            // debugger;
+
+                            // create item하면 될듯..?
+                            // let index = this.oTable.getSelectedIndex();  //2
+                            // let sPath = this.oTable.getContextByIndex(index).getPath(); //'/Products(13)'
+                            // // let oMainModel = this.oMainModel;
+                            // // this.oTable
+
+                        }
+                    }
+                }
+                
+                
+                // oTable.getSelectedKey
+                // oTable.getSelectedIndices; -> filter걸때마다 바뀜~
+
+                // var oSelectData = oTable.getRowBindingContext().getObject();
+                // var aSlipHData = this.oslipH.getData().hlist;
+                // var aSlipIData = this.oslipI.getData().ilist;
+            }
         });
     });

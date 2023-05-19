@@ -100,6 +100,9 @@
                             </fb:FilterBar>
 						</layout:VerticalLayout>
 					</layout:HorizontalLayout>
+					<!-- <layout:HorizontalLayout allowWrapping="true">
+						<Button text="aa" class="sapUiMediumMarginEnd"></Button>
+					</layout:HorizontalLayout> -->
 				</f:DynamicPageHeader>
 			</f:header>
 			<f:content>
@@ -179,7 +182,7 @@
 					rows="{slipBefore>/blist}"
                     rowActionCount="1"
 					selectionMode="MultiToggle"
-					visibleRowCount="10" visibleRowCountMode="Auto"
+					visibleRowCountMode="Auto"
 					paste="onPaste"
 					ariaLabelledBy="title">
 					<t:extension>
@@ -245,16 +248,16 @@
 			</f:content>
 			<!-- DynamicPage Footer toggle footer클릭시-->
 			<f:footer>
-					<OverflowToolbar height="4rem">
+					<Toolbar height="4rem">
 						<!-- <Button icon="sap-icon://message-popup"
 						        text="{messagesLength}"
 						        type="Emphasized"
 						        press="onMessageButtonPress"
 						        visible="{= !!$messagesLength}}"/> -->
 						<ToolbarSpacer/>
-						<Button type="Accept" text="Accept"/>
-						<Button type="Reject" text="Reject"/>
-					</OverflowToolbar>
+						<Button type="Accept" text="Accept" press="onPressAcceptBtn"/>
+						<!-- <Button type="Reject" text="Reject"/> -->
+					</Toolbar>
 				</f:footer>
 			<!-- <f:footer> 
 				<OverflowToolbar>

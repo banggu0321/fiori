@@ -30,6 +30,7 @@ sap.ui.define([
             },
             onCreate: function(){
                 let oData = this.oMainModel.getData();
+                debugger;
                 
                 oData.Productno = Number(oData.Productno);
                 
