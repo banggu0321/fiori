@@ -1,12 +1,13 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/Filter",
-    "sap/ui/model/json/JSONModel"
+    "sap/ui/model/json/JSONModel",
+    'sap/m/MessageToast'
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, Filter, JSONModel) {
+    function (Controller, Filter, JSONModel, MessageToast) {
         "use strict";
 
         return Controller.extend("ER.zferslip.controller.Main", {
@@ -77,7 +78,7 @@ sap.ui.define([
                 
                 this._defaultSet();
                 this.todaydate = this.getToday();
-                // this._createSlip();
+            
 
                 // let oo = this.getOwnerComponent().getModel().getObject("/employeeSet");
                 // console.log(oo);
@@ -334,28 +335,6 @@ sap.ui.define([
             
                 return year + month + day;
             },
-            // _createSlip : function(){
-            //     var sliphdatas = [];
-            //     var slipidatas = [];
-
-            //     debugger;
-            //     var aSlipBeforeData = this.oSlipBefore.getData("list");
-            //     for(var i = 0; i < aSlipBeforeData.length; i++){
-            //         sliphdatas.push({
-            //             slipid : i,
-            //             docnum : aSlipBeforeData[i].docnum,
-            //             sliptype : aSlipBeforeData[i].sliptype,
-            //             prfdate : aSlipBeforeData[i].prfdate,
-            //             pdtdate : "오늘날짜",
-            //             managerid : this.sempi,
-            //             partid : aSlipBeforeData[i].partid
-            //         });
-                    
-            //         this.oslipH.setProperty("/",sliphdatas);
-            //         this.oslipi.setProperty("/",slipidatas);
-
-            //     }
-            // },
             onSearch: function(){
                 var oComboBox = this.byId("idComboBox1");
                 // var sDateRange1 = this.byId("idDateRangeSelection").getFrom();
@@ -420,16 +399,21 @@ sap.ui.define([
                 var aSlipidatas = [];
                 for(var i = 0; i < aSlipHData.length; i++){
                     if(aSlipHData[i].Docnum == oSelectData.Docnum){
+                        // debugger;
                         this.oslipH.setProperty("/select",aSlipHData[i]);
                         this.oslipH.setProperty("/selectBefore",aSlipBeforeData[i]);
 
                         for(var j = 0; j < aSlipIData.length ; j++){
                             if(aSlipIData[j].Slipid == aSlipHData[i].Slipid){
                                 aSlipidatas.push(aSlipIData[j]);
+                                // debugger;
                             }
                         }
                         this.oslipI.setProperty("/select",aSlipidatas);
                         break;
+                        // this.byId("idSlipDetailTable").setModel(this.oslipI, "slipI");
+                        // debugger
+                        // this.byId("idSlipDetailTable").bindRows("slipI>/select");
                     };
                     // console.log(i);
                 }
@@ -439,6 +423,24 @@ sap.ui.define([
 
                 if (oDialog){
                     oDialog.open();
+                    this.byId("idSlipDetailTable").unbindRows();
+                    this.byId("idSlipDetailTable").bindRows("slipI>/select");
+                    // this.byId("idSlipDetailTable").updateRows();
+                    // this.byId("idSlipDetailTable").refreshRows();
+                    // var aRows = this.byId("idSlipDetailTable").getRows();
+
+                    // // 각 행의 input 값을 초기화
+                    // this.byId("idSlipDetailTable").getRows().forEach(function(oRow) {
+                    //     // var oInput1 = oRow.getCells()[2]; // 적절한 경로로 input 컨트롤에 접근해야 합니다.
+                    //     // oInput1.setValue(""); // 입력값 초기화
+                    //     oRow.getCells()[2].setValue("");
+                    //     oRow.getCells()[3].setValue("");
+                    // });
+                    // this.byId("idSlipDetailTable").bindRows("slipI>/select");
+                    // this.byId("idSlipDetailTable").refreshRows();
+                    // setModel(this.oslipI, "/select");
+                    // this.byId("idSlipDetailTable").getBinding("rows")
+                    // debugger;
                     return;                    
                 }
                 
@@ -450,18 +452,36 @@ sap.ui.define([
                 },this);
             },
             onClose: function(oEvent){
-                var oDialog = oEvent.getSource().getParent(); //Dialog    
-                var oTable = this.byId("idSlipDetailTable");
-                let index = oTable.getSelectedIndices();
-
-                for(var j = index.length - 1 ; j >= 0 ; j--){
-                    oTable.getRows()[index[j]].getCells()[2].setEnabled(false);
-                    oTable.getRows()[index[j]].getCells()[3].setEnabled(false);
-                };
-                
-                oDialog.close();
-                oTable.clearSelection();
-                
+                this._popupconfirm("취소", function (bConfirm) {
+                    if (bConfirm) {
+                      var oDialog = this.byId("DetailDialog"); //Dialog 
+                      var oTable = this.byId("idSlipDetailTable");
+                      var index = oTable.getSelectedIndices();
+                  
+                      for (var j = index.length - 1; j >= 0; j--) {
+                        oTable.getRows()[index[j]].getCells()[2].setEnabled(false);
+                        oTable.getRows()[index[j]].getCells()[3].setEnabled(false);
+                      }
+                    //   debugger;
+                      oDialog.close();
+                      MessageToast.show("변경 취소");
+                      oTable.clearSelection();
+                    }
+                }.bind(this));
+                // var bConfirm = this._popupconfirm("취소");
+                // if(bConfirm){
+                //     var oDialog = oEvent.getSource().getParent(); //Dialog    
+                //     var oTable = this.byId("idSlipDetailTable");
+                //     let index = oTable.getSelectedIndices();
+    
+                //     for(var j = index.length - 1 ; j >= 0 ; j--){
+                //         oTable.getRows()[index[j]].getCells()[2].setEnabled(false);
+                //         oTable.getRows()[index[j]].getCells()[3].setEnabled(false);
+                //     };
+                //     MessageToast.show("변경 취소");
+                //     oDialog.close();
+                //     oTable.clearSelection();
+                // }
                 // debugger;
             },
             onSelectionChange :function(oEvent){
@@ -483,52 +503,167 @@ sap.ui.define([
 
                 // 만약 Check를 풀었을 때, Table 선택된 Indices 에 포함되어 있지 않으면 풀었다는 거니까 enabled = false 설정
                 var rowIndex = oEvent.getParameters().rowIndex;
-                if (aSelectedIndices.indexOf(rowIndex) < 0) {
-                    for(var i = 2 ; i <= 3 ; i++){
-                        aRows[rowIndex].getCells()[i].setEnabled(false);
-                        // var ocell = this.oTable.getRows()[rowIndex].getCells()[i];  //aRows[rowIndex].getCells()[4].setEnabled(false);
-                        // var sAmountValue = ocell.getValue(); 
-                        //  = sAmountValue
-                    }
-                };
+                if(aRows[rowIndex] != undefined){
+                    if (aSelectedIndices.indexOf(rowIndex) < 0) {
+                    
+                        aRows[rowIndex].getCells()[2].setEnabled(false);
+                        aRows[rowIndex].getCells()[3].setEnabled(false);
+    
+                        // for(var i = 2 ; i <= 3 ; i++){
+                        //     aRows[rowIndex].getCells()[i].setEnabled(false);
+                        //     // var ocell = this.oTable.getRows()[rowIndex].getCells()[i];  //aRows[rowIndex].getCells()[4].setEnabled(false);
+                        //     // var sAmountValue = ocell.getValue(); 
+                        //     //  = sAmountValue
+                        // }
+                    };
+                }
+                
             },
             onSave : function(oEvent){
-                var oTable = this.byId("idSlipDetailTable");
-                var aSelectidata = this.oslipI.getData().select;
-                var aSlipIData = this.oslipI.getData().ilist;
-                let index = oTable.getSelectedIndices();
-
-                for(var i = 0; i < aSelectidata.length; i++){
-                    for(var j = 0 ; j < aSlipIData.length ; j++){
-                        if(aSlipIData[j].Slipid === aSelectidata[i].Slipid && aSlipIData[j].Prnum === aSelectidata[i].Prnum){
-                            for(var k = 2 ; k <= 3 ; k++){
-                                // aRows[rowIndex].getCells()[i].setEnabled(false);
-                                // debugger;
-                                var ocell = oTable.getRows()[i].getCells()[k];  //aRows[rowIndex].getCells()[4].setEnabled(false);
-                                var sAmountValue = ocell.getValue(); 
-                                if(sAmountValue != 0){
-                                    // console.log(i, j, k);
-                                    // console.log(sAmountValue);
-                                    // aSelectidata = sAmountValue
-                                    if(aSlipIData[j].Amt == 0 ){ ///tax
-                                        aSlipIData[j].Tax = sAmountValue;
-                                    } else {
-                                        aSlipIData[j].Amt = sAmountValue;
+                this._popupconfirm("저장", function (bConfirm) {
+                    if (bConfirm) {
+                        var oTable = this.byId("idSlipDetailTable");
+                        var aSelectidata = this.oslipI.getData().select;
+                        var aSlipIData = this.oslipI.getData().ilist;
+                        let index = oTable.getSelectedIndices();
+        
+                        for(var i = 0; i < aSelectidata.length; i++){
+                            for(var j = 0 ; j < aSlipIData.length ; j++){
+                                if(aSlipIData[j].Slipid === aSelectidata[i].Slipid && aSlipIData[j].Prnum === aSelectidata[i].Prnum){
+                                    for(var k = 2 ; k <= 3 ; k++){
+                                        // aRows[rowIndex].getCells()[i].setEnabled(false);
+                                        // debugger;
+                                        var ocell = oTable.getRows()[i].getCells()[k];  //aRows[rowIndex].getCells()[4].setEnabled(false);
+                                        var sAmountValue = ocell.getValue(); 
+                                        if(sAmountValue != 0){
+                                            // console.log(i, j, k);
+                                            // console.log(sAmountValue);
+                                            // aSelectidata = sAmountValue
+                                            if(aSlipIData[j].Amt == 0 ){ ///tax
+                                                aSlipIData[j].Tax = sAmountValue;
+                                            } else {
+                                                aSlipIData[j].Amt = sAmountValue;
+                                            }
+                                        }
                                     }
                                 }
                             }
-                        }
+                        };
+                        var oDialog = this.byId("DetailDialog"); //Dialog        
+                        // var oDialog = this.byId("ProductsDialog");      
+                        for(var j = index.length - 1 ; j >= 0 ; j--){
+                            oTable.getRows()[index[j]].getCells()[2].setEnabled(false);
+                            oTable.getRows()[index[j]].getCells()[3].setEnabled(false);
+                        };
+                        oDialog.close();
+                        MessageToast.show("변경 저장");
+                        oTable.clearSelection();
                     }
-                };
-                var oDialog = oEvent.getSource().getParent(); //Dialog        
-                // var oDialog = this.byId("ProductsDialog");      
-                for(var j = index.length - 1 ; j >= 0 ; j--){
-                    oTable.getRows()[index[j]].getCells()[2].setEnabled(false);
-                    oTable.getRows()[index[j]].getCells()[3].setEnabled(false);
-                };
-                oDialog.close();
-                oTable.clearSelection();
+                }.bind(this));
+
                 
-            }
+            },
+            // _popupconfirm : function(sSaveCancel){
+            //     new sap.m.Dialog({
+            //         title: "확인",
+            //         type: sap.m.DialogType.Message,
+            //         content: new sap.m.Text({
+            //           text: "변경 사항을 " + sSaveCancel + "하시겠습니까?"
+            //         }),
+            //         beginButton: new sap.m.Button({
+            //           text: "예",
+            //           press: function () {
+            //             // 저장 버튼을 눌렀을 때의 동작 처리
+            //             this.getParent().close();
+            //             setTimeout(function () {
+            //                 return true;
+            //             }, 0);
+            //           }
+            //         }),
+            //         endButton: new sap.m.Button({
+            //           text: "아니오",
+            //           press: function () {
+            //             // 취소 버튼을 눌렀을 때의 동작 처리
+            //             this.getParent().close();
+            //           }
+            //         }),
+            //         afterClose: function () {
+            //           this.destroy();
+            //         }
+            //     }).open();
+            // },
+            _popupconfirm: function (sSaveCancel, callback) {
+                var dialog = new sap.m.Dialog({
+                  title: "확인",
+                  type: sap.m.DialogType.Message,
+                  content: new sap.m.Text({
+                    text: "변경 사항을 " + sSaveCancel + "하시겠습니까?"
+                  }),
+                  beginButton: new sap.m.Button({
+                    text: "예",
+                    press: function () {
+                      // 저장 버튼을 눌렀을 때의 동작 처리
+                      dialog.close();
+                      callback(true);
+                    }
+                  }),
+                  endButton: new sap.m.Button({
+                    text: "아니오",
+                    press: function () {
+                      // 취소 버튼을 눌렀을 때의 동작 처리
+                      dialog.close();
+                      callback(false);
+                    }
+                  }),
+                  afterClose: function () {
+                    dialog.destroy();
+                  }
+                });
+              
+                dialog.open();
+              },
+              onChange : function(oEvent){
+                var sAmount3 = 0;
+                var sAmount4 = 0;
+                var oTable = this.byId("idSlipDetailTable");
+
+                for(var i = 0; i < oTable.getRows().length; i++){
+                    sAmount3 += Number(oTable.getRows()[i].getCells()[2].getValue());
+                    sAmount4 += Number(oTable.getRows()[i].getCells()[3].getValue());
+                }
+            
+                // aSelectidata.forEach(function(e){
+                //     if(e.Dcindicator === '3'){
+                //         sAmount3 += Number(e.Amt) + Number(e.Tax);
+                //         // debugger;
+                //     }else{
+                //         sAmount4 += Number(e.Amt) + Number(e.Tax);
+                //         // debugger;
+                //     }
+                // });
+                // debugger;
+
+                if(sAmount3 === sAmount4){
+                    this.byId("idTotalAmt").setValue(sAmount3);
+                    for(var i = 0; i < oTable.getRows().length; i++){
+                        oTable.getRows()[i].getCells()[2].setValueState('None');
+                        oTable.getRows()[i].getCells()[3].setValueState('None');
+                    }
+                    MessageToast.show("총액이 변경되었습니다.");
+                    // oEvent.getSource().setValueState('None');
+                    
+                    // this.byId("idTotalAmt").setValueState('None');
+                    // debugger;
+                }else{
+                    // debugger;
+                    oEvent.getSource().setValueState('Error');
+                    oEvent.getSource().setValueStateText("금액을 맞춰주세요");
+                    // oEvent
+                    // this.byId("idTotalAmt").setEnabled(true);
+                    // this.byId("idTotalAmt").setValueState('Error');
+                    // this.byId("idTotalAmt").setValueStateText("금액을 맞춰주세요");
+                    // this.byId("idTotalAmt").setEnabled("false");
+                }
+              }
         });
     });

@@ -6,7 +6,8 @@
 	xmlns:t="sap.ui.table" xmlns:u="sap.ui.unified"
     xmlns="sap.m">
     <!-- <Page id="page" title="{i18n>title}"> -->
-    <f:DynamicPage id="idDynamicPage" headerExpanded="{/headerExpanded}" toggleHeaderOnTitleClick="{/titleClickable}">
+    <!-- <f:DynamicPage id="idDynamicPage" headerExpanded="{/headerExpanded}" toggleHeaderOnTitleClick="{/titleClickable}" showFooter="true"> -->
+    <f:DynamicPage id="idDynamicPage" showFooter="true">
 			<!-- DynamicPage Title -->
 			<f:title>
 				<f:DynamicPageTitle >
@@ -178,7 +179,7 @@
 					rows="{slipBefore>/blist}"
                     rowActionCount="1"
 					selectionMode="MultiToggle"
-					visibleRowCount="7"
+					visibleRowCount="10" visibleRowCountMode="Auto"
 					paste="onPaste"
 					ariaLabelledBy="title">
 					<t:extension>
@@ -187,7 +188,7 @@
 						</OverflowToolbar>
 					</t:extension>
 					<t:columns>
-						<t:Column width="11rem">
+						<t:Column width="8rem">
 							<Label text="상태" />
 							<t:template>
 								<Text text="{slipBefore>Status}" wrapping="false" />
@@ -199,7 +200,7 @@
 								<Text text="{slipBefore>Docnum}" wrapping="false" />
 							</t:template>
 						</t:Column>
-						<t:Column width="9rem">
+						<t:Column width="11rem">
 							<Label text="전표상세" />
 							<t:template>
 								<Button text="Show Details" press="onDetailBtn"/>
@@ -243,17 +244,29 @@
 				</t:Table>           
 			</f:content>
 			<!-- DynamicPage Footer toggle footer클릭시-->
-			<f:footer> 
+			<f:footer>
+					<OverflowToolbar height="4rem">
+						<!-- <Button icon="sap-icon://message-popup"
+						        text="{messagesLength}"
+						        type="Emphasized"
+						        press="onMessageButtonPress"
+						        visible="{= !!$messagesLength}}"/> -->
+						<ToolbarSpacer/>
+						<Button type="Accept" text="Accept"/>
+						<Button type="Reject" text="Reject"/>
+					</OverflowToolbar>
+				</f:footer>
+			<!-- <f:footer> 
 				<OverflowToolbar>
 					<Button icon="sap-icon://message-popup"
 							text="{/messagesLength}"
 							type="Emphasized"
 							press="onMessageButtonPress"
-							visible="{= !!${/messagesLength}}"/>
+							visible="true"/>
 					<ToolbarSpacer/>
 					<Button type="Accept" text="Accept"/>
 					<Button type="Reject" text="Reject"/>
 				</OverflowToolbar>
-			</f:footer>
+			</f:footer> -->
 		</f:DynamicPage>
 </mvc:View>

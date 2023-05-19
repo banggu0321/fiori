@@ -5,7 +5,7 @@
 	xmlns:f="sap.ui.layout.form"
 	xmlns:l="sap.ui.layout"
     xmlns="sap.m">
-    <Dialog id="DetailDialog" draggable="true" resizable="true" title="전표상세보기">
+    <Dialog id="DetailDialog" contentWidth="44rem" draggable="true" resizable="true" title="전표상세보기">
         <content>
             <VBox>
                 <f:SimpleForm id="SimpleFormChange354"
@@ -54,7 +54,7 @@
                                     </HBox>
                                     <HBox >
                                         <Label text="총금액" />
-                                        <Input value="{slipH>/selectBefore/Amount}" enabled="false"/>
+                                        <Input id="idTotalAmt" value="{slipH>/selectBefore/Amount}" enabled="false"/>
                                     </HBox>
                                 <!-- </VBox> -->
                                 <!-- <VBox>
@@ -82,16 +82,16 @@
 					id="idSlipDetailTable"
 					rows="{slipI>/select}"
 					selectionMode="MultiToggle"
-					visibleRowCount="7"
+					visibleRowCount="5"
 					paste="onPaste"
                     selectionBehavior="RowOnly"
 					ariaLabelledBy="title"
                     rowSelectionChange="onSelectionChange">
-					<t:extension>
+					<!-- <t:extension>
 						<OverflowToolbar style="Clear">
-							<Title id="deailtitle" text="Products" level="H2"/>
+							<Title id="deailtitle" text="전표상세" level="H2"/>
 						</OverflowToolbar>
-					</t:extension>
+					</t:extension> -->
 					<t:columns>
 						<t:Column width="11rem" visible="false"> 
 							<Label text="slipid" />
@@ -99,16 +99,16 @@
 								<Text text="{slipI>slipid}" wrapping="false" />
 							</t:template>
 						</t:Column>
-						<t:Column width="11rem">
+						<t:Column width="5rem">
 							<Label text="순번" />
 							<t:template>
 								<Text text="{slipI>Prnum}" wrapping="false" />
 							</t:template>
 						</t:Column>
-						<t:Column width="9rem">
+						<t:Column width="11rem">
 							<Label text="계정코드" />
 							<t:template>
-								<Text text="{slipI>Accocode}" wrapping="false" />
+								<Text text="{slipI>Accocode}({slipI>Acconm})" wrapping="false" />
 							</t:template>
 						</t:Column>
 						<!-- <t:Column width="9rem">
@@ -117,7 +117,7 @@
 								<Text text="{slipI>dcindicator}" wrapping="false" />
 							</t:template>
 						</t:Column> -->
-						<t:Column width="11rem">
+						<t:Column width="9rem">
 							<Label text="차변" />
 							<t:template>
 								<Input id="idDetailTableInput1" 
@@ -129,7 +129,8 @@
 											],
 											formatter: '.formatter.dcindicator3Text'
 											}" 
-										enabled="false" />
+										enabled="false" 
+										change="onChange"/>
 								<!-- <Text text="{
 									parts: [
 										{ path: 'slipI>Dcindicator' },
@@ -140,7 +141,7 @@
 									}" wrapping="false" /> -->
 							</t:template>
 						</t:Column>
-						<t:Column width="11rem">
+						<t:Column width="9rem">
 							<Label text="대변" />
 							<t:template>
 								<Input id="idDetailTableInput2" 
@@ -152,7 +153,8 @@
 											],
 											formatter: '.formatter.dcindicator4Text'
 											}" 
-										enabled="false" />
+										enabled="false"
+										change="onChange" />
 								<!-- <Text text="{
 									parts: [
 										{ path: 'slipI>Dcindicator' },
@@ -163,7 +165,7 @@
 									}" wrapping="false" /> -->
 							</t:template>
 						</t:Column>
-						<t:Column width="11rem">
+						<t:Column width="9rem">
 							<Label text="통화" />
 							<t:template>
 								<Text text="{slipI>Curkey}" wrapping="false" />
