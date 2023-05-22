@@ -28,7 +28,7 @@ sap.ui.define([
                     // oDateTimeInstance = sap.ui.core.format.DateFormat.getDateTimeInstance({
                     //     pattern : 'yyyy-MM-dd'
                     // });
-                    return sDate.slice(0,4) + '-' + sDate.slice(4, 6) + '-' + sDate.slice(6,8);;
+                    return sDate.slice(0,4) + '-' + sDate.slice(4, 6) + '-' + sDate.slice(6,8);
                 },
                 dcindicator3Text : function(sDcIndicator, sAmtValue, sTaxValue) {
                     if (sDcIndicator === '3' && sAmtValue === 0) {
@@ -96,6 +96,7 @@ sap.ui.define([
             _defaultSet : function(){
                 // odata model 변수 세팅
                 this.oModel = this.getOwnerComponent().getModel(); //oData
+                this.oModel.setUseBatch(false);
                 //json model 변수 세팅
                 this.oSlipBefore = this.getView().getModel("slipBefore"); //main
                 //json model 변수 세팅
@@ -106,6 +107,10 @@ sap.ui.define([
                 this.oTable = this.byId("idSlipbeforeTable");
             },
             _getdata : function(){
+                this.oSlipBefore
+                this.oslipH
+                this.oslipI
+
                 var tabledatas = [];
                 var sliphdatas = [];
                 var slipidatas = [];
@@ -135,7 +140,7 @@ sap.ui.define([
                                 Sliptype : oReturn.results[i].Sliptype,
                                 Sliptypedesc : oReturn.results[i].Sliptypedesc,
                                 Prfdate : oReturn.results[i].Indate,
-                                Pdtdate : this.todaydate,
+                                Pstdate : this.todaydate,
                                 Managerid : this.empid,
                                 Partid : oReturn.results[i].Partnerid,
                                 Partname : oReturn.results[i].Partname
@@ -147,7 +152,7 @@ sap.ui.define([
                                 Docnum : oReturn.results[i].Batterysoid,
                                 Prnum : '01',
                                 Accocode : '101',
-                                Acconm : 'aa',
+                                Acconm : '현금',
                                 Dcindicator : '3',
                                 Amt : Number(oReturn.results[i].Amt),
                                 Tax : 0,
@@ -158,7 +163,7 @@ sap.ui.define([
                                 Docnum : oReturn.results[i].Batterysoid,
                                 Prnum : '02',
                                 Accocode : '401',
-                                Acconm : 'aa',
+                                Acconm : '상품매출',
                                 Dcindicator : '4',
                                 Amt : Number(oReturn.results[i].Amt) * 0.9,
                                 Tax : 0,
@@ -168,8 +173,8 @@ sap.ui.define([
                                 Slipid : 'BON'+i,
                                 Docnum : oReturn.results[i].Batterysoid,
                                 Prnum : '03',
-                                Accocode : '225',
-                                Acconm : 'aa',
+                                Accocode : '255',
+                                Acconm : '부가세예수금',
                                 Dcindicator : '4',
                                 Amt : 0,
                                 Tax : Number(oReturn.results[i].Amt) * 0.1,
@@ -211,7 +216,7 @@ sap.ui.define([
                                 Sliptype : oReturn.results[i].Sliptype,
                                 Sliptypedesc : oReturn.results[i].Sliptypedesc,
                                 Prfdate : oReturn.results[i].Fdate,
-                                Pdtdate : this.todaydate,
+                                Pstdate : this.todaydate,
                                 Managerid : this.empid,
                                 Partid : oReturn.results[i].Partnerid,
                                 Partname : oReturn.results[i].Partname
@@ -223,7 +228,7 @@ sap.ui.define([
                                 Docnum : oReturn.results[i].Rentalid,
                                 Prnum : '01',
                                 Accocode : '102',
-                                Acconm : 'aa',
+                                Acconm : '당좌예금',
                                 Dcindicator : '3',
                                 Amt : Number(oReturn.results[i].Retfee) + Number(oReturn.results[i].Drivfee),
                                 Tax : 0,
@@ -234,7 +239,7 @@ sap.ui.define([
                                 Docnum : oReturn.results[i].Rentalid,
                                 Prnum : '02',
                                 Accocode : '830',
-                                Acconm : 'aa',
+                                Acconm : '소모품비',
                                 Dcindicator : '4',
                                 Amt : ( Number(oReturn.results[i].Retfee) + Number(oReturn.results[i].Drivfee) ) * 0.9,
                                 Tax : 0,
@@ -245,7 +250,7 @@ sap.ui.define([
                                 Docnum : oReturn.results[i].Rentalid,
                                 Prnum : '03',
                                 Accocode : '135',
-                                Acconm : 'aa',
+                                Acconm : '부가세대급금',
                                 Dcindicator : '4',
                                 Amt : 0,
                                 Tax : ( Number(oReturn.results[i].Retfee) + Number(oReturn.results[i].Drivfee) ) * 0.1,
@@ -287,7 +292,7 @@ sap.ui.define([
                                 Sliptype : oReturn.results[i].Sliptype,
                                 Sliptypedesc : oReturn.results[i].Sliptypedesc,
                                 Prfdate : oReturn.results[i].Autodat,
-                                Pdtdate : this.todaydate,
+                                Pstdate : this.todaydate,
                                 Managerid : this.empid,
                                 Partid : oReturn.results[i].Partid,
                                 Partname : oReturn.results[i].Partname
@@ -299,7 +304,7 @@ sap.ui.define([
                                 Docnum : oReturn.results[i].Autonum,
                                 Prnum : '01',
                                 Accocode : '102',
-                                Acconm : 'aa',
+                                Acconm : '당좌예금',
                                 Dcindicator : '4',
                                 Amt : Number(oReturn.results[i].Amount),
                                 Tax : 0,
@@ -310,7 +315,7 @@ sap.ui.define([
                                 Docnum : oReturn.results[i].Autonum,
                                 Prnum : '02',
                                 Accocode : '830',
-                                Acconm : 'aa',
+                                Acconm : '소모품비',
                                 Dcindicator : '3',
                                 Amt : Number(oReturn.results[i].Amount) * 0.9,
                                 Tax : 0,
@@ -321,7 +326,7 @@ sap.ui.define([
                                 Docnum : oReturn.results[i].Autonum,
                                 Prnum : '03',
                                 Accocode : '135',
-                                Acconm : 'aa',
+                                Acconm : '부가세대급금',
                                 Dcindicator : '3',
                                 Amt : 0,
                                 Tax : Number(oReturn.results[i].Amount) * 0.1,
@@ -411,6 +416,7 @@ sap.ui.define([
                         // debugger;
                         this.oslipH.setProperty("/select",aSlipHData[i]);
                         this.oslipH.setProperty("/selectBefore",aSlipBeforeData[i]);
+                        this.sRollbackAmt = aSlipBeforeData[i].Amount;
 
                         for(var j = 0; j < aSlipIData.length ; j++){
                             if(aSlipIData[j].Slipid == aSlipHData[i].Slipid){
@@ -426,7 +432,7 @@ sap.ui.define([
                     };
                     // console.log(i);
                 }
-                // debugger;
+                debugger;
 
                 var oDialog = this.byId("DetailDialog"); //DialogID
 
@@ -472,6 +478,7 @@ sap.ui.define([
                         oTable.getRows()[index[j]].getCells()[3].setEnabled(false);
                       }
                     //   debugger;
+                      this.byId("idTotalAmt").setValue(this.sRollbackAmt);
                       oDialog.close();
                       MessageToast.show("변경 취소");
                       oTable.clearSelection();
@@ -655,8 +662,8 @@ sap.ui.define([
                 });
               
                 dialog.open();
-              },
-              onChange : function(oEvent){
+            },
+            onChange : function(oEvent){
                 var sAmount3 = 0;
                 var sAmount4 = 0;
                 var oTable = this.byId("idSlipDetailTable");
@@ -665,18 +672,8 @@ sap.ui.define([
                     sAmount3 += Number(oTable.getRows()[i].getCells()[2].getValue());
                     sAmount4 += Number(oTable.getRows()[i].getCells()[3].getValue());
                 }
-            
-                // aSelectidata.forEach(function(e){
-                //     if(e.Dcindicator === '3'){
-                //         sAmount3 += Number(e.Amt) + Number(e.Tax);
-                //         // debugger;
-                //     }else{
-                //         sAmount4 += Number(e.Amt) + Number(e.Tax);
-                //         // debugger;
-                //     }
-                // });
-                // debugger;
 
+                // debugger;
                 if(sAmount3 === sAmount4){
                     this.byId("idTotalAmt").setValue(sAmount3);
                     for(var i = 0; i < oTable.getRows().length; i++){
@@ -684,18 +681,9 @@ sap.ui.define([
                         oTable.getRows()[i].getCells()[3].setValueState('None');
                     }
                     MessageToast.show("총액이 변경되었습니다.");
-                    // oEvent.getSource().setValueState('None');
-                    
-                    // this.byId("idTotalAmt").setValueState('None');
-                    // debugger;
                 }else{
-                    // debugger;
                     oEvent.getSource().setValueState('Error');
                     oEvent.getSource().setValueStateText("금액을 맞춰주세요");
-                    // this.byId("idTotalAmt").setEnabled(true);
-                    // this.byId("idTotalAmt").setValueState('Error');
-                    // this.byId("idTotalAmt").setValueStateText("금액을 맞춰주세요");
-                    // this.byId("idTotalAmt").setEnabled("false");
                 }
             },
             onPressAcceptBtn : function(){
@@ -705,51 +693,127 @@ sap.ui.define([
                 var aSlipIData = this.oslipI.getData().ilist;
                 var oSlipCreateHData , oSlipCreateIData;
                 var oSlipReadHData ;
+                var sError = 0;
+                var promises = [];
 
-                debugger;
+                // debugger;
                 let index = oTable.getSelectedIndices(); // [0,4,7]
+
+                if (index.length === 0) {
+                    MessageToast.show("행을 선택해주세요!");
+                    return;
+                }
+
                 for(var i = 0; i < index.length; i++){
                     let sPath = oTable.getContextByIndex(index[i]).getPath();
                     let skey = Number(sPath.substr(7));
 
                     oSlipCreateHData = aSlipHData[skey];
-                    // oSlipCreateHData.Pdtdate = oSlipCreateHData.Prfdate;
-                    // oSlipCreateHData.Pdtdate = "";
-                    // oSlipCreateHData.Prfdate = "";
-                    debugger;
+                    // oSlipCreateHData.Pstdate = "2021-12-31T00:00:00";
+                    // oSlipCreateHData.Pstdate = "";
+                    // oSlipCreateHData.Prfdate = "2021-12-31T00:00:00";
+                    // debugger;
 
-                    // //디버깅 부분 그냥 다 안되고 있음 - prfdate type문제(문자열일때) + pdtdate type문제(T00타입일떄)
+                    // //디버깅 부분 그냥 다 안되고 있음 - prfdate type문제(문자열일때) + Pstdate type문제(T00타입일떄)
                     // // ***살ㄹ줘 
                     // 나머지 create넣고,, 로직상에서 날짜 찾아야하는건 아니지......
 
-                    // var date = new Date(oSlipCreateHData.Prfdate);
+                    oSlipCreateHData.Prfdate = new Date(oSlipCreateHData.Prfdate);
+                    oSlipCreateHData.Pstdate = new Date();
                     // var month = String(date.getMonth() + 1).padStart(2, '0');
                     // var day = String(date.getDate()).padStart(2, '0');
                     // var year = String(date.getFullYear());
-                    // var formattedDate = year +'-'+ month +'-'+ day;
+                    // oSlipCreateHData.Prfdate = year +'-'+ month +'-'+ day+"T00:00:00";
                     // console.log(formattedDate);
 
                     // oSlipCreateHData.Prfdate = formattedDate;
 
                     // // oSlipCreateHData.Prfdate = new Date(oSlipCreateHData.Prfdate).toISOString().slice(0, -5);
-                    // oSlipCreateHData.Pdtdate = 
-                    //     oSlipCreateHData.Pdtdate.substr(0, 4) + '-' 
-                    //     + oSlipCreateHData.Pdtdate.substr(4, 2) + '-' 
-                    //     + oSlipCreateHData.Pdtdate.substr(6, 2);
+                    // oSlipCreateHData.Pstdate = 
+                    //     oSlipCreateHData.Pstdate.substr(0, 4) + '-' 
+                    //     + oSlipCreateHData.Pstdate.substr(4, 2) + '-' 
+                    //     + oSlipCreateHData.Pstdate.substr(6, 2) + "T00:00:00";
                     // debugger;
 
                     // create head
-                    this.oModel.create("/sliphfSet", oSlipCreateHData, {
-                        success: function(oReturn){
-                            sap.m.MessageToast.show("Create Success!!");
-                            oSlipReadHData = oReturn;
-                            debugger;
-                        },
-                        error : function(){
-                            sap.m.MessageToast.show("Error~!");
-                        }
-                    });
-                    debugger;
+                    var promise = new Promise(function(resolve, reject) {
+                        this.oModel.create("/sliphfSet", oSlipCreateHData, {
+                            success: function(oReturn){
+
+                                console.log("create head");
+                                oSlipReadHData = oReturn;
+                                // debugger;   
+                                // debugger;
+                                for(var j = 0; j < aSlipIData.length; j++){
+                                    if(aSlipIData[j].Docnum === oSlipReadHData.Docnum){
+                                        // debugger;
+                                        oSlipCreateIData = aSlipIData[j];
+                                        oSlipCreateIData.Slipid = oSlipReadHData.Slipid;
+                                        oSlipCreateIData.Amt = String(oSlipCreateIData.Amt);
+                                        oSlipCreateIData.Tax = String(oSlipCreateIData.Tax);
+                                        // debugger;   
+
+                                        this.oModel.create("/slipifSet", oSlipCreateIData, {
+                                            success: function(){
+                                                // console.log("Create item uccess!!");
+                                            },
+                                            error: function(){
+                                                // console.log("Item Error~!");
+                                                sError += 1;
+                                            }
+                                        });
+                                    }
+                                };
+                                resolve();
+                            }.bind(this),
+                            error : function(){
+                                sError += 1;
+                                reject(); 
+                                // sap.m.MessageToast.show("Head Error~!");
+                                // debugger;
+                            }
+                        });
+                    }.bind(this));
+
+                    promises.push(promise);
+
+                    // this.oModel.create("/sliphfSet", oSlipCreateHData, {
+                    //     success: function(oReturn){
+                    //         sap.m.MessageToast.show("Create head Success!!");
+                    //         oSlipReadHData = oReturn;
+                    //         // debugger;   
+                    //         for(var j = 0; j < aSlipIData.length; i++){
+                    //             if(aSlipIData[j].Docnum === oSlipReadHData.Docnum){
+                    //                 // debugger;
+                    //                 aSlipIData[j].Slipid = oSlipReadHData.Slipid;
+                    //                 aSlipCreateIData.push(aSlipIData[j]);
+                    //             }
+                    //         };
+                    //     },
+                    //     error : function(){
+                    //         sap.m.MessageToast.show("Head Error~!");
+                    //         // debugger;
+                    //     }
+                    // });
+                    // debugger;
+                    
+                    // for(var k = 0; k < aSlipCreateIData.length; k++){
+                    //     oSlipCreateIData = aSlipCreateIData[j];
+                    //     oSlipCreateIData.Slipid = oSlipReadHData.Slipid;
+
+                    //     this.oModel.create("/slipifSet", oSlipCreateIData, {
+                    //         success: function(){
+                    //             console.log("Create item uccess!!");
+                    //             debugger;
+                    //         },
+                    //         error: function(){
+                    //             console.log("Item Error~!");
+                    //             debugger;
+                    //         }
+                    //     });
+                    // };
+                    
+                    // debugger;
 
                     //안해도 될까???????
                     // var sFullPath = this.oModel.createKey("/sliphfSet",{
@@ -768,29 +832,36 @@ sap.ui.define([
                     //     }.bind(this)
                     // });
                     
-                    for(var j = 0; i < aSlipIData.length; i++){
-                        if(oSlipCreateHData.Slipid === aSlipIData[j].Slipid){
-                            oSlipCreateIData = aSlipIData[j];
-                            // oSlipCreateIData.Slipid = oSlipReadHData.Slipid;
-                            // debugger;
+                    // for(var j = 0; i < aSlipIData.length; i++){
+                    //     if(oSlipCreateHData.Slipid === aSlipIData[j].Slipid){
+                    //         oSlipCreateIData = aSlipIData[j];
+                    //         // oSlipCreateIData.Slipid = oSlipReadHData.Slipid;
+                    //         // debugger;
 
-                            // create item하면 될듯..?
-                            // let index = this.oTable.getSelectedIndex();  //2
-                            // let sPath = this.oTable.getContextByIndex(index).getPath(); //'/Products(13)'
-                            // // let oMainModel = this.oMainModel;
-                            // // this.oTable
+                    //         // create item하면 될듯..?
+                    //         // let index = this.oTable.getSelectedIndex();  //2
+                    //         // let sPath = this.oTable.getContextByIndex(index).getPath(); //'/Products(13)'
+                    //         // // let oMainModel = this.oMainModel;
+                    //         // // this.oTable
 
-                        }
-                    }
+                    //     }
+                    // }
                 }
-                
-                
-                // oTable.getSelectedKey
-                // oTable.getSelectedIndices; -> filter걸때마다 바뀜~
+                Promise.all(promises).then(function() {
+                    console.log(sError);
 
-                // var oSelectData = oTable.getRowBindingContext().getObject();
-                // var aSlipHData = this.oslipH.getData().hlist;
-                // var aSlipIData = this.oslipI.getData().ilist;
+                    if(sError > 0){
+                        // debugger;
+                        MessageToast.show("전표 생성 에러");
+                    }else{
+                        MessageToast.show("전표 생성 완료");
+                        this.oSlipBefore.setData({});
+                        this.oslipH.setData({});
+                        this.oslipI.setData({});
+                        this._getdata();
+                        this.oSlipBefore.refresh();
+                    }
+                }.bind(this));
             }
         });
     });

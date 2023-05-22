@@ -39,7 +39,7 @@
                                         <Label text="전기일자" />
                                         <Input 
 											value="{
-												path : 'slipH>/select/Pdtdate',
+												path : 'slipH>/select/Pstdate',
 												formatter : '.formatter.dateTime2'
 												}"  
 											enabled="false"/>
