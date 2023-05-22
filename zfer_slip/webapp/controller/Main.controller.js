@@ -60,7 +60,7 @@ sap.ui.define([
                 // var tabledatas = {
                 //     // list :[
                 //     //     // {
-                //     //     //     status : "미완료",
+                //     //     //     status : "Incomplete",
                 //     //     //     docnum : "CWN11111111",
                 //     //     //     partid : "PAT00",
                 //     //     //     sliptype : "AA",
@@ -124,7 +124,7 @@ sap.ui.define([
                         for(var i = 0 ; i < oReturn.results.length; i++){
                             // debugger;
                             tabledatas.push({
-                                Status : "미완료",
+                                Status : "Incomplete",
                                 Docnum : oReturn.results[i].Batterysoid,
                                 Partid : oReturn.results[i].Partnerid,
                                 Partname : oReturn.results[i].Partname,
@@ -199,7 +199,7 @@ sap.ui.define([
                         for(var i = 0 ; i < oReturn.results.length; i++){
                             // debugger;
                             tabledatas.push({
-                                Status : "미완료",
+                                Status : "Incomplete",
                                 Docnum : oReturn.results[i].Rentalid,
                                 Partid : oReturn.results[i].Partnerid,
                                 Partname : oReturn.results[i].Partname,
@@ -275,7 +275,7 @@ sap.ui.define([
                         for(var i = 0 ; i < oReturn.results.length; i++){
                             // debugger;
                             tabledatas.push({
-                                Status : "미완료",
+                                Status : "Incomplete",
                                 Docnum : oReturn.results[i].Autonum,
                                 Partid : oReturn.results[i].Partid,
                                 Partname : oReturn.results[i].Partname,
@@ -467,7 +467,7 @@ sap.ui.define([
                 },this);
             },
             onClose: function(oEvent){
-                this._popupconfirm("취소", function (bConfirm) {
+                this._popupconfirm("변경 사항을 취소", function (bConfirm) {
                     if (bConfirm) {
                       var oDialog = this.byId("DetailDialog"); //Dialog 
                       var oTable = this.byId("idSlipDetailTable");
@@ -536,7 +536,7 @@ sap.ui.define([
                 
             },
             onSave : function(oEvent){
-                this._popupconfirm("저장", function (bConfirm) {
+                this._popupconfirm("변경 사항을 저장", function (bConfirm) {
                     if (bConfirm) {
                         var oTable = this.byId("idSlipDetailTable");
                         var aSelectidata = this.oslipI.getData().select;
@@ -638,7 +638,7 @@ sap.ui.define([
                   title: "확인",
                   type: sap.m.DialogType.Message,
                   content: new sap.m.Text({
-                    text: "변경 사항을 " + sSaveCancel + "하시겠습니까?"
+                    text : sSaveCancel + "하시겠습니까?"
                   }),
                   beginButton: new sap.m.Button({
                     text: "예",
@@ -687,181 +687,98 @@ sap.ui.define([
                 }
             },
             onPressAcceptBtn : function(){
-                var oTable = this.byId("idSlipbeforeTable");
-                // var aSlipBData = this.oSlipBefore.getData().blist;
-                var aSlipHData = this.oslipH.getData().hlist;
-                var aSlipIData = this.oslipI.getData().ilist;
-                var oSlipCreateHData , oSlipCreateIData;
-                var oSlipReadHData ;
-                var sError = 0;
-                var promises = [];
-
-                // debugger;
-                let index = oTable.getSelectedIndices(); // [0,4,7]
-
-                if (index.length === 0) {
-                    MessageToast.show("행을 선택해주세요!");
-                    return;
-                }
-
-                for(var i = 0; i < index.length; i++){
-                    let sPath = oTable.getContextByIndex(index[i]).getPath();
-                    let skey = Number(sPath.substr(7));
-
-                    oSlipCreateHData = aSlipHData[skey];
-                    // oSlipCreateHData.Pstdate = "2021-12-31T00:00:00";
-                    // oSlipCreateHData.Pstdate = "";
-                    // oSlipCreateHData.Prfdate = "2021-12-31T00:00:00";
-                    // debugger;
-
-                    // //디버깅 부분 그냥 다 안되고 있음 - prfdate type문제(문자열일때) + Pstdate type문제(T00타입일떄)
-                    // // ***살ㄹ줘 
-                    // 나머지 create넣고,, 로직상에서 날짜 찾아야하는건 아니지......
-
-                    oSlipCreateHData.Prfdate = new Date(oSlipCreateHData.Prfdate);
-                    oSlipCreateHData.Pstdate = new Date();
-                    // var month = String(date.getMonth() + 1).padStart(2, '0');
-                    // var day = String(date.getDate()).padStart(2, '0');
-                    // var year = String(date.getFullYear());
-                    // oSlipCreateHData.Prfdate = year +'-'+ month +'-'+ day+"T00:00:00";
-                    // console.log(formattedDate);
-
-                    // oSlipCreateHData.Prfdate = formattedDate;
-
-                    // // oSlipCreateHData.Prfdate = new Date(oSlipCreateHData.Prfdate).toISOString().slice(0, -5);
-                    // oSlipCreateHData.Pstdate = 
-                    //     oSlipCreateHData.Pstdate.substr(0, 4) + '-' 
-                    //     + oSlipCreateHData.Pstdate.substr(4, 2) + '-' 
-                    //     + oSlipCreateHData.Pstdate.substr(6, 2) + "T00:00:00";
-                    // debugger;
-
-                    // create head
-                    var promise = new Promise(function(resolve, reject) {
-                        this.oModel.create("/sliphfSet", oSlipCreateHData, {
-                            success: function(oReturn){
-
-                                console.log("create head");
-                                oSlipReadHData = oReturn;
-                                // debugger;   
-                                // debugger;
-                                for(var j = 0; j < aSlipIData.length; j++){
-                                    if(aSlipIData[j].Docnum === oSlipReadHData.Docnum){
-                                        // debugger;
-                                        oSlipCreateIData = aSlipIData[j];
-                                        oSlipCreateIData.Slipid = oSlipReadHData.Slipid;
-                                        oSlipCreateIData.Amt = String(oSlipCreateIData.Amt);
-                                        oSlipCreateIData.Tax = String(oSlipCreateIData.Tax);
-                                        // debugger;   
-
-                                        this.oModel.create("/slipifSet", oSlipCreateIData, {
-                                            success: function(){
-                                                // console.log("Create item uccess!!");
-                                            },
-                                            error: function(){
-                                                // console.log("Item Error~!");
-                                                sError += 1;
-                                            }
-                                        });
-                                    }
-                                };
-                                resolve();
-                            }.bind(this),
-                            error : function(){
-                                sError += 1;
-                                reject(); 
-                                // sap.m.MessageToast.show("Head Error~!");
-                                // debugger;
-                            }
-                        });
-                    }.bind(this));
-
-                    promises.push(promise);
-
-                    // this.oModel.create("/sliphfSet", oSlipCreateHData, {
-                    //     success: function(oReturn){
-                    //         sap.m.MessageToast.show("Create head Success!!");
-                    //         oSlipReadHData = oReturn;
-                    //         // debugger;   
-                    //         for(var j = 0; j < aSlipIData.length; i++){
-                    //             if(aSlipIData[j].Docnum === oSlipReadHData.Docnum){
-                    //                 // debugger;
-                    //                 aSlipIData[j].Slipid = oSlipReadHData.Slipid;
-                    //                 aSlipCreateIData.push(aSlipIData[j]);
-                    //             }
-                    //         };
-                    //     },
-                    //     error : function(){
-                    //         sap.m.MessageToast.show("Head Error~!");
-                    //         // debugger;
-                    //     }
-                    // });
-                    // debugger;
-                    
-                    // for(var k = 0; k < aSlipCreateIData.length; k++){
-                    //     oSlipCreateIData = aSlipCreateIData[j];
-                    //     oSlipCreateIData.Slipid = oSlipReadHData.Slipid;
-
-                    //     this.oModel.create("/slipifSet", oSlipCreateIData, {
-                    //         success: function(){
-                    //             console.log("Create item uccess!!");
-                    //             debugger;
-                    //         },
-                    //         error: function(){
-                    //             console.log("Item Error~!");
-                    //             debugger;
-                    //         }
-                    //     });
-                    // };
-                    
-                    // debugger;
-
-                    //안해도 될까???????
-                    // var sFullPath = this.oModel.createKey("/sliphfSet",{
-                    //     Slipid : oSlipCreateHData.Docnum
-                    // }); // "/Products(2)" 과 동일함
-
-                    // this.oModel.read(sFullPath,{
-                    //     //filters: [필터모델객체]
-                    //     success: function(oReturn){
-                    //         console.log("READ : ", oReturn);
-                    //         /*oReturn => { ProductNo:1, .....} */
-                    //         oSlipReadHData = oReturn;
-                    //         // this.oMainModel.setProperty("/", oReturn);
-                    //         // this.oMainModel.setData(oReturn);
-                    //         // debugger;
-                    //     }.bind(this)
-                    // });
-                    
-                    // for(var j = 0; i < aSlipIData.length; i++){
-                    //     if(oSlipCreateHData.Slipid === aSlipIData[j].Slipid){
-                    //         oSlipCreateIData = aSlipIData[j];
-                    //         // oSlipCreateIData.Slipid = oSlipReadHData.Slipid;
-                    //         // debugger;
-
-                    //         // create item하면 될듯..?
-                    //         // let index = this.oTable.getSelectedIndex();  //2
-                    //         // let sPath = this.oTable.getContextByIndex(index).getPath(); //'/Products(13)'
-                    //         // // let oMainModel = this.oMainModel;
-                    //         // // this.oTable
-
-                    //     }
-                    // }
-                }
-                Promise.all(promises).then(function() {
-                    console.log(sError);
-
-                    if(sError > 0){
+                this._popupconfirm("전표를 생성", function (bConfirm) {
+                    if (bConfirm) {
+                        var oTable = this.byId("idSlipbeforeTable");
+                        // var aSlipBData = this.oSlipBefore.getData().blist;
+                        var aSlipHData = this.oslipH.getData().hlist;
+                        var aSlipIData = this.oslipI.getData().ilist;
+                        var oSlipCreateHData , oSlipCreateIData;
+                        var oSlipReadHData ;
+                        var sError = 0;
+                        var promises = [];
+        
                         // debugger;
-                        MessageToast.show("전표 생성 에러");
-                    }else{
-                        MessageToast.show("전표 생성 완료");
-                        this.oSlipBefore.setData({});
-                        this.oslipH.setData({});
-                        this.oslipI.setData({});
-                        this._getdata();
-                        this.oSlipBefore.refresh();
+                        let index = oTable.getSelectedIndices(); // [0,4,7]
+        
+                        if (index.length === 0) {
+                            MessageToast.show("행을 선택해주세요!");
+                            return;
+                        }
+        
+                        for(var i = 0; i < index.length; i++){
+                            let sPath = oTable.getContextByIndex(index[i]).getPath();
+                            let skey = Number(sPath.substr(7));
+        
+                            oSlipCreateHData = aSlipHData[skey];
+                            // //디버깅 부분 그냥 다 안되고 있음 - prfdate type문제(문자열일때) + Pstdate type문제(T00타입일떄)
+                            // // ***살ㄹ줘 
+                            // 나머지 create넣고,, 로직상에서 날짜 찾아야하는건 아니지......
+        
+                            oSlipCreateHData.Prfdate = new Date(oSlipCreateHData.Prfdate);
+                            oSlipCreateHData.Pstdate = new Date();
+        
+                            // create head
+                            var promise = new Promise(function(resolve, reject) {
+                                this.oModel.create("/sliphfSet", oSlipCreateHData, {
+                                    success: function(oReturn){
+        
+                                        console.log("create head");
+                                        oSlipReadHData = oReturn;
+                                        // debugger;   
+                                        // debugger;
+                                        for(var j = 0; j < aSlipIData.length; j++){
+                                            if(aSlipIData[j].Docnum === oSlipReadHData.Docnum){
+                                                // debugger;
+                                                oSlipCreateIData = aSlipIData[j];
+                                                oSlipCreateIData.Slipid = oSlipReadHData.Slipid;
+                                                oSlipCreateIData.Amt = String(oSlipCreateIData.Amt);
+                                                oSlipCreateIData.Tax = String(oSlipCreateIData.Tax);
+                                                // debugger;   
+        
+                                                this.oModel.create("/slipifSet", oSlipCreateIData, {
+                                                    success: function(){
+                                                        // console.log("Create item uccess!!");
+                                                    },
+                                                    error: function(){
+                                                        // console.log("Item Error~!");
+                                                        sError += 1;
+                                                    }
+                                                });
+                                            }
+                                        };
+                                        resolve();
+                                    }.bind(this),
+                                    error : function(){
+                                        sError += 1;
+                                        reject(); 
+                                        // sap.m.MessageToast.show("Head Error~!");
+                                        // debugger;
+                                    }
+                                });
+                            }.bind(this));
+        
+                            promises.push(promise);
+                        }
+                        Promise.all(promises).then(function() {
+                            console.log(sError);
+        
+                            if(sError > 0){
+                                // debugger;
+                                MessageToast.show("전표 생성 에러");
+                            }else{
+                                MessageToast.show("전표 생성 완료");
+                                this.oSlipBefore.setData({});
+                                this.oslipH.setData({});
+                                this.oslipI.setData({});
+                                this._getdata();
+                                this.oSlipBefore.refresh();
+                            }
+                        }.bind(this));
                     }
                 }.bind(this));
+
+                
             }
         });
     });
