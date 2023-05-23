@@ -22,7 +22,11 @@ sap.ui.define([
                     return oDateTimeInstance.format(oDate);
                 },
                 dateTime2: function(sDate) {
-                    return sDate.slice(0,4) + '-' + sDate.slice(4, 6) + '-' + sDate.slice(6,8);
+                    if(sDate !== undefined){
+                        // debugger;
+                        return sDate.slice(0,4) + '-' + sDate.slice(4, 6) + '-' + sDate.slice(6,8);
+                    }
+                    
                 },
                 dcindicator3Text : function(sDcIndicator, sAmtValue, sTaxValue) {
                     if (sDcIndicator === '3' && sAmtValue === 0) {
@@ -83,9 +87,12 @@ sap.ui.define([
                 this.oTable = this.byId("idSlipbeforeTable");
             },
             _getdata : function(){
-                this.oSlipBefore
-                this.oslipH
-                this.oslipI
+                // this.oSlipBefore
+                // this.oslipH
+                // this.oslipI
+                this.oSlipBefore.setData({});
+                this.oslipH.setData({});
+                this.oslipI.setData({});
 
                 var tabledatas = [];
                 var sliphdatas = [];
@@ -397,7 +404,7 @@ sap.ui.define([
                         break;
                     };
                 }
-                debugger;
+                // debugger;
 
                 var oDialog = this.byId("DetailDialog"); //DialogID
 
@@ -454,10 +461,15 @@ sap.ui.define([
                 // 만약 Check를 풀었을 때, Table 선택된 Indices 에 포함되어 있지 않으면 풀었다는 거니까 enabled = false 설정
                 var rowIndex = oEvent.getParameters().rowIndex;
                 if(aRows[rowIndex] != undefined){
-                    if (aSelectedIndices.indexOf(rowIndex) < 0) {
-                        aRows[rowIndex].getCells()[2].setEnabled(false);
-                        aRows[rowIndex].getCells()[3].setEnabled(false);
-                    };
+                    if(aRows[rowIndex].getCells()[2].getValueState() === 'Error' 
+                        || aRows[rowIndex].getCells()[3].getValueState() === 'Error' ){
+                    }else{
+                        if (aSelectedIndices.indexOf(rowIndex) < 0) {
+                            aRows[rowIndex].getCells()[2].setEnabled(false);
+                            aRows[rowIndex].getCells()[3].setEnabled(false);
+                        };
+                    }
+                    
                 }
                 
             },
@@ -636,7 +648,7 @@ sap.ui.define([
                             let skey = Number(sPath.substr(7));
         
                             oSlipCreateHData = aSlipHData[skey];
-                            debugger;
+                            // debugger;
                             // //디버깅 부분 그냥 다 안되고 있음 - prfdate type문제(문자열일때) + Pstdate type문제(T00타입일떄)
                             // // ***살ㄹ줘 
                             // 나머지 create넣고,, 로직상에서 날짜 찾아야하는건 아니지......
@@ -694,9 +706,6 @@ sap.ui.define([
                                 MessageToast.show("전표 생성 에러");
                             }else{
                                 MessageToast.show("전표 생성 완료");
-                                this.oSlipBefore.setData({});
-                                this.oslipH.setData({});
-                                this.oslipI.setData({});
                                 this._getdata();
                                 this.oSlipBefore.refresh();
                             }

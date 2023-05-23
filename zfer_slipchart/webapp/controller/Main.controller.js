@@ -43,8 +43,7 @@ sap.ui.define([
                                 aPartnercode.push({text: oReturn.results[j].Partcode,nodes:aPartner});
                             }else if(i === 0){
                                 aPartner.push({text: oReturn.results[i].Partid});
-                            }
-                            else if(oReturn.results[j].Partcode === oReturn.results[i].Partcode){
+                            }else if(oReturn.results[j].Partcode === oReturn.results[i].Partcode){
                                 aPartner.push({text: oReturn.results[i].Partid});
                             }else{
                                 aPartnercode.push({text: oReturn.results[j].Partcode,nodes:aPartner});
