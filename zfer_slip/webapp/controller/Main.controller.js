@@ -636,6 +636,7 @@ sap.ui.define([
                             let skey = Number(sPath.substr(7));
         
                             oSlipCreateHData = aSlipHData[skey];
+                            debugger;
                             // //디버깅 부분 그냥 다 안되고 있음 - prfdate type문제(문자열일때) + Pstdate type문제(T00타입일떄)
                             // // ***살ㄹ줘 
                             // 나머지 create넣고,, 로직상에서 날짜 찾아야하는건 아니지......

@@ -1,0 +1,42 @@
+{
+    "list":[
+        {
+            "text": "Node1",
+            "nodes":
+            [
+                {
+                    "text": "Node1-1",
+                    "nodes":[]
+                }
+            ]
+        },
+        {
+            "text": "Node1",
+            "nodes":
+            [
+                {
+                    "text": "Node1-1",
+                    "nodes":[]
+                },
+                {
+                    "text": "Node1-1",
+                    "nodes":[]
+                },
+                {
+                    "text": "Node1-1",
+                    "nodes":[]
+                }
+            ]
+        },
+        {
+            "text": "Node1",
+            "nodes":
+            [
+                {
+                    "text": "Node1-1",
+                    "nodes":[]
+                }
+            ]
+        }
+    ]       
+}
