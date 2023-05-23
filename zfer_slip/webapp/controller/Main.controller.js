@@ -22,12 +22,6 @@ sap.ui.define([
                     return oDateTimeInstance.format(oDate);
                 },
                 dateTime2: function(sDate) {
-                    
-                    // let oDateTimeInstance;
-
-                    // oDateTimeInstance = sap.ui.core.format.DateFormat.getDateTimeInstance({
-                    //     pattern : 'yyyy-MM-dd'
-                    // });
                     return sDate.slice(0,4) + '-' + sDate.slice(4, 6) + '-' + sDate.slice(6,8);
                 },
                 dcindicator3Text : function(sDcIndicator, sAmtValue, sTaxValue) {
@@ -57,31 +51,13 @@ sap.ui.define([
                         {type : "배터리판매"}
                     ]
                 };
-                // var tabledatas = {
-                //     // list :[
-                //     //     // {
-                //     //     //     status : "Incomplete",
-                //     //     //     docnum : "CWN11111111",
-                //     //     //     partid : "PAT00",
-                //     //     //     sliptype : "AA",
-                //     //     //     prfdate : "20230516",
-                //     //     //     amount : "1000000",
-                //     //     //     curkey : "KRW"
-                //     //     // }
-                //     // ]
-                // };
-                // debugger;
                 this.getView().setModel(new JSONModel(typedatas),"typeList"); //전표유형
                 this.getView().setModel(new JSONModel(),"slipBefore"); //table
                 this.getView().setModel(new JSONModel(),"slipH"); //table -> 전체 배열 [ {}, {}, {}]
-                this.getView().setModel(new JSONModel(),"slipI"); //table -> [ obj{ [item] [item] [item]}, , , , , , ]
+                this.getView().setModel(new JSONModel(),"slipI"); //table -> [ obj{ [item] [item] [item]}, , ]
                 
                 this._defaultSet();
                 this.todaydate = this.getToday();
-            
-
-                // let oo = this.getOwnerComponent().getModel().getObject("/employeeSet");
-                // console.log(oo);
 
                 this.getOwnerComponent().getModel().read("/employeeSet", {
                     success: function(oReturn) {
@@ -98,11 +74,11 @@ sap.ui.define([
                 this.oModel = this.getOwnerComponent().getModel(); //oData
                 this.oModel.setUseBatch(false);
                 //json model 변수 세팅
-                this.oSlipBefore = this.getView().getModel("slipBefore"); //main
+                this.oSlipBefore = this.getView().getModel("slipBefore"); //slipBefore
                 //json model 변수 세팅
-                this.oslipH = this.getView().getModel("slipH"); //main
+                this.oslipH = this.getView().getModel("slipH"); //slipH
                 //json model 변수 세팅
-                this.oslipI = this.getView().getModel("slipI"); //main
+                this.oslipI = this.getView().getModel("slipI"); //slipI
                 //table객체 
                 this.oTable = this.byId("idSlipbeforeTable");
             },
@@ -116,7 +92,7 @@ sap.ui.define([
                 var slipidatas = [];
                 var snum = 0;
 
-                var sPath = "/wbatsofSet";   // '/auto'
+                var sPath = "/wbatsofSet"; 
                 this.oModel.read(sPath,{ 
                     success:function(oReturn){
                         // debugger;
@@ -351,40 +327,34 @@ sap.ui.define([
             },
             onSearch: function(){
                 var oComboBox = this.byId("idComboBox1");
-                // var sDateRange1 = this.byId("idDateRangeSelection").getFrom();
-                // var sDateRange2 = this.byId("idDateRangeSelection").getTo();
                 var oDateRange = this.byId("idDateRangeSelection");
-                // debugger;
                 var oTable = this.byId("idSlipbeforeTable");
                 var aFilter = [];
                 var sFilter1 = '';
 
-                // if(oComboBox2.getSelectedKey()){  // if(oComboBox2.getSelectedKey() != ""){
-                    // oComboBox2.setValueState("None");
-                    // case()
-                    switch(oComboBox.getSelectedKey()){
-                        case '오토필' : 
-                            sFilter1 = 'MON';
-                            break;
-                        case '대여' : 
-                            sFilter1 = 'REN';
-                            break;
-                        case '배터리판매' : 
-                            sFilter1 = 'BON';
-                            break;
-                    };
+                switch(oComboBox.getSelectedKey()){
+                    case '오토필' : 
+                        sFilter1 = 'MON';
+                        break;
+                    case '대여' : 
+                        sFilter1 = 'REN';
+                        break;
+                    case '배터리판매' : 
+                        sFilter1 = 'BON';
+                        break;
+                };
 
-                    if (sFilter1) {
-                        aFilter.push(new Filter("Docnum", "Contains", sFilter1));
-                        // debugger;
-                    };
+                if (sFilter1) {
+                    aFilter.push(new Filter("Docnum", "Contains", sFilter1));
                     // debugger;
-                    if (oDateRange.getValue()){
-                        aFilter.push(new Filter("Prfdate", "BT", oDateRange.getFrom(), oDateRange.getTo()));
-                        // debugger;
-                    };
-                    
-                    oTable.getBinding("rows").filter(aFilter);
+                };
+                // debugger;
+                if (oDateRange.getValue()){
+                    aFilter.push(new Filter("Prfdate", "BT", oDateRange.getFrom(), oDateRange.getTo()));
+                    // debugger;
+                };
+                
+                oTable.getBinding("rows").filter(aFilter);
                    
                     // if(oDateRange.getValue()) {
                     //     // debugger;
@@ -405,7 +375,6 @@ sap.ui.define([
                 // }
             },
             onDetailBtn :function(oEvent){
-                // debugger;
                 var oSelectData = oEvent.getSource().getParent().getRowBindingContext().getObject();
                 var aSlipHData = this.oslipH.getData().hlist;
                 var aSlipIData = this.oslipI.getData().ilist;
@@ -426,11 +395,7 @@ sap.ui.define([
                         }
                         this.oslipI.setProperty("/select",aSlipidatas);
                         break;
-                        // this.byId("idSlipDetailTable").setModel(this.oslipI, "slipI");
-                        // debugger
-                        // this.byId("idSlipDetailTable").bindRows("slipI>/select");
                     };
-                    // console.log(i);
                 }
                 debugger;
 
@@ -440,22 +405,6 @@ sap.ui.define([
                     oDialog.open();
                     this.byId("idSlipDetailTable").unbindRows();
                     this.byId("idSlipDetailTable").bindRows("slipI>/select");
-                    // this.byId("idSlipDetailTable").updateRows();
-                    // this.byId("idSlipDetailTable").refreshRows();
-                    // var aRows = this.byId("idSlipDetailTable").getRows();
-
-                    // // 각 행의 input 값을 초기화
-                    // this.byId("idSlipDetailTable").getRows().forEach(function(oRow) {
-                    //     // var oInput1 = oRow.getCells()[2]; // 적절한 경로로 input 컨트롤에 접근해야 합니다.
-                    //     // oInput1.setValue(""); // 입력값 초기화
-                    //     oRow.getCells()[2].setValue("");
-                    //     oRow.getCells()[3].setValue("");
-                    // });
-                    // this.byId("idSlipDetailTable").bindRows("slipI>/select");
-                    // this.byId("idSlipDetailTable").refreshRows();
-                    // setModel(this.oslipI, "/select");
-                    // this.byId("idSlipDetailTable").getBinding("rows")
-                    // debugger;
                     return;                    
                 }
                 
@@ -484,21 +433,6 @@ sap.ui.define([
                       oTable.clearSelection();
                     }
                 }.bind(this));
-                // var bConfirm = this._popupconfirm("취소");
-                // if(bConfirm){
-                //     var oDialog = oEvent.getSource().getParent(); //Dialog    
-                //     var oTable = this.byId("idSlipDetailTable");
-                //     let index = oTable.getSelectedIndices();
-    
-                //     for(var j = index.length - 1 ; j >= 0 ; j--){
-                //         oTable.getRows()[index[j]].getCells()[2].setEnabled(false);
-                //         oTable.getRows()[index[j]].getCells()[3].setEnabled(false);
-                //     };
-                //     MessageToast.show("변경 취소");
-                //     oDialog.close();
-                //     oTable.clearSelection();
-                // }
-                // debugger;
             },
             onSelectionChange :function(oEvent){
                 var oTable = oEvent.getSource();
@@ -521,16 +455,8 @@ sap.ui.define([
                 var rowIndex = oEvent.getParameters().rowIndex;
                 if(aRows[rowIndex] != undefined){
                     if (aSelectedIndices.indexOf(rowIndex) < 0) {
-                    
                         aRows[rowIndex].getCells()[2].setEnabled(false);
                         aRows[rowIndex].getCells()[3].setEnabled(false);
-    
-                        // for(var i = 2 ; i <= 3 ; i++){
-                        //     aRows[rowIndex].getCells()[i].setEnabled(false);
-                        //     // var ocell = this.oTable.getRows()[rowIndex].getCells()[i];  //aRows[rowIndex].getCells()[4].setEnabled(false);
-                        //     // var sAmountValue = ocell.getValue(); 
-                        //     //  = sAmountValue
-                        // }
                     };
                 }
                 
@@ -690,7 +616,6 @@ sap.ui.define([
                 this._popupconfirm("전표를 생성", function (bConfirm) {
                     if (bConfirm) {
                         var oTable = this.byId("idSlipbeforeTable");
-                        // var aSlipBData = this.oSlipBefore.getData().blist;
                         var aSlipHData = this.oslipH.getData().hlist;
                         var aSlipIData = this.oslipI.getData().ilist;
                         var oSlipCreateHData , oSlipCreateIData;
