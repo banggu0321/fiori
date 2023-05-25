@@ -129,78 +129,80 @@
                     <Tree
                         id="Tree"
                         items="{path: 'PartnerTreeList>/list'}"
-                        mode="MultiSelect">
+                        mode="MultiSelect"
+                        selectionChange="onSelectionChange">
                         <items>
                             <StandardTreeItem title="{PartnerTreeList>text}"/>
                         </items>
                     </Tree>
                 </VBox>
                 <!-- <VBox width="100%" > -->
-                    <VBox width="35%" >
-                        <HBox >
-                            <viz:VizFrame
-                                id="idViewChart1"
-                                vizType="line" uiConfig="{applicationSet:'fiori'}"
-                                visible="false"
-                                vizProperties="{
-                                        'title' : { text : '실적차트', visible : true},
-                                        'legendGroup':{layout:{position: 'left'}},
-                                        'plotArea' : {
-                                            drawingEffect: 'glossy',
-                                            dataLabel: { visible: true, type:'value'}
-                                        }
-                                    }">
-                                <viz:dataset>
-                                    <viz.data:FlattenedDataset id="idFlattenedDataset1" data="{/sliphfpartnerSet}">
-                                        <viz.data:dimensions>
-                                            <viz.data:DimensionDefinition name="협력사" value="{Partid}" />
-                                            </viz.data:dimensions>
-                                        <viz.data:measures>
-                                            <viz.data:MeasureDefinition name="금액" value="{Amt}" />
-                                            <!-- <viz.data:MeasureDefinition name="총 좌석" value="{DetailModel>Seatsmax}" /> -->
-                                            </viz.data:measures>
-                                    </viz.data:FlattenedDataset>
-                                </viz:dataset>
-                                <viz:feeds>
-                                    <!-- <viz.feeds:FeedItem type="Measure" uid="valueAxis" values="예약 좌석,총 좌석" /> -->
-                                    <viz.feeds:FeedItem type="Measure" uid="valueAxis" values="금액" />
-                                    <viz.feeds:FeedItem type="Dimension" uid="categoryAxis" values="협력사" />
-                                </viz:feeds>
-                            </viz:VizFrame>
-                            <viz:VizFrame
-                                id="idViewChart2"
-                                vizType="line" uiConfig="{applicationSet:'fiori'}"
-                                visible="true"
-                                vizProperties="{
-                                        'title' : { text : '실적차트', visible : true},
-                                        'legendGroup':{layout:{position: 'left'}},
-                                        'plotArea' : {
-                                            drawingEffect: 'glossy',
-                                            dataLabel: { visible: true, type:'value'}
-                                        }
-                                    }">
-                                <viz:dataset>
-                                    <viz.data:FlattenedDataset id="idFlattenedDataset2" data="{slipPartnerList>/list}">
-                                        <viz.data:dimensions>
-                                            <viz.data:DimensionDefinition name="월별" value="{slipPartnerList>month}월" />
-                                            <!-- <viz.data:DimensionDefinition name="협력사" value="{Partid}" /> -->
-                                            </viz.data:dimensions>
-                                        <viz.data:measures>
-                                            <viz.data:MeasureDefinition name="금액" value="slipPartnerList>year}" />
-                                            <!-- <viz.data:MeasureDefinition name="협력사" value="{Partid}" /> -->
-                                            <!-- <viz.data:MeasureDefinition name="총 좌석" value="{DetailModel>Seatsmax}" /> -->
-                                            </viz.data:measures>
-                                    </viz.data:FlattenedDataset>
-                                </viz:dataset>
-                                <viz:feeds>
-                                    <!-- <viz.feeds:FeedItem type="Measure" uid="valueAxis" values="예약 좌석,총 좌석" /> -->
-                                    <viz.feeds:FeedItem type="Measure" uid="valueAxis" values="금액" />
-                                    <viz.feeds:FeedItem type="Dimension" uid="categoryAxis" values="월별" />
-                                </viz:feeds>
-                            </viz:VizFrame>
-                        </HBox>
-                    </VBox>
-                    <VBox width="100%"></VBox>
+                <VBox width="20%" >
+                    <HBox >
+                        <viz:VizFrame
+                            id="idViewChart1"
+                            vizType="bar" uiConfig="{applicationSet:'fiori'}"
+                            visible="false"
+                            vizProperties="{
+                                    'title' : { text : '실적차트', visible : true},
+                                    'legendGroup':{layout:{position: 'left'}},
+                                    'plotArea' : {
+                                        drawingEffect: 'glossy',
+                                        dataLabel: { visible: true, type:'value'}
+                                    }
+                                }">
+                            <viz:dataset>
+                                <viz.data:FlattenedDataset id="idFlattenedDataset1" data="{/sliphfpartnerSet}">
+                                    <viz.data:dimensions>
+                                        <viz.data:DimensionDefinition name="협력사" value="{Partid}" />
+                                        </viz.data:dimensions>
+                                    <viz.data:measures>
+                                        <viz.data:MeasureDefinition name="금액" value="{Amt}" />
+                                        <!-- <viz.data:MeasureDefinition name="총 좌석" value="{DetailModel>Seatsmax}" /> -->
+                                        </viz.data:measures>
+                                </viz.data:FlattenedDataset>
+                            </viz:dataset>
+                            <viz:feeds>
+                                <!-- <viz.feeds:FeedItem type="Measure" uid="valueAxis" values="예약 좌석,총 좌석" /> -->
+                                <viz.feeds:FeedItem type="Measure" uid="valueAxis" values="금액" />
+                                <viz.feeds:FeedItem type="Dimension" uid="categoryAxis" values="협력사" />
+                            </viz:feeds>
+                        </viz:VizFrame>
+                    </HBox>
+                </VBox>
+                <VBox width="100%">
+                    <viz:VizFrame
+                        id="idViewChart2"
+                        vizType="line" uiConfig="{applicationSet:'fiori'}"
+                        visible="true">
+                        <!-- vizProperties="{
+                                'title' : { text : '실적차트', visible : true},
+                                'legendGroup':{layout:{position: 'left'}},
+                                'plotArea' : {
+                                    drawingEffect: 'glossy',
+                                    dataLabel: { visible: true, type:'value'}
+                                }
+                            }" -->
+                        <!-- <viz:dataset>
+                            <viz.data:FlattenedDataset id="idFlattenedDataset2" data="{slipPartnerList>/list}">
+                                <viz.data:dimensions>
+                                    !<viz.data:DimensionDefinition name="월별" value="{slipPartnerList>month}월" />
+                                    <viz.data:DimensionDefinition name="협력사" value="{Partid}" />
+                                </viz.data:dimensions>
+                                <viz.data:measures>
+                                    !<viz.data:MeasureDefinition name="금액" value="{slipPartnerList>PAT07}" />
+                                    <viz.data:MeasureDefinition name="협력사" value="{Partid}" />
+                                    <viz.data:MeasureDefinition name="총 좌석" value="{DetailModel>Seatsmax}" />
+                                </viz.data:measures>
+                            </viz.data:FlattenedDataset>
+                        </viz:dataset>
+                        <viz:feeds>
+                            <viz.feeds:FeedItem type="Measure" uid="valueAxis" values="예약 좌석,총 좌석" />
+                            !<viz.feeds:FeedItem type="Measure" uid="valueAxis" values="금액" />
+                            !<viz.feeds:FeedItem type="Dimension" uid="categoryAxis" values="월별" />
+                        </viz:feeds> -->
+                    </viz:VizFrame>
+                </VBox>
                 <!-- </VBox> -->
             </HBox>
         </f:content>

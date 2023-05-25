@@ -61,8 +61,8 @@ sap.ui.define([
                         oDetailModel.setProperty("/Carrname", oReturn.Carrname);
                         oDetailModel.setProperty("/Carrid", oReturn.Carrid);
                         oDetailModel.setProperty("/data", oReturn.to_Item.results);
-                        oDetailModel.setData(oReturn);
-                        debugger;
+                        // oDetailModel.setData(oReturn);
+                        // debugger;
                     }.bind(this),
                 });
 
@@ -103,6 +103,7 @@ sap.ui.define([
                 var sVizType = oRadioButton.getSelectedButton().getProperty("text");
                 var oChart1 = this.byId("idViewChart1");
                 var oChart2 = this.byId("idViewChart2");
+                debugger;
                 
                 if(sVizType == "Price"){
                     oChart1.setVisible(false);

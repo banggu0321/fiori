@@ -31,7 +31,8 @@
 						<GenericTag text="미생성"
 							status="Error"
 							press="onPressOpenPopover"
-							design="StatusIconHidden">
+							design="StatusIconHidden"
+							class="sapUiSmallMarginTop">
 							<ObjectNumber 
 								id="idObjNum"
 								number="2"
