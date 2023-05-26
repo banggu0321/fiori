@@ -116,6 +116,10 @@
       "type": "XML",
       "async": true,
       "id": "App"
+    },
+    "config": {
+      "fullWidth" : true
     }
+    
   }
 }

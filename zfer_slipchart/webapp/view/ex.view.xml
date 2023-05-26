@@ -1,0 +1,244 @@
+<mvc:View controllerName="ER.zferslipchart.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true" 
+    xmlns:f="sap.f"
+	xmlns:layout="sap.ui.layout"
+    xmlns:fb="sap.ui.comp.filterbar" xmlns:core="sap.ui.core" 
+	xmlns:t="sap.ui.table" xmlns:u="sap.ui.unified"
+	xmlns:tnt="sap.tnt"
+    xmlns:viz="sap.viz.ui5.controls"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns="sap.m">
+    <f:DynamicPage id="idDynamicPage" showFooter="true">
+        <!-- DynamicPage Title -->
+        <f:title>
+            <f:DynamicPageTitle >
+                <f:heading >
+                    <Title text="실적 차트"/>
+                </f:heading>
+                <f:expandedContent>
+                    <ObjectAttribute id="idAtUserName" title="사용자명 " text="{/employeeSet/Name}"/>
+                    <ObjectAttribute id="idAtDept"  title="소속부서 " text=""/>
+                </f:expandedContent>
+                <f:snappedContent>
+                    <Label id="idLabeluname" text=""/>
+                </f:snappedContent>
+                <f:snappedTitleOnMobile>
+                    <!-- <ObjectAttribute title="사용자명" text="Warehouse A"/>
+                    <ObjectAttribute title="소속부서" text="23L"/> -->
+                </f:snappedTitleOnMobile>
+                <!-- <f:content>
+                    <OverflowToolbar>
+                        <GenericTag text="미생성"
+                            status="Error"
+                            press="onPressOpenPopover"
+                            design="StatusIconHidden">
+                            <ObjectNumber 
+                                id="idObjNum"
+                                number="2"
+                                unit="개"
+                                emphasized="false"
+                                state="Error"/>
+                        </GenericTag>
+                    </OverflowToolbar>
+                </f:content> -->
+            </f:DynamicPageTitle>
+        </f:title>
+        <!-- DynamicPage Header -->
+        <f:header>
+            <f:DynamicPageHeader pinnable="true">
+                <layout:HorizontalLayout allowWrapping="true">
+                    <layout:VerticalLayout class="sapUiMediumMarginEnd">
+                        <!-- <ObjectAttribute title="사용자명" text="Warehouse A"/>
+                        <ObjectAttribute title="소속부서" text="23L"/> -->
+                        <fb:FilterBar id="filterBar" header="Search Filters" useToolbar="false"
+                            search="onSearch" filterContainerWidth="10rem">
+                            <fb:filterGroupItems>
+                                <!-- <fb:FilterGroupItem groupName="__$INTERNAL$" name="sliptype" label="전표 유형"
+                                    visibleInFilterBar="true">
+                                    <fb:control>
+                                        <MultiComboBox
+                                            id="idComboBox1"
+                                            fieldGroupIds="MyGroup,MyGroup2">
+                                            <core:ListItem key="{typeList>type}" text="{typeList>type}" additionalText="{CustomerID}" />
+                                            <items>
+                                                <core:SeparatorItem text="aa"/>
+                                                <core:Item text="Group 1" enabled="false" />
+                                                <core:ListItem text="Item 1-1" key="1-1" />
+                                                <core:ListItem text="Item 1-2" key="1-2" />
+
+                                                <core:SeparatorItem text="aa"/>
+
+                                                <core:Item text="Group 2" enabled="false" />
+                                                <core:ListItem text="Item 2-1" key="2-1" />
+                                                <core:ListItem text="Item 2-2" key="2-2" />
+                                            </items>
+                                        </MultiComboBox>
+                                    </fb:control>
+                                </fb:FilterGroupItem> -->
+                                <fb:FilterGroupItem groupName="__$INTERNAL$" name="slipdate" label="증빙일자"
+                                    visibleInFilterBar="true">
+                                    <fb:control>
+                                        <DatePicker
+                                            id="idDateRangeSelection"
+                                            value="{
+                                                'path': '/valueDP10',
+                                                'type': 'sap.ui.model.type.Date',
+                                                'formatOptions': {
+                                                    'pattern': 'yyyy'
+                                                }
+                                            }"
+                                            change="handleChange"/>
+                                        <!-- <DateRangeSelection
+                                            id="idDateRangeSelection"
+                                            class="DRS1"
+                                            value= "{
+                                                'type': 'sap.ui.model.type.DateInterval',
+                                                'formatOptions': {
+                                                    'pattern': 'yyyy/MM/dd'
+                                                },
+                                                'parts': [
+                                                    {
+                                                        'type': 'sap.ui.model.type.Date',
+                                                        'path': '/start'
+                                                    },
+                                                    {
+                                                        'type': 'sap.ui.model.type.Date',
+                                                        'path': '/end'
+                                                    }
+                                                ]
+                                            }"/> -->
+                                    </fb:control>
+                                </fb:FilterGroupItem>
+                            </fb:filterGroupItems>
+                        </fb:FilterBar>
+                    </layout:VerticalLayout>
+                </layout:HorizontalLayout>
+                <!-- <layout:HorizontalLayout allowWrapping="true">
+                    <Button text="aa" class="sapUiMediumMarginEnd"></Button>
+                </layout:HorizontalLayout> -->
+            </f:DynamicPageHeader>
+        </f:header>
+        <f:content>
+            <HBox >
+                <VBox width="25%">
+                    <VBox height="45%" >
+                        <Toolbar>
+                            <Title text="매출" level="H1" />
+                        </Toolbar>
+                        
+                        <Tree
+                            id="idTree1"
+                            items="{path: 'PartnerTreeList>/ilist'}"
+                            mode="MultiSelect"
+                            selectionChange="onSelectionChange1">
+                            <items>
+                                <StandardTreeItem title="{PartnerTreeList>text}"/>
+                            </items>
+                        </Tree>
+                    
+                    </VBox>
+                    <VBox>
+                        <Toolbar>
+                            <Title text="매입" level="H1" />
+                        </Toolbar>
+                        <Tree
+                            id="idTree2"
+                            items="{path: 'PartnerTreeList>/olist'}"
+                            mode="MultiSelect"
+                            selectionChange="onSelectionChange2">
+                            <items>
+                                <StandardTreeItem title="{PartnerTreeList>text}"/>
+                            </items>
+                        </Tree>
+                    </VBox>
+                </VBox>
+                <!-- <VBox width="100%" > -->
+                <VBox width="20%" >
+                    <HBox >
+                        <viz:VizFrame
+                            id="idViewChart1"
+                            vizType="bar" uiConfig="{applicationSet:'fiori'}"
+                            visible="false"
+                            vizProperties="{
+                                    'title' : { text : '실적차트', visible : true},
+                                    'legendGroup':{layout:{position: 'left'}},
+                                    'plotArea' : {
+                                        drawingEffect: 'glossy',
+                                        dataLabel: { visible: true, type:'value'}
+                                    }
+                                }">
+                            <viz:dataset>
+                                <viz.data:FlattenedDataset id="idFlattenedDataset1" data="{/sliphfpartnerSet}">
+                                    <viz.data:dimensions>
+                                        <viz.data:DimensionDefinition name="협력사" value="{Partid}" />
+                                        </viz.data:dimensions>
+                                    <viz.data:measures>
+                                        <viz.data:MeasureDefinition name="금액" value="{Amt}" />
+                                        <!-- <viz.data:MeasureDefinition name="총 좌석" value="{DetailModel>Seatsmax}" /> -->
+                                        </viz.data:measures>
+                                </viz.data:FlattenedDataset>
+                            </viz:dataset>
+                            <viz:feeds>
+                                <!-- <viz.feeds:FeedItem type="Measure" uid="valueAxis" values="예약 좌석,총 좌석" /> -->
+                                <viz.feeds:FeedItem type="Measure" uid="valueAxis" values="금액" />
+                                <viz.feeds:FeedItem type="Dimension" uid="categoryAxis" values="협력사" />
+                            </viz:feeds>
+                        </viz:VizFrame>
+                    </HBox>
+                </VBox>
+                <VBox width="100%">
+                    <viz:VizFrame
+                        id="idViewChart2"
+                        vizType="line" uiConfig="{applicationSet:'fiori'}"
+                        visible="true">
+                        <!-- vizProperties="{
+                                'title' : { text : '실적차트', visible : true},
+                                'legendGroup':{layout:{position: 'left'}},
+                                'plotArea' : {
+                                    drawingEffect: 'glossy',
+                                    dataLabel: { visible: true, type:'value'}
+                                }
+                            }" -->
+                        <!-- <viz:dataset>
+                            <viz.data:FlattenedDataset id="idFlattenedDataset2" data="{slipPartnerList>/list}">
+                                <viz.data:dimensions>
+                                    !<viz.data:DimensionDefinition name="월별" value="{slipPartnerList>month}월" />
+                                    <viz.data:DimensionDefinition name="협력사" value="{Partid}" />
+                                </viz.data:dimensions>
+                                <viz.data:measures>
+                                    !<viz.data:MeasureDefinition name="금액" value="{slipPartnerList>PAT07}" />
+                                    <viz.data:MeasureDefinition name="협력사" value="{Partid}" />
+                                    <viz.data:MeasureDefinition name="총 좌석" value="{DetailModel>Seatsmax}" />
+                                </viz.data:measures>
+                            </viz.data:FlattenedDataset>
+                        </viz:dataset>
+                        <viz:feeds>
+                            <viz.feeds:FeedItem type="Measure" uid="valueAxis" values="예약 좌석,총 좌석" />
+                            !<viz.feeds:FeedItem type="Measure" uid="valueAxis" values="금액" />
+                            !<viz.feeds:FeedItem type="Dimension" uid="categoryAxis" values="월별" />
+                        </viz:feeds> -->
+                    </viz:VizFrame>
+                </VBox>
+                <!-- </VBox> -->
+            </HBox>
+        </f:content>
+    </f:DynamicPage>
+    <!-- <Page id="page" title="{i18n>title}">
+        <content> -->
+
+
+        <!-- <DatePicker
+					id="DP10"
+					value="{
+						'path': '/valueDP10',
+						'type': 'sap.ui.model.type.Date',
+						'formatOptions': {
+							'pattern': 'MM-y'
+						}
+					}"
+					change="handleChange"
+					class="sapUiSmallMarginBottom"/> -->
+        <!-- </content>
+    </Page> -->
+</mvc:View>

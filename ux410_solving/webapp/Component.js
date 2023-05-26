@@ -1,7 +1,7 @@
 /**
  * eslint-disable @sap/ui5-jsdocs/no-jsdoc
  */
-
+var _rootPath = jQuery.sap.getModulePath("sap.btp.ux410solving").split('/~')[0];
 sap.ui.define([
         "sap/ui/core/UIComponent",
         "sap/ui/Device",

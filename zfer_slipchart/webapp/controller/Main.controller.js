@@ -13,9 +13,6 @@ sap.ui.define([
 
         return Controller.extend("ER.zferslipchart.controller.Main", {
             onInit: function () {
-                // oModel.loadData( sap.ui.require.toUrl("zprojectteste1104/model/data.json") );
-                // this.getView().setModel(new JSONModel(),"PartnerList");
-                // this.getView().setModel(new JSONModel(sap.ui.require.toUrl("ER/zferslipchart/model/Tree.json")),"PartnerList");
                 
                 this.aPartnerAll = [];
                 this.getView().setModel(new JSONModel(),"slipAll");
@@ -24,164 +21,244 @@ sap.ui.define([
                 this.getView().setModel(new JSONModel(),"PartnerTreeList");
 
                 this._defaultSet();
-                this._getData().then(function () {
-                    this._setCharrInController();
-                }.bind(this));
-                
+                this._getData();
+
+                // var oTree1 = this.byId("idTree1"); // 트리 컨트롤 식별자
+                // var oTree2 = this.byId("idTree2"); // 트리 컨트롤 식별자
                 // debugger;
-                // var oModel = new JSONModel();
-                // oModel.loadData( sap.ui.require.toUrl("ER.zferslipchart/webapp/model/Tree.json") );
-                // this.getView().setModel(oModel, 'ParterList');
+
+                // // 트리의 모든 항목을 반복하면서 선택 속성 설정
+                // oTree1.getItems().forEach(function (oItem) {
+                //     oItem.setSelected(true);
+                // });
+                // oTree2.getItems().forEach(function (oItem) {
+                //     oItem.setSelected(true);
+                // });
             },
             _defaultSet : function(){
                 // odata model 변수 세팅
                 this.oModel = this.getOwnerComponent().getModel(); //oData
                 //json model 변수 세팅
-                this.oslipAll = this.getView().getModel("slipAll"); //slipAll
-                //json model 변수 세팅
                 this.opartnerList = this.getView().getModel("partnerList"); //partneList
                 //json model 변수 세팅
                 this.oslipPartnerList = this.getView().getModel("slipPartnerList"); //partnerList
                 //json model 변수 세팅
-                this.oPartnerTreeList = this.getView().getModel("PartnerTreeList"); //partneList
+                this.oPartnerTreeList = this.getView().getModel("PartnerTreeList"); //partnerList
+                //json model 변수 세팅
+                this.oslipAll = this.getView().getModel("slipAll"); //slipAll
             },
-            
-            _getData : function(){
-                return new Promise(function (resolve, reject) {
-                    var aPartner = [];
-                    var aPartnercode = [];
-                    var aPartnerAll = [];
-                    var aPartnerAmtTem = [];
-                    this.getOwnerComponent().getModel().read("/employeeSet", {
-                        success: function(oReturn) {
-                            this.empid = oReturn.results[0].Employeeid;
-                            this.byId("idAtUserName").setText(`${oReturn.results[0].Name}(${this.empid})`);
-                            this.byId("idAtDept").setText(`${oReturn.results[0].Deptname}`);
-                            this.byId("idLabeluname").setText(`${oReturn.results[0].Deptname} ${oReturn.results[0].Name}(${oReturn.results[0].Employeeid})`);
-                        }.bind(this)
-                    });
-
-                    this.getOwnerComponent().getModel().read("/partnerSet", {
-                        success: function(oReturn) {
-                            this.opartnerList.setProperty("/list",oReturn);
-                            for(var i = 0; i < oReturn.results.length + 1 ; i++){ //0 6
-                                // debugger;
-                                var j = i - 1;
-                                if(i === oReturn.results.length){
-                                    aPartnercode.push({text: oReturn.results[j].Partcode,nodes:aPartner});
-                                }else if(i === 0){
-                                    aPartner.push({text: oReturn.results[i].Partid});
-                                }else if(oReturn.results[j].Partcode === oReturn.results[i].Partcode){
-                                    aPartner.push({text: oReturn.results[i].Partid});
-                                }else{
-                                    aPartnercode.push({text: oReturn.results[j].Partcode,nodes:aPartner});
-                                    aPartner = [];
-                                    aPartner.push({text: oReturn.results[i].Partid});
-                                }
-
-                                if(oReturn.results[i] != undefined){
-                                    aPartnerAll.push(oReturn.results[i].Partid);
-                                    aPartnerAmtTem.push(0);
-                                }
+            _getData: function() {
+                this._getEmployeeData();
+                this._getPartnerData();
+                this._setCharrInController();
+              },
+              _getEmployeeData: function() {
+                this.getOwnerComponent().getModel().read("/employeeSet", {
+                  success: function(oReturn) {
+                    this.empid = oReturn.results[0].Employeeid;
+                    this.byId("idAtUserName").setText(`${oReturn.results[0].Name}(${this.empid})`);
+                    this.byId("idAtDept").setText(`${oReturn.results[0].Deptname}`);
+                    this.byId("idLabeluname").setText(`${oReturn.results[0].Deptname} ${oReturn.results[0].Name}(${oReturn.results[0].Employeeid})`);
+                  }.bind(this),
+                  error: function(error) {
+                    console.error("Failed to get employee data:", error);
+                  }
+                });
+              },
+              _getPartnerData: function() {
+                var aPartnerI = [];
+                var aPartnerO = [];
+                var aPartnercodeI = [];
+                var aPartnercodeO = [];
+                this.getOwnerComponent().getModel().read("/partnerSet", {
+                  success: function(oReturn) {
+                    this.opartnerList.setProperty("/list", oReturn);
+                    debugger;
+                    for(var i = 0; i < oReturn.results.length; i++){ //0 6
+                        var oDatai = oReturn.results[i];
+                        var j = i + 1;
+                        var oDataj = oReturn.results[j] === undefined ? { Partcode : ''} : oReturn.results[j] ;
+                        if(oDatai.Inoutcome === 'I'){
+                            // aPartnerI.push({Patid : oDatai.Partid ,text: oDatai.Partcode+"-"+oDatai.Partid+"("+oDatai.Partname+")"});
+                            if(oDatai.Partcode === oDataj.Partcode){
+                                aPartnerI.push({text: oDatai.Partid+"("+oDatai.Partname+")"});
+                            }else{
+                                aPartnerI.push({text: oDatai.Partid+"("+oDatai.Partname+")"});
+                                aPartnercodeI.push({text: oDatai.Partcode+"("+oDatai.Partcodedesc+")",nodes:aPartnerI});
+                                aPartnerI = [];
                             }
-                            this.oPartnerTreeList.setProperty("/list", {list:aPartnercode});
-                            // this.getView().setModel(new JSONModel({list:aPartnercode}),"PartnerTreeList");
-                            this.aPartnerAll = aPartnerAll;
-                            // debugger;
-                        }.bind(this)
-                    });
-
-                    this.getOwnerComponent().getModel().read("/sliphSet", {
-                        success: function(oReturn) {
-                            // var sPstdatei, sPstdatej ;
-                            var aPartnerAmt = aPartnerAmtTem;
-                            var aDatas = [];
-                            // debugger;
-                            for(var i = 0; i < oReturn.results.length  ; i++){
-                                // debugger;
-                                var sPstdatei, sPstdatej;
-                                var j = i + 1;
-                                sPstdatei = this._datefomatter(oReturn.results[i].Pstdate); //202304 , 202305
-                                
-                                if(i != oReturn.results.length - 1){
-                                    sPstdatej = this._datefomatter(oReturn.results[j].Pstdate); //202305, 202306
-                                };
-                                
-                                if(sPstdatei === sPstdatej){
-                                    for(var k = 0; k < aPartnerAll.length ; k++){
-                                        if(aPartnerAll[k] === oReturn.results[i].Partid){
-                                            aPartnerAmt[k] += Number(oReturn.results[i].Amt);
-                                            break;
-                                        }
-                                    }
-                                    // debugger;
-                                }
-                                // else if( i === oReturn.results.length - 1){
-                                //     for(var l = 0; l < aPartnerAll.length ; l++){
-                                //         if(aPartnerAll[l] === oReturn.results[i].Partid){
-                                //             aPartnerAmt[l] += Number(oReturn.results[i].Amt);
-                                //             break;
-                                //         }
-                                //     }
-                                //     // debugger;
-                                // }
-                                else {
-                                    for(var l = 0; l < aPartnerAll.length ; l++){
-                                        if(aPartnerAll[l] === oReturn.results[i].Partid){
-                                            aPartnerAmt[l] += Number(oReturn.results[i].Amt);
-                                            break;
-                                        }
-                                    };
-                                    var oData = {
-                                        year: sPstdatei.substr(0, 4), //20230401 ->2023
-                                        month: oReturn.results[i].Month              //'1'
-                                    };
-
-                                    for (var m = 0; m < aPartnerAll.length; m++) {
-                                        var key = aPartnerAll[m];
-                                        var value = aPartnerAmt[m];
-                                        oData[key] = value;
-                                    }
-                                    aDatas.push(oData);
-                                    aPartnerAmt = aPartnerAmtTem;
-                                    debugger;
-                                };
-
-                                //무한루프
-                                if(i === oReturn.results.length - 1){
-                                    var oData = {
-                                        year: sPstdatei.substr(0, 4), //20230401 ->2023
-                                        month: oReturn.results[i].Month              //'1'
-                                    };
-
-                                    for (var o = 0; o < aPartnerAll.length; o++) {
-                                        var key = aPartnerAll[o];
-                                        var value = aPartnerAmt[o];
-                                        oData[key] = value;
-                                    }
-                                    aDatas.push(oData);
-                                    aPartnerAmt = aPartnerAmtTem;
-                                };
-                            };
-                            this.oslipPartnerList.setProperty("/list", aDatas);
-                            this.oslipPartnerList.setProperty("/flist", aDatas);
-                            resolve();
-                        }.bind(this),
-                        error: function (oError) {
-                            reject(oError); // 데이터 가져오기에 실패했을 때 reject 호출
+                        }else{
+                            // aPartnerO.push({Patid : oDatai.Partid ,text: oDatai.Partcode+"-"+oDatai.Partid+"("+oDatai.Partname+")"});
+                            if(oDatai.Partcode === oDataj.Partcode){
+                                aPartnerO.push({text: oDatai.Partid+"("+oDatai.Partname+")"});
+                            }else{
+                                aPartnerO.push({text: oDatai.Partid+"("+oDatai.Partname+")"});
+                                aPartnercodeO.push({text:oDatai.Partcode+"("+oDatai.Partcodedesc+")",nodes:aPartnerO});
+                                aPartnerO = [];
+                            }
                         }
-                    });
-                }.bind(this));
-                // this.getOwnerComponent().getModel().read("/sliphSet", {
-                //     success: function(oReturn) {
-                //         for(var j = 0; j < oReturn.results.length; j++){
-                //             oPartnerList.push
-                //         }
-                //         oReturn.results
-                //     }.bind(this)
-                // });
+                    }
+                    this.oPartnerTreeList.setProperty("/ilist", {list:aPartnercodeI});
+                    this.oPartnerTreeList.setProperty("/olist", {list:aPartnercodeO});
+                    // this.oPartnerTreeList.setProperty("/ilist", {list:aPartnerI});
+                    // this.oPartnerTreeList.setProperty("/olist", {list:aPartnerO});
+                    this._getSlipData();
+            
+                  }.bind(this),
+                  error: function(error) {
+                    console.error("Failed to get partner data:", error);
+                  }
+                });
+              },
+              _getSlipData: function() {
+                var oDateRange = this.byId("idDateRangeSelection");
+                var aFilters = [];   
+                if (oDateRange.getValue()){ //'2023'
+                    var oFilter = new Filter("Year", "EQ", oDateRange.getValue());
+                }else{
+                    var oFilter =new Filter("Year", "EQ", String(new Date().getFullYear()));
+                }
+                aFilters.push(oFilter);
                 
-            },
+                var aPartnerList = this.opartnerList.getData().list.results;
+                var aPartnerMonthI = [];
+                var aPartnerMonthO = [];
+                
+                // 수정중**** 두개 나누는게 좋을것같아...아마도!
+                for(var i = 0; i < aPartnerList.length; i++){
+                    if(aPartnerList[i].Inoutcome === 'I'){
+                        var oPartnerMonth = {
+                            partid:aPartnerList[i].Partid,
+                            1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0,11:0,12:0}
+                        aPartnerMonthI.push(oPartnerMonth);
+                    }else{
+                        var oPartnerMonth = {
+                            partid:aPartnerList[i].Partid,
+                            1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0,11:0,12:0}
+                        aPartnerMonthO.push(oPartnerMonth);
+                    }
+                }
+
+                this.getOwnerComponent().getModel().read("/sliphSet", {
+                  filters: aFilters,
+                  success: function(oReturn) {
+                    // debugger;
+                    // for(var i = 0; i < oReturn.results.length; i++){
+                    //     for(var j = 1; j <= 12 ; j++){
+                    //         if(oReturn.results[i].Month === j){
+
+                    //         }else{
+
+                    //         }
+                    //     }
+                    // }
+                  }.bind(this),
+                  error: function(error) {
+                    console.error("Failed to get slip data:", error);
+                  }
+                });
+              },
+            // _getData : function(){
+            //     var aPartnerI = [];
+            //     var aPartnerO = [];
+            //     var aPartnercodeI = [];
+            //     var aPartnercodeO = [];
+            //     this.getOwnerComponent().getModel().read("/employeeSet", {
+            //         success: function(oReturn) {
+            //             this.empid = oReturn.results[0].Employeeid;
+            //             this.byId("idAtUserName").setText(`${oReturn.results[0].Name}(${this.empid})`);
+            //             this.byId("idAtDept").setText(`${oReturn.results[0].Deptname}`);
+            //             this.byId("idLabeluname").setText(`${oReturn.results[0].Deptname} ${oReturn.results[0].Name}(${oReturn.results[0].Employeeid})`);
+            //         }.bind(this)
+            //     });
+
+            //     this.getOwnerComponent().getModel().read("/partnerSet", {
+            //         success: function(oReturn) {
+            //             this.opartnerList.setProperty("/list", oReturn);
+            //             for(var i = 0; i < oReturn.results.length; i++){ //0 6
+            //                 var oDatai = oReturn.results[i];
+            //                 var j = i + 1;
+            //                 var oDataj = oReturn.results[j] === undefined ? { Partcode : ''} : oReturn.results[j] ;
+            //                 if(oDatai.Inoutcome === 'I'){
+            //                     // aPartnerI.push({Patid : oDatai.Partid ,text: oDatai.Partcode+"-"+oDatai.Partid+"("+oDatai.Partname+")"});
+            //                     if(oDatai.Partcode === oDataj.Partcode){
+            //                         aPartnerI.push({text: oDatai.Partid+"("+oDatai.Partname+")"});
+            //                     }else{
+            //                         aPartnerI.push({text: oDatai.Partid+"("+oDatai.Partname+")"});
+            //                         aPartnercodeI.push({text: oDatai.Partcode+"("+oDatai.Partcodedesc+")",nodes:aPartnerI});
+            //                         aPartnerI = [];
+            //                     }
+            //                 }else{
+            //                     // aPartnerO.push({Patid : oDatai.Partid ,text: oDatai.Partcode+"-"+oDatai.Partid+"("+oDatai.Partname+")"});
+            //                     if(oDatai.Partcode === oDataj.Partcode){
+            //                         aPartnerO.push({text: oDatai.Partid+"("+oDatai.Partname+")"});
+            //                     }else{
+            //                         aPartnerO.push({text: oDatai.Partid+"("+oDatai.Partname+")"});
+            //                         aPartnercodeO.push({text:oDatai.Partcode+"("+oDatai.Partcodedesc+")",nodes:aPartnerO});
+            //                         aPartnerO = [];
+            //                     }
+            //                 }
+            //             }
+            //             this.oPartnerTreeList.setProperty("/ilist", {list:aPartnercodeI});
+            //             this.oPartnerTreeList.setProperty("/olist", {list:aPartnercodeO});
+            //             // this.oPartnerTreeList.setProperty("/ilist", {list:aPartnerI});
+            //             // this.oPartnerTreeList.setProperty("/olist", {list:aPartnerO});
+                        
+            //             // var oTree1 = this.byId("idTree1"); // 트리 컨트롤 식별자
+            //             // var oTree2 = this.byId("idTree2"); // 트리 컨트롤 식별자
+            //             // debugger;
+            //             // // 트리 컨트롤의 선택 모드를 "다중 선택"에서 "단일 선택"으로 변경
+            //             // oTree1.setSelectionMode(sap.ui.commons.TreeSelectionMode.Single);
+
+            //             // // 트리 컨트롤의 선택 모드를 "다중 선택"에서 "단일 선택(하위 항목 선택 가능)"으로 변경
+            //             // oTree1.setSelectionMode(sap.ui.commons.TreeSelectionMode.SingleToggle);
+
+            //         }.bind(this)
+            //     });
+            //     this._getSlipData();
+            // },
+            // _getSlipData : function(){
+            //     var oDateRange = this.byId("idDateRangeSelection");
+            //     // var oDateRange2 = this.byId("idDateRangeSelection2");
+            //     var aFilters = [];    
+
+            //     if (oDateRange.getValue()){ //'2023'
+            //         var oFilter = new Filter("Year", "EQ", oDateRange.getValue());
+            //     }else{
+            //         var oFilter =new Filter("Year", "EQ", String(new Date().getFullYear()));
+            //     }
+            //     aFilters.push(oFilter);
+
+            //     // if (oDateRange2.getValue()){ //'2023'
+            //     //     var oFilter = new Filter("Year", "BT", oDateRange2.getFrom(),oDateRange2.getTo());
+            //     // }
+            //     // aFilters.push(oFilter);
+            //     // debugger;
+            //     var aPartnerList = this.opartnerList.getData();
+            //     debugger;
+
+            //     // for(var i = 0; i < this.opartnerList.get){
+
+            //     // }
+
+            //     this.getOwnerComponent().getModel().read("/sliphSet", {
+            //         filters: aFilters,
+            //         success: function(oReturn) {
+            //             // debugger;
+            //             // for(var i = 0; i < oReturn.results.length; i++){
+            //             //     for(var j = 1; j <= 12 ; j++){
+            //             //         if(oReturn.results[i].Month === j){
+
+            //             //         }else{
+
+            //             //         }
+            //             //     }
+            //             // }
+            //         }.bind(this)
+            //     });
+
+            //     this._setCharrInController();
+            // },
             _setCharrInController : function(){
                 var oChart = this.byId("idViewChart2");
                 var aMeasureD = []; //[{name : "PAT07" , value : "{slipPartnerList>PAT07}"}]
@@ -240,31 +317,90 @@ sap.ui.define([
                 return oDateTimeInstance.format(date);
             },
             onSearch : function(){
-                // debugger;
-                var oDateRange = this.byId("idDateRangeSelection");
-                // var aFilter = [];
                 
+                this._getSlipData();
 
-                if (oDateRange.getValue()){
-                    var arr = this.oslipPartnerList.getData().list.filter(
-                        function(item){
-                            return item.year === oDateRange.getValue();
-                        }
-                    );
-                    this.oslipPartnerList.setProperty("/flist",[]);
-                    this.oslipPartnerList.setProperty("/flist",arr);
-                    // var arr = this.oslipPartnerList.filter(function(){
-                        
-                    // })
-                    debugger;
-                    // aFilter.push(new Filter("year", "EQ", oDateRange.getValue()));
-                    // // debugger;
-                };
+                
                 
                 // oTable.getBinding("rows").filter(aFilter);
             },
-            onSelectionChange : function(oEvent){
-                debugger;
+            onSelectionChange1 : function(oEvent){
+                // var selectedNode = oEvent.getParameter("listItem");
+                // var tree = oEvent.getSource();
+                // var model = tree.getModel("PartnerTreeList");
+
+                // // 부모 노드인지 확인
+                // if (selectedNode.getNodes && selectedNode.getNodes().length > 0) {
+                //     // 부모 노드 선택 시 자식 노드들도 선택
+                //     var nodes = selectedNode.getNodes();
+                //     for (var i = 0; i < nodes.length; i++) {
+                //     var path = nodes[i].getBindingContextPath();
+                //     tree.setSelectedItem(tree.getItemByContextPath(path), true);
+                //     }
+                // } else {
+                //     // 자식 노드 선택 시 부모 노드도 선택
+                //     var parentPath = selectedNode.getBindingContextPath() + "/..";
+                //     tree.setSelectedItem(tree.getItemByContextPath(parentPath), true);
+                // }
+
+                var selectedItems = oEvent.getParameter("listItems");
+                var tree = oEvent.getSource();
+
+                // selectedItems.forEach(function(item) {
+                //     var isParentNode = item.getBindingContext("PartnerTreeList").getProperty("nodes");
+                //     if (isParentNode && isParentNode.length > 0) {
+                //     var childNodes = isParentNode;
+                //     childNodes.forEach(function(child) {
+                //         var path = item.getBindingContext("PartnerTreeList").getPath() + "/nodes/" + child.text;
+                //         var treeItem = tree.getItems().find(function(item) {
+                //         return item.getBindingContext("PartnerTreeList").getPath() === path;
+                //         });
+                //         if (treeItem) {
+                //         tree.setSelectedItem(treeItem, true);
+                //         }
+                //     });
+                //     }
+                // });
+                
+
+                // var allItems = tree.getItems();
+                // var selectedContextPaths = selectedItems.map(function(item) {
+                //     return item.getBindingContextPath();
+                // });
+
+                // allItems.forEach(function(item) {
+                //     var itemContextPath = item.getBindingContextPath();
+                //     var parentNodeSelected = selectedContextPaths.some(function(path) {
+                //     return path.startsWith(itemContextPath) && path !== itemContextPath;
+                //     });
+
+                //     if (parentNodeSelected) {
+                //     tree.setSelectedItem(item, true);
+                //     }
+                // });      
+
+                // //됨
+                // selectedItems.forEach(function(item) {
+                //     var isParentNode = item.getBindingContext("PartnerTreeList").getProperty("nodes");
+                //     if (isParentNode && isParentNode.length > 0) {
+                //         tree.removeSelections([item]);
+                //     }
+                // });
+                
+                // var selectedItems = oEvent.getParameter("listItems");
+                // var tree = oEvent.getSource();
+
+                // // Parent 노드 선택 해제
+                // var invalidSelections = selectedItems.filter(function(item) {
+                //     return item.getParent();
+                // });
+
+                // invalidSelections.forEach(function(item) {
+                //     tree.removeSelections([item]);
+                // });
             }
+            // onSelectionChange : function(oEvent){
+            //     debugger;
+            // }
         });
     });

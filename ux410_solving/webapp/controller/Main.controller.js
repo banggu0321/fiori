@@ -21,6 +21,10 @@ sap.ui.define([
                     };
 
                 this.getView().setModel(new JSONModel(datas),"typeList");
+
+                if(_rootPath){
+                    this.byId("idImage").setSrc(_rootPath + '/image/pinggu.png');
+                }
             },
             onSearch: function(){
                 var oComboBox1 = this.byId("idComboBox1");
