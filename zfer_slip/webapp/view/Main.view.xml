@@ -183,14 +183,19 @@
 				id="idSlipbeforeTable"
 				rows="{slipBefore>/blist}"
 				rowActionCount="1"
-				selectionMode="MultiToggle"
+				selectionMode="MultiToggle" 
 				visibleRowCountMode="Auto"
 				paste="onPaste"
 				ariaLabelledBy="title">
+				<!-- visibleRowCount="50" -->
 				<t:extension>
 					<OverflowToolbar style="Clear" height="3em">
 						<Title id="title" text="Document" level="H1"/>
 						<ToolbarSpacer/>
+						<Button
+							icon="sap-icon://activities"
+							tooltip="Select Row Creation Required"
+							press="SelectRequiredIndices"/>
 						<Button
 							icon="sap-icon://filter"
 							tooltip="Clear all sortings"
@@ -203,16 +208,13 @@
 					</OverflowToolbar>
 				</t:extension>
 				<t:columns>
-					<t:Column width="7rem" hAlign="Center">
+					<t:Column id="statusColumn" sortProperty="Status" sorted="true" width="7rem" hAlign="Center">
 						<Label text="상태" />
 						<t:template >
-							<!-- <FlexBox direction="Row" alignItems="Start" class="sapUiTinyMarginBottom"> -->
-								<!-- <Text text="Color Scheme 4" class="sapUiTinyMarginEnd"/> -->
-								<tnt:InfoLabel id="infolabel" renderMode="Loose" 
-									colorScheme="{= (${slipBefore>Status}) === 'Incomplete' ? 4 : 9}"
-									text="{slipBefore>Status}" />
-							<!-- </FlexBox> -->
-							<!-- <Text text="{slipBefore>Status}" wrapping="false" /> -->
+							<tnt:InfoLabel id="infolabel" renderMode="Loose" 
+								colorScheme="{= (${slipBefore>Status}) === 'Necessary' ? 3 : 1}"
+									displayOnly= "{= (${slipBefore>Status}) === 'Necessary' ? false : true}" 
+								text="{slipBefore>Status}" />
 						</t:template>
 					</t:Column>
 					<t:Column sortProperty="Docnum" sorted="true" width="11rem" hAlign="Center">
@@ -224,6 +226,56 @@
 					<t:Column width="11rem" hAlign="Center">
 						<Label text="전표상세" />
 						<t:template>
+							<!-- <t:Table
+								id="idSlipDetailTable"
+								rows="{slipI>/select}"
+								selectionMode="None"
+								visibleRowCount="3"
+								paste="onPaste"
+								selectionBehavior="RowOnly"
+								ariaLabelledBy="title"
+								rowSelectionChange="onSelectionChange">
+								<t:columns>
+									<t:Column width="3rem">
+										<Label text="계정코드" />
+										<t:template>
+											<Text text="{slipI>Accocode}({slipI>Acconm})" wrapping="false" />
+										</t:template>
+									</t:Column>
+									<t:Column width="4rem">
+										<Label text="차변" />
+										<t:template>
+											<Input id="idDetailTableInput1" 
+												value="{
+													parts: [
+														{ path: 'slipI>Dcindicator' },
+														{ path: 'slipI>Amt' },
+														{ path: 'slipI>Tax' }
+													],
+													formatter: '.formatter.dcindicator3Text'
+													}" 
+												enabled="false" 
+												change="onChange"/>
+										</t:template>
+									</t:Column>
+									<t:Column width="4rem">
+										<Label text="대변" />
+										<t:template>
+											<Input id="idDetailTableInput2" 
+												value="{
+													parts: [
+														{ path: 'slipI>Dcindicator' },
+														{ path: 'slipI>Amt' },
+														{ path: 'slipI>Tax' }
+													],
+													formatter: '.formatter.dcindicator4Text'
+													}" 
+												enabled="false"
+												change="onChange" />
+										</t:template>
+									</t:Column>
+								</t:columns>
+							</t:Table>  -->
 							<Button text="Show Details" press="onDetailBtn"/>
 						</t:template>
 					</t:Column>

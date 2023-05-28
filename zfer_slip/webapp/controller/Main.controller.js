@@ -87,9 +87,6 @@ sap.ui.define([
                 this.oTable = this.byId("idSlipbeforeTable");
             },
             _getdata : function(){
-                // this.oSlipBefore
-                // this.oslipH
-                // this.oslipI
                 this.oSlipBefore.setData({});
                 this.oslipH.setData({});
                 this.oslipI.setData({});
@@ -105,9 +102,15 @@ sap.ui.define([
                         // debugger;
                         console.log("wbatso데이터성공");
                         for(var i = 0 ; i < oReturn.results.length; i++){
+                            var sStatus;
+                            if(oReturn.results[i].Indate < new Date(new Date().getFullYear(), new Date().getMonth(), 1)){
+                                sStatus = "Necessary";
+                            }else{
+                                sStatus = "Irrelevant"; //Irrelevant
+                            }
                             // debugger;
                             tabledatas.push({
-                                Status : "Incomplete",
+                                Status : sStatus,
                                 Docnum : oReturn.results[i].Batterysoid,
                                 Partid : oReturn.results[i].Partnerid,
                                 Partname : oReturn.results[i].Partname,
@@ -168,6 +171,7 @@ sap.ui.define([
                         };
                         this.oSlipBefore.setProperty("/blist",tabledatas);
                         this.byId("idObjNum").setNumber(snum);
+                        this._sortStatus();
                     }.bind(this)
                 });
 
@@ -180,9 +184,15 @@ sap.ui.define([
                         // debugger;
                         console.log("rental데이터성공");
                         for(var i = 0 ; i < oReturn.results.length; i++){
+                            var sStatus;
+                            if(oReturn.results[i].Fdate < new Date(new Date().getFullYear(), new Date().getMonth(), 1)){
+                                sStatus = "Necessary";
+                            }else{
+                                sStatus = "Irrelevant";
+                            }
                             // debugger;
                             tabledatas.push({
-                                Status : "Incomplete",
+                                Status : sStatus,
                                 Docnum : oReturn.results[i].Rentalid,
                                 Partid : oReturn.results[i].Partnerid,
                                 Partname : oReturn.results[i].Partname,
@@ -244,6 +254,7 @@ sap.ui.define([
                         };
                         this.oSlipBefore.setProperty("/blist",tabledatas);
                         this.byId("idObjNum").setNumber(snum);
+                        this._sortStatus();
                     }.bind(this)
                 });
                 
@@ -256,9 +267,15 @@ sap.ui.define([
                         // debugger;
                         console.log("auto데이터성공");
                         for(var i = 0 ; i < oReturn.results.length; i++){
+                            var sStatus;
+                            if(oReturn.results[i].Autodat < new Date(new Date().getFullYear(), new Date().getMonth(), 1)){
+                                sStatus = "Necessary";
+                            }else{
+                                sStatus = "Irrelevant";
+                            }
                             // debugger;
                             tabledatas.push({
-                                Status : "Incomplete",
+                                Status : sStatus,
                                 Docnum : oReturn.results[i].Autonum,
                                 Partid : oReturn.results[i].Partid,
                                 Partname : oReturn.results[i].Partname,
@@ -320,9 +337,16 @@ sap.ui.define([
                         };
                         this.oSlipBefore.setProperty("/blist",tabledatas);
                         this.byId("idObjNum").setNumber(snum);
+                        this._sortStatus();
                     }.bind(this)
                 });
                 // debugger;
+            },
+            _sortStatus:function(){
+                this.oSlipBefore.getData().blist.sort(function(a, b) {
+                    return b.Status.localeCompare(a.Status);
+                });
+                this.oSlipBefore.setData(this.oSlipBefore.getData().blist);
             },
             getToday : function(){
                 var date = new Date();
@@ -382,14 +406,24 @@ sap.ui.define([
                 // }
             },
             onDetailBtn :function(oEvent){
+                // debugger;
                 var oSelectData = oEvent.getSource().getParent().getRowBindingContext().getObject();
                 var aSlipHData = this.oslipH.getData().hlist;
                 var aSlipIData = this.oslipI.getData().ilist;
                 var aSlipBeforeData = this.oSlipBefore.getData().blist;
                 var aSlipidatas = [];
+
+                var selectedIndices = this.oTable.getSelectedIndices();
+                selectedIndices.push(oEvent.getSource().getParent().getIndex());
+                selectedIndices.forEach(function(item){
+                    this.oTable.addSelectionInterval(selectedIndices[item], selectedIndices[item]);
+                }.bind(this));
+                // this.oTable.addSelectionInterval(selectedIndices[0], selectedIndices[selectedIndices.length - 1]);
+                // debugger;
+
+                // this.oTable.setSelectedIndex(oEvent.getSource().getParent().getIndex());
                 for(var i = 0; i < aSlipHData.length; i++){
                     if(aSlipHData[i].Docnum == oSelectData.Docnum){
-                        // debugger;
                         this.oslipH.setProperty("/select",aSlipHData[i]);
                         this.oslipH.setProperty("/selectBefore",aSlipBeforeData[i]);
                         this.sRollbackAmt = aSlipBeforeData[i].Amount;
@@ -397,14 +431,12 @@ sap.ui.define([
                         for(var j = 0; j < aSlipIData.length ; j++){
                             if(aSlipIData[j].Slipid == aSlipHData[i].Slipid){
                                 aSlipidatas.push(aSlipIData[j]);
-                                // debugger;
                             }
                         }
                         this.oslipI.setProperty("/select",aSlipidatas);
                         break;
                     };
                 }
-                // debugger;
 
                 var oDialog = this.byId("DetailDialog"); //DialogID
 
@@ -542,35 +574,6 @@ sap.ui.define([
                     }
                 }.bind(this));
             },
-            // _popupconfirm : function(sSaveCancel){
-            //     new sap.m.Dialog({
-            //         title: "확인",
-            //         type: sap.m.DialogType.Message,
-            //         content: new sap.m.Text({
-            //           text: "변경 사항을 " + sSaveCancel + "하시겠습니까?"
-            //         }),
-            //         beginButton: new sap.m.Button({
-            //           text: "예",
-            //           press: function () {
-            //             // 저장 버튼을 눌렀을 때의 동작 처리
-            //             this.getParent().close();
-            //             setTimeout(function () {
-            //                 return true;
-            //             }, 0);
-            //           }
-            //         }),
-            //         endButton: new sap.m.Button({
-            //           text: "아니오",
-            //           press: function () {
-            //             // 취소 버튼을 눌렀을 때의 동작 처리
-            //             this.getParent().close();
-            //           }
-            //         }),
-            //         afterClose: function () {
-            //           this.destroy();
-            //         }
-            //     }).open();
-            // },
             _popupconfirm: function (sSaveCancel, callback) {
                 var dialog = new sap.m.Dialog({
                   title: "확인",
@@ -648,11 +651,7 @@ sap.ui.define([
                             let skey = Number(sPath.substr(7));
         
                             oSlipCreateHData = aSlipHData[skey];
-                            // debugger;
-                            // //디버깅 부분 그냥 다 안되고 있음 - prfdate type문제(문자열일때) + Pstdate type문제(T00타입일떄)
-                            // // ***살ㄹ줘 
-                            // 나머지 create넣고,, 로직상에서 날짜 찾아야하는건 아니지......
-        
+                            
                             oSlipCreateHData.Prfdate = new Date(oSlipCreateHData.Prfdate);
                             oSlipCreateHData.Pstdate = new Date();
         
@@ -713,21 +712,77 @@ sap.ui.define([
                     }
                 }.bind(this));
             },
+            SelectRequiredIndices : function(){debugger;
+                var oColumn = this.byId("statusColumn"); // 정렬할 열의 ID에 맞게 변경
+                this.oTable.sort(oColumn, sap.ui.table.SortOrder.Descending, false);
+
+                var aData = this.oTable.getBinding().getModel().getProperty("/");
+                // var aRows = this.oTable.getRows();
+                var aSelectedRows = [];
+
+                for (var i = 0; i < aData.length; i++) {
+                  if (aData[i].Status === 'Necessary') {
+                    aSelectedRows.push(aData[i]);
+                    this.oTable.addSelectionInterval(i, i);
+                  }
+                }
+                // for (var i = 0; i < aRows.length; i++) {
+                //     var oRow = aRows[i];
+                //     var oContext = oRow.getRowBindingContext();
+                //     // debugger;
+                //     var oData = oContext.getObject();
+                    
+                //     if (oData.Status === 'Necessary') {
+                //       aSelectedRows.push(oData);
+                //       oRow.setSelected(true);
+                //     }
+                //   }
+
+                // var oBinding = this.oTable.getBinding("rows");
+                // var aRows = [];
+              
+                // if (oBinding) {
+                //   for (var i = 0; i < oBinding.getLength(); i++) {
+                //     var oRow = this.oTable.getRows()[i];
+                //     aRows.push(oRow);
+                //   }
+                // }
+                // debugger;
+                // for (var j = 0; j < aRows.length; j++) {
+                //     var oContext = aRows[j].getRowBindingContext(); // 또는 oRow.getBindingContextPath()를 사용하여 경로를 가져올 수 있습니다.
+                //     // debugger;
+                //     var sStatus = oContext.getObject("Status");
+                
+                //     if (sStatus === "Necessary") {
+                //         // debugger;
+                //         aRows[j]._setSelected(true); // 선택된 행으로 설정
+                //     }
+                //   }
+
+                // var aRows = this.oTable.getRows();
+              
+                // for (var i = 0; i < aRows.length; i++) {
+                //   var oRow = aRows[i];
+                //   var oContext = oRow.getBindingContext(); // 또는 oRow.getBindingContextPath()를 사용하여 경로를 가져올 수 있습니다.
+                //   var sStatus = oContext.getProperty("Status");
+              
+                //   if (sStatus === "Necessary") {
+                //     oRow.setSelected(true); // 선택된 행으로 설정
+                //   }
+                // }
+            },
             clearAllSortings: function(oEvent) {
-                var oTable = this.byId("idSlipbeforeTable");
-                oTable.getBinding().sort(null);
+                this.oTable.getBinding().sort(null);
                 this._resetSortingState();
             },
             _resetSortingState: function() {
-                var oTable = this.byId("idSlipbeforeTable");
-                var aColumns = oTable.getColumns();
+                var aColumns = this.oTable.getColumns();
                 for (var i = 0; i < aColumns.length; i++) {
                     aColumns[i].setSorted(false);
                 }
             },
             clearSelection : function(){
-                this.byId("idSlipbeforeTable").clearSelection();
-
+                this.oTable.clearSelection();
             }
         });
     });

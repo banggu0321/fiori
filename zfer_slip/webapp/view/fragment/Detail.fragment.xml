@@ -34,7 +34,6 @@
 				<f:SimpleForm id="SimpleFormChangeColumn_oneGroup234"
 					editable="true"
 					layout="ColumnLayout"
-					title="Address"
 					columnsM="2"
 					columnsL="3"
 					columnsXL="4">
@@ -59,7 +58,7 @@
 							enabled="false"/>
 						<Label text="협력사" />
 						<Input value="{slipH>/select/Partid}({slipH>/select/Partname})" enabled="false"/>
-						<Label text="총금액" />
+						<Label text="총 금액" />
 						<Input id="idTotalAmt" value="{slipH>/selectBefore/Amount}" enabled="false"/>
                     </f:content>
                 </f:SimpleForm>
