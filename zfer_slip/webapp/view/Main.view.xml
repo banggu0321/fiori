@@ -108,77 +108,6 @@
 			</f:DynamicPageHeader>
 		</f:header>
 		<f:content>
-			<!-- <Table id="idSlipbeforeTable"
-					mode="MultiSelect"
-					sticky="HeaderToolbar,ColumnHeaders"
-					items="{
-						path: 'slipBefore>/list'
-					}"
-					class="sapFDynamicPageAlignContent"
-					
-					width="auto">
-				<headerToolbar>
-					<Toolbar>
-						<Title text="Products" level="H2"/>
-					</Toolbar>
-				</headerToolbar>
-				<columns>
-					<Column
-							width="12em">
-						<Text text="상태" />
-					</Column>
-					<Column
-							minScreenWidth="Tablet"
-							demandPopin="true">
-						<Text text="문서번호" />
-					</Column>
-					<Column
-							minScreenWidth="Tablet"
-							demandPopin="true"
-							hAlign="End">
-						<Text text="전표상세" />
-					</Column>
-					<Column
-							hAlign="End">
-						<Text text="협력사ID" />
-					</Column>
-					<Column
-							hAlign="End">
-						<Text text="전표유형" />
-					</Column>
-					<Column
-							hAlign="End">
-						<Text text="증빙일자" />
-					</Column>
-					<Column
-							hAlign="End">
-						<Text text="금액/단위" />
-					</Column>
-				</columns>
-				<items>
-					<ColumnListItem>
-						<cells>
-							<Text text="{slipBefore>status}" />
-							<Text text="{slipBefore>docnum}" />
-							<Button text="상세보기" press="onDetailBtn" ></Button>
-							<Text text="{slipBefore>partid}" />
-							<Text text="{slipBefore>sliptype}" />
-							<Text 
-								text="{
-											path: 'slipBefore>prfdate',
-											formatter: '.formatter.dateTime'
-										}" />
-							<ObjectNumber
-									number="{
-										parts:[{path:'slipBefore>amount'},{path:'slipBefore>curkey'}],
-										type: 'sap.ui.model.type.Currency',
-										formatOptions: {showMeasure: false}
-									}"
-									unit="{slipBefore>curkey}" />
-						</cells>
-					</ColumnListItem>
-				</items>
-			</Table> -->
 			<t:Table
 				id="idSlipbeforeTable"
 				rows="{slipBefore>/blist}"
@@ -194,14 +123,17 @@
 						<ToolbarSpacer/>
 						<Button
 							icon="sap-icon://activities"
+							text="All Necessary"
 							tooltip="Select Row Creation Required"
 							press="SelectRequiredIndices"/>
 						<Button
 							icon="sap-icon://filter"
+							text="Filter Off"
 							tooltip="Clear all sortings"
 							press="clearAllSortings"/>
 						<Button
 							icon="sap-icon://decline"
+							text="Deselect All"
 							tooltip="clear selection"
 							press="clearSelection"/>
 						<Button type="Accept" text="Create Slip" press="onPressAcceptBtn"/>
@@ -291,7 +223,7 @@
 							<ObjectIdentifier  title="{slipBefore>Sliptype}" text="{slipBefore>Sliptypedesc}"/>
 						</t:template>
 					</t:Column>
-					<t:Column sortProperty="Prfdate" sorted="true" width="11rem" hAlign="Center">
+					<t:Column id="PrfdateColumn" sortProperty="Prfdate" sorted="true" width="11rem" hAlign="Center">
 						<Label text="증빙일자" />
 						<t:template>
 							<Text text="{

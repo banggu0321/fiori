@@ -5,7 +5,7 @@
 	xmlns:f="sap.ui.layout.form"
 	xmlns:l="sap.ui.layout"
     xmlns="sap.m">
-    <Dialog id="DetailDialog" contentWidth="44rem" draggable="true" resizable="true" title="전표상세보기">
+    <Dialog id="DetailDialog" contentWidth="44rem" draggable="true" resizable="true" title="Slip Details">
         <content>
             <VBox>
                 <!-- <f:SimpleForm id="SimpleFormChange354"

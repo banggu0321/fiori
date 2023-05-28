@@ -359,7 +359,7 @@ sap.ui.define([
             onSearch: function(){
                 var oComboBox = this.byId("idComboBox1");
                 var oDateRange = this.byId("idDateRangeSelection");
-                var oTable = this.byId("idSlipbeforeTable");
+                // var oTable = this.byId("idSlipbeforeTable");
                 var aFilter = [];
                 var sFilter1 = '';
 
@@ -385,7 +385,7 @@ sap.ui.define([
                     // debugger;
                 };
                 
-                oTable.getBinding("rows").filter(aFilter);
+                this.oTable.getBinding("rows").filter(aFilter);
                    
                     // if(oDateRange.getValue()) {
                     //     // debugger;
@@ -442,8 +442,9 @@ sap.ui.define([
 
                 if (oDialog){
                     oDialog.open();
-                    this.byId("idSlipDetailTable").unbindRows();
-                    this.byId("idSlipDetailTable").bindRows("slipI>/select");
+                    var oDTable = this.byId("idSlipDetailTable");
+                    oDTable.unbindRows();
+                    oDTable.bindRows("slipI>/select");
                     return;                    
                 }
                 
@@ -464,6 +465,8 @@ sap.ui.define([
                       for (var j = index.length - 1; j >= 0; j--) {
                         oTable.getRows()[index[j]].getCells()[2].setEnabled(false);
                         oTable.getRows()[index[j]].getCells()[3].setEnabled(false);
+                        oTable.getRows()[index[j]].getCells()[2].setValueState('None');
+                        oTable.getRows()[index[j]].getCells()[3].setValueState('None');
                       }
                     //   debugger;
                       this.byId("idTotalAmt").setValue(this.sRollbackAmt);
@@ -501,7 +504,6 @@ sap.ui.define([
                             aRows[rowIndex].getCells()[3].setEnabled(false);
                         };
                     }
-                    
                 }
                 
             },
@@ -568,8 +570,8 @@ sap.ui.define([
                             oDialog.close();
                             MessageToast.show("변경 저장");
                             oTable.clearSelection();
-                            this.byId("idSlipbeforeTable").unbindRows();
-                            this.byId("idSlipbeforeTable").bindRows("slipBefore>/blist");
+                            oTable.unbindRows();
+                            oTable.bindRows("slipBefore>/blist");
                         }
                     }
                 }.bind(this));
@@ -601,7 +603,6 @@ sap.ui.define([
                     dialog.destroy();
                   }
                 });
-              
                 dialog.open();
             },
             onChange : function(oEvent){
@@ -630,7 +631,6 @@ sap.ui.define([
             onPressAcceptBtn : function(){
                 this._popupconfirm("전표를 생성", function (bConfirm) {
                     if (bConfirm) {
-                        var oTable = this.byId("idSlipbeforeTable");
                         var aSlipHData = this.oslipH.getData().hlist;
                         var aSlipIData = this.oslipI.getData().ilist;
                         var oSlipCreateHData , oSlipCreateIData;
@@ -639,7 +639,7 @@ sap.ui.define([
                         var promises = [];
         
                         // debugger;
-                        let index = oTable.getSelectedIndices(); // [0,4,7]
+                        let index = this.oTable.getSelectedIndices(); // [0,4,7]
         
                         if (index.length === 0) {
                             MessageToast.show("행을 선택해주세요!");
@@ -647,7 +647,7 @@ sap.ui.define([
                         }
         
                         for(var i = 0; i < index.length; i++){
-                            let sPath = oTable.getContextByIndex(index[i]).getPath();
+                            let sPath = this.oTable.getContextByIndex(index[i]).getPath();
                             let skey = Number(sPath.substr(7));
         
                             oSlipCreateHData = aSlipHData[skey];
@@ -712,12 +712,20 @@ sap.ui.define([
                     }
                 }.bind(this));
             },
-            SelectRequiredIndices : function(){debugger;
-                var oColumn = this.byId("statusColumn"); // 정렬할 열의 ID에 맞게 변경
-                this.oTable.sort(oColumn, sap.ui.table.SortOrder.Descending, false);
+            SelectRequiredIndices : function(){
+                var oComboBox = this.byId("idComboBox1");
+                var oDateRange = this.byId("idDateRangeSelection");
+                // var oSColumn = this.byId("statusColumn");
+                var oPColumn = this.byId("PrfdateColumn");
+                oComboBox.setSelectedKey("");
+                oDateRange.setValue("");
+                this.oTable.unbindRows();
+                this.oTable.bindRows("slipBefore>/blist");
+
+                // this.oTable.sort(oSColumn, sap.ui.table.SortOrder.Descending, false);
+                this.oTable.sort(oPColumn, sap.ui.table.SortOrder.Ascending, false);
 
                 var aData = this.oTable.getBinding().getModel().getProperty("/");
-                // var aRows = this.oTable.getRows();
                 var aSelectedRows = [];
 
                 for (var i = 0; i < aData.length; i++) {
@@ -726,50 +734,6 @@ sap.ui.define([
                     this.oTable.addSelectionInterval(i, i);
                   }
                 }
-                // for (var i = 0; i < aRows.length; i++) {
-                //     var oRow = aRows[i];
-                //     var oContext = oRow.getRowBindingContext();
-                //     // debugger;
-                //     var oData = oContext.getObject();
-                    
-                //     if (oData.Status === 'Necessary') {
-                //       aSelectedRows.push(oData);
-                //       oRow.setSelected(true);
-                //     }
-                //   }
-
-                // var oBinding = this.oTable.getBinding("rows");
-                // var aRows = [];
-              
-                // if (oBinding) {
-                //   for (var i = 0; i < oBinding.getLength(); i++) {
-                //     var oRow = this.oTable.getRows()[i];
-                //     aRows.push(oRow);
-                //   }
-                // }
-                // debugger;
-                // for (var j = 0; j < aRows.length; j++) {
-                //     var oContext = aRows[j].getRowBindingContext(); // 또는 oRow.getBindingContextPath()를 사용하여 경로를 가져올 수 있습니다.
-                //     // debugger;
-                //     var sStatus = oContext.getObject("Status");
-                
-                //     if (sStatus === "Necessary") {
-                //         // debugger;
-                //         aRows[j]._setSelected(true); // 선택된 행으로 설정
-                //     }
-                //   }
-
-                // var aRows = this.oTable.getRows();
-              
-                // for (var i = 0; i < aRows.length; i++) {
-                //   var oRow = aRows[i];
-                //   var oContext = oRow.getBindingContext(); // 또는 oRow.getBindingContextPath()를 사용하여 경로를 가져올 수 있습니다.
-                //   var sStatus = oContext.getProperty("Status");
-              
-                //   if (sStatus === "Necessary") {
-                //     oRow.setSelected(true); // 선택된 행으로 설정
-                //   }
-                // }
             },
             clearAllSortings: function(oEvent) {
                 this.oTable.getBinding().sort(null);
