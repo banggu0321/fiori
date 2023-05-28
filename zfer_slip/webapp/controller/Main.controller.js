@@ -724,6 +724,10 @@ sap.ui.define([
                 for (var i = 0; i < aColumns.length; i++) {
                     aColumns[i].setSorted(false);
                 }
+            },
+            clearSelection : function(){
+                this.byId("idSlipbeforeTable").clearSelection();
+
             }
         });
     });

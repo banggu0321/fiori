@@ -185,17 +185,20 @@
 				rowActionCount="1"
 				selectionMode="MultiToggle"
 				visibleRowCountMode="Auto"
-				sort="sortDeliveryDate"
 				paste="onPaste"
 				ariaLabelledBy="title">
 				<t:extension>
-					<OverflowToolbar style="Clear" height="5em">
+					<OverflowToolbar style="Clear" height="3em">
 						<Title id="title" text="Document" level="H1"/>
 						<ToolbarSpacer/>
 						<Button
-							icon="sap-icon://decline"
+							icon="sap-icon://filter"
 							tooltip="Clear all sortings"
 							press="clearAllSortings"/>
+						<Button
+							icon="sap-icon://decline"
+							tooltip="clear selection"
+							press="clearSelection"/>
 						<Button type="Accept" text="Create Slip" press="onPressAcceptBtn"/>
 					</OverflowToolbar>
 				</t:extension>
@@ -246,15 +249,14 @@
 								wrapping="false" />
 						</t:template>
 					</t:Column>
-					<t:Column sortProperty="Amount"
-						 width="9rem" hAlign="Center" sorted="true">
+					<t:Column width="9rem" hAlign="Center">
 						<Label text="금액" />
 						<t:template>
 							<ObjectNumber
 								textAlign="End"
 								number="{
-									parts:[{path:'slipBefore>Amount'}],
-									type: 'sap.ui.model.type.Float',
+									parts:[{path:'slipBefore>Amount'},{path:'slipBefore>Curkey'}],
+									type: 'sap.ui.model.type.Currency',
 									formatOptions: {showMeasure: false}
 								}"
 								unit="{slipBefore>Curkey}" />

@@ -14,10 +14,10 @@ sap.ui.define([
         return Controller.extend("ER.zferslipchart.controller.Main", {
             onInit: function () {
                 
-                this.aPartnerAll = [];
+                // this.aPartnerAll = [];
                 this.getView().setModel(new JSONModel(),"slipAll");
                 this.getView().setModel(new JSONModel(),"partnerList");
-                this.getView().setModel(new JSONModel(),"slipPartnerList");
+                // this.getView().setModel(new JSONModel(),"slipPartnerList");
                 this.getView().setModel(new JSONModel(),"PartnerTreeList");
 
                 this._defaultSet();
@@ -40,8 +40,8 @@ sap.ui.define([
                 this.oModel = this.getOwnerComponent().getModel(); //oData
                 //json model 변수 세팅
                 this.opartnerList = this.getView().getModel("partnerList"); //partneList
-                //json model 변수 세팅
-                this.oslipPartnerList = this.getView().getModel("slipPartnerList"); //partnerList
+                // //json model 변수 세팅
+                // this.oslipPartnerList = this.getView().getModel("slipPartnerList"); //partnerList
                 //json model 변수 세팅
                 this.oPartnerTreeList = this.getView().getModel("PartnerTreeList"); //partnerList
                 //json model 변수 세팅
@@ -50,7 +50,7 @@ sap.ui.define([
             _getData: function() {
                 this._getEmployeeData();
                 this._getPartnerData();
-                this._setCharrInController();
+                // this._setCharrInController();
               },
               _getEmployeeData: function() {
                 this.getOwnerComponent().getModel().read("/employeeSet", {
@@ -73,7 +73,7 @@ sap.ui.define([
                 this.getOwnerComponent().getModel().read("/partnerSet", {
                   success: function(oReturn) {
                     this.opartnerList.setProperty("/list", oReturn);
-                    debugger;
+                    // debugger;
                     for(var i = 0; i < oReturn.results.length; i++){ //0 6
                         var oDatai = oReturn.results[i];
                         var j = i + 1;
@@ -123,40 +123,72 @@ sap.ui.define([
                 var aPartnerList = this.opartnerList.getData().list.results;
                 var aPartnerMonthI = [];
                 var aPartnerMonthO = [];
+                var aPartnerMonth = [];
                 
                 // 수정중**** 두개 나누는게 좋을것같아...아마도!
-                for(var i = 0; i < aPartnerList.length; i++){
-                    if(aPartnerList[i].Inoutcome === 'I'){
-                        var oPartnerMonth = {
-                            partid:aPartnerList[i].Partid,
-                            1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0,11:0,12:0}
-                        aPartnerMonthI.push(oPartnerMonth);
-                    }else{
-                        var oPartnerMonth = {
-                            partid:aPartnerList[i].Partid,
-                            1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0,11:0,12:0}
-                        aPartnerMonthO.push(oPartnerMonth);
-                    }
-                }
-
+                
+                //년도로 filter건 개수만 가져옴
                 this.getOwnerComponent().getModel().read("/sliphSet", {
                   filters: aFilters,
                   success: function(oReturn) {
-                    // debugger;
-                    // for(var i = 0; i < oReturn.results.length; i++){
-                    //     for(var j = 1; j <= 12 ; j++){
-                    //         if(oReturn.results[i].Month === j){
+                    for(var i = 0; i < aPartnerList.length; i++){
+                        var oPartnerMonth = {
+                            Partid:aPartnerList[i].Partid,
+                            Inoutcome:aPartnerList[i].Inoutcome,
+                            Total : 0,
+                            Curkey :'',
+                            1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0,11:0,12:0}
+                        aPartnerMonth.push(oPartnerMonth);
+                    };
+                    
+                    for(var i = 0; i < oReturn.results.length; i++){
+                        var Partid = oReturn.results[i].Partid;
+                        var Month = oReturn.results[i].Month;
+                        for(var j = 0; j<aPartnerMonth.length;j++){
+                            if(aPartnerMonth[j].Partid === Partid){
+                                // debugger;
+                                // debugger;
+                                aPartnerMonth[j][Month] += Number(oReturn.results[i].Amt);
+                                aPartnerMonth[j].Total += Number(oReturn.results[i].Amt);
+                                aPartnerMonth[j].Curkey = oReturn.results[i].Curkey;
+                                // debugger;
+                            }
+                        }
+                    }
+                    var data = [];
+                    aPartnerMonth.forEach(function(item){
+                        var partid = item.Partid;
+                        if(item.Inoutcome === 'I'){
+                            aPartnerMonthI.push(item);
+                        }else{
+                            aPartnerMonthO.push(item);
+                        }
+                        //확인하세요~~~~~ 여기부터~
 
-                    //         }else{
+                        // for (var i = 1; i <= 12; i++) {
+                        //     var amount = item[i];
+                        //     data.push({ Partid: partid, month: i, amount: amount });
+                        // }
 
-                    //         }
-                    //     }
-                    // }
+                    });
+                    this.oslipAll.setProperty("/ilist", aPartnerMonthI);
+                    this.oslipAll.setProperty("/olist", aPartnerMonthO);
+
+                    aPartnerMonth.forEach(function (item) {
+                        var partid = item.Partid;
+                        for (var i = 1; i <= 12; i++) {
+                            var amount = item[i];
+                            data.push({ Partid: partid, month: i, amount: amount });
+                        }
+                    });
+
                   }.bind(this),
                   error: function(error) {
                     console.error("Failed to get slip data:", error);
                   }
                 });
+                // debugger;
+                this._setCharrInController();
               },
             // _getData : function(){
             //     var aPartnerI = [];
@@ -260,26 +292,43 @@ sap.ui.define([
             //     this._setCharrInController();
             // },
             _setCharrInController : function(){
+                // debugger;
                 var oChart = this.byId("idViewChart2");
                 var aMeasureD = []; //[{name : "PAT07" , value : "{slipPartnerList>PAT07}"}]
-                // var aMeasureV = this.aPartnerAll; //["PAT07","PAT07","PAT07"...]
+                var aMeasureV = []; //["PAT07","PAT07","PAT07"...]
+                var aPartnerList = this.opartnerList.getData().list.results;
                     // debugger;
 
-                for (var p = 0; p < this.aPartnerAll.length; p++) {
-                    var measure = this.aPartnerAll[p];
-                    var measureData = {
-                      name: measure,
-                      value: "{slipPartnerList>" + measure + "}"
-                    };
-                    aMeasureD.push(measureData);
+                for (var p = 0; p < aPartnerList.length; p++) {
+                    if(aPartnerList[p].Inoutcome === 'O'){
+                        // debugger;
+                        var measure = aPartnerList[p].Partid;
+                        var measureData = {
+                          name: Partid,
+                          value: "{slipAll>Partid}"
+                        };
+                        aMeasureD.push(measureData);
+                        aMeasureV.push(measure);
+                    }
+                    // debugger;
                 }
                 var oColDataset = new FlattenedDataset({
                     dimensions : [
-                        {name : "년" , value : "{slipPartnerList>year}년"},
-                        {name : "월별" , value : "{slipPartnerList>month}월"}],
+                        {name : "1" , value : "{slipAll>1}월"},
+                        {name : "2" , value : "{slipAll>2}월"},
+                        {name : "3" , value : "{slipAll>3}월"},
+                        {name : "4" , value : "{slipAll>4}월"},
+                        {name : "5" , value : "{slipAll>5}월"},
+                        {name : "6" , value : "{slipAll>6}월"},
+                        {name : "7" , value : "{slipAll>7}월"},
+                        {name : "8" , value : "{slipAll>8}월"},
+                        {name : "9" , value : "{slipAll>9}월"},
+                        {name : "10" , value : "{slipAll>10}월"},
+                        {name : "11" , value : "{slipAll>11}월"},
+                        {name : "12" , value : "{slipAll>12}월"}],
                     measures : aMeasureD, 
                     data : {
-                        path : "slipPartnerList>/flist"
+                        path : "slipAll>/olist"
                     }
                 });
                 oChart.setDataset(oColDataset);
@@ -287,19 +336,19 @@ sap.ui.define([
                 var oFeedValueAxis = new FeedItem({
                    type : "Measure",
                     uid : "valueAxis",
-                    values : this.aPartnerAll
+                    values : aMeasureV
                 });
                 var oFeedCategoryAxis = new FeedItem({
                     type : "Dimension",
                      uid : "categoryAxis",
-                     values : ["년","월별"]
+                     values : ["1","2","3","4","5","6","7","8","9","10","11","12"]
                 });
 
                 oChart.addFeed(oFeedValueAxis);
                 oChart.addFeed(oFeedCategoryAxis);
-                // debugger;
+
                 oChart.setVizProperties({
-                    title: {text: '실적차트`'},
+                    title: {text: '실적차트'},
                     plotArea : {
                         drawingEffect: 'glossy',
                         dataLabel: { visible: true, type:'value'}
