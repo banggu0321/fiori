@@ -1,0 +1,92 @@
+<mvc:View controllerName="zferslipex.controller.Main"
+          xmlns:mvc="sap.ui.core.mvc"
+          xmlns="sap.m"
+          xmlns:f="sap.f"      
+          xmlns:viz="sap.viz.ui5.controls"
+          xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+          xmlns:viz.data="sap.viz.ui5.data">          
+    <f:DynamicPage>
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="EReON 지점별 차량 구매 오더 이력 차트" />
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+            <!-- <f:DynamicPageHeader>
+                <fb:FilterBar id="idFilterBar" header="Search Filters" useToolbar="false" search="onSearch" filterContainerWidth="10rem">
+                    <fb:filterGroupItems>
+                        <fb:FilterGroupItem groupName="__$INTERNAL$" name="branch" label="지점ID" visibleInFilterBar="true">
+                            <fb:control>
+                                <ComboBox
+                                    id="idComboBox"
+                                    showSecondaryValues="true"                                     
+                                    items="{
+                                        path: '>/list',
+                                        templateShareable: true
+                                    }">       
+                                    <core:ListItem
+                                        key="{branchList>branch}"
+                                        text="{branchList>branch}"
+                                        additionalText="{branchList>branchname}"/>
+                                </ComboBox>
+                            </fb:control>
+                        </fb:FilterGroupItem>
+                    </fb:filterGroupItems>
+                </fb:FilterBar>
+            </f:DynamicPageHeader> -->
+        </f:header>       
+        <f:content> 
+            <VBox> 
+                <HBox width="800px" height="500px">          
+                    <viz:VizFrame 
+                    id="idVizFrame2" 
+                    uiConfig="{applicationSet:'fiori'}"
+                    vizType='column'
+                    selectData="onChartSelectData">           
+                        <viz:dataset>
+                            <viz.data:FlattenedDataset id="idFlattendDataset2" data="{/sliphSet}">
+                                <viz.data:dimensions>
+                                    <viz.data:DimensionDefinition name="Branch" value="{Slipid}" />
+                                </viz.data:dimensions>
+                                <viz.data:measures>
+                                    <viz.data:MeasureDefinition name="Price" value="{Amt}"/>
+                                </viz.data:measures>
+                            </viz.data:FlattenedDataset>
+                        </viz:dataset>
+                        
+                        <viz:feeds>
+                            <viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="Branch" />                
+                            <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Price" />
+                        </viz:feeds>
+                    </viz:VizFrame> 
+                </HBox>   
+                <HBox width="800px" height="800px">                                                              
+                    <viz:VizFrame 
+                        id="idVizFrame" 
+                        uiConfig="{applicationSet:'fiori'}"
+                        vizType='bar'
+                        selectData="onChartSelectData">           
+                        <viz:dataset>
+                            <viz.data:FlattenedDataset id="idFlattendDataset" data="{/sliphSet}">
+                                <viz.data:dimensions>
+                                    <viz.data:DimensionDefinition name="Branch" value="{Slipid}" />
+                                    <!-- <viz.data:DimensionDefinition name="Branchname" value="{Branchname}" />
+                                    <viz.data:DimensionDefinition name="Ctyname" value="{Ctyname}" /> -->
+                                </viz.data:dimensions>
+                                <viz.data:measures>
+                                    <viz.data:MeasureDefinition name="Price" value="{Amt}"/>
+                                </viz.data:measures>
+                            </viz.data:FlattenedDataset>
+                        </viz:dataset>
+                        <viz:feeds>
+                            <viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="Branch" />                
+                            <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Price" />
+                        </viz:feeds>
+                    </viz:VizFrame>  
+                </HBox>        
+            </VBox>            
+        </f:content>            
+    </f:DynamicPage>
+</mvc:View>

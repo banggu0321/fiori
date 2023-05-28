@@ -8,73 +8,59 @@
     <Dialog id="DetailDialog" contentWidth="44rem" draggable="true" resizable="true" title="전표상세보기">
         <content>
             <VBox>
-                <f:SimpleForm id="SimpleFormChange354"
-                        editable="true"
-                        layout="ResponsiveGridLayout"
-                        title=""
-                        adjustLabelSpan="false"
-                        singleContainerFullSize="false" >
-                        <f:content>
-                            <l:Grid containerQuery="true" >
-                                <!-- <VBox > defaultSpan="XL1 L2 M3 S4" -->
-                                    <HBox >
-                                        <Label text="증빙문서번호" labelFor="idDocnum" />
-                                        <Text id="idDocnum" text="{slipH>/select/Docnum}" textAlign="Center"/>
-                                    </HBox>
-                                    <HBox >
-                                        <Label text="전표유형" />
-                                        <Input value="{slipH>/select/Sliptype}({slipH>/select/Sliptypedesc})" enabled="false"/>
-                                        <!-- <Input value="" enabled="false"/> -->
-                                    </HBox>
-                                    <HBox >
-                                        <Label text="증빙일자" />
-                                        <Input
-											value="{
-												path : 'slipH>/select/Prfdate',
-												formatter : '.formatter.dateTime'
-												}"   
-											enabled="false"/>
-                                    </HBox>
-                                    <HBox >
-                                        <Label text="전기일자" />
-                                        <Input 
-											value="{
-												path : 'slipH>/select/Pstdate',
-												formatter : '.formatter.dateTime2'
-												}"  
-											enabled="false"/>
-                                    </HBox>
-                                    <!-- <HBox >
-                                        <Label text="담당자id" />
-                                        <Input value="{slipH>/select/docnum}" enabled="false"/>
-                                    </HBox> -->
-                                    <HBox >
-                                        <Label text="협력사" />
-                                        <Input value="{slipH>/select/Partid}({slipH>/select/Partname})" enabled="false"/>
-                                    </HBox>
-                                    <HBox >
-                                        <Label text="총금액" />
-                                        <Input id="idTotalAmt" value="{slipH>/selectBefore/Amount}" enabled="false"/>
-                                    </HBox>
-                                <!-- </VBox> -->
-                                <!-- <VBox>
-                                    <Label text="OrderDate" />
-                                    <Input value="{}" enabled="false"/>
-                                </VBox>
-                                <VBox>
-                                    <Label text="label1"/>
-                                    <Input value="{}" enabled="false"/>
-                                </VBox>
-                                <VBox>
-                                    <Label text="label1"/>
-                                    <Input value="{}" enabled="false"/>
-                                </VBox>
-                                <VBox>
-                                    <Label text="label1"/>
-                                    <Input value="{}" enabled="false"/>
-                                </VBox> -->
-								<!-- </VBox> -->
-                            </l:Grid>
+                <!-- <f:SimpleForm id="SimpleFormChange354"
+					editable="true"
+					layout="ResponsiveGridLayout"
+					title=""
+					adjustLabelSpan="false"
+					singleContainerFullSize="false" > -->
+				<!-- <f:SimpleForm id="SimpleFormChange480_Trial"
+					editable="true"
+					layout="ResponsiveGridLayout"
+					title=""
+					labelSpanXL="4"
+					labelSpanL="4"
+					labelSpanM="4"
+					labelSpanS="12"
+					adjustLabelSpan="false"
+					emptySpanXL="0"
+					emptySpanL="0"
+					emptySpanM="0"
+					emptySpanS="0"
+					columnsXL="3"
+					columnsL="2"
+					columnsM="2"
+					singleContainerFullSize="false" > -->
+				<f:SimpleForm id="SimpleFormChangeColumn_oneGroup234"
+					editable="true"
+					layout="ColumnLayout"
+					title="Address"
+					columnsM="2"
+					columnsL="3"
+					columnsXL="4">
+					<f:content >
+						<Label text="증빙문서번호" labelFor="idDocnum"/>
+						<Input id="idDocnum" value="{slipH>/select/Docnum}" enabled="false"/>
+						<Label text="전표유형" />
+						<Input value="{slipH>/select/Sliptype}({slipH>/select/Sliptypedesc})" enabled="false"/>
+						<Label text="증빙일자" />
+						<Input
+							value="{
+								path : 'slipH>/select/Prfdate',
+								formatter : '.formatter.dateTime'
+								}"   
+							enabled="false"/>
+						<Label text="전기일자" />
+						<Input 
+							value="{
+								path : 'slipH>/select/Pstdate',
+								formatter : '.formatter.dateTime2'
+								}"  
+							enabled="false"/>
+						<Label text="협력사" />
+						<Input value="{slipH>/select/Partid}({slipH>/select/Partname})" enabled="false"/>
+						<Label text="총금액" />
+						<Input id="idTotalAmt" value="{slipH>/selectBefore/Amount}" enabled="false"/>
                     </f:content>
                 </f:SimpleForm>
             </VBox>

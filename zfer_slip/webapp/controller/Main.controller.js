@@ -712,8 +712,18 @@ sap.ui.define([
                         }.bind(this));
                     }
                 }.bind(this));
-
-                
+            },
+            clearAllSortings: function(oEvent) {
+                var oTable = this.byId("idSlipbeforeTable");
+                oTable.getBinding().sort(null);
+                this._resetSortingState();
+            },
+            _resetSortingState: function() {
+                var oTable = this.byId("idSlipbeforeTable");
+                var aColumns = oTable.getColumns();
+                for (var i = 0; i < aColumns.length; i++) {
+                    aColumns[i].setSorted(false);
+                }
             }
         });
     });

@@ -185,12 +185,17 @@
 				rowActionCount="1"
 				selectionMode="MultiToggle"
 				visibleRowCountMode="Auto"
+				sort="sortDeliveryDate"
 				paste="onPaste"
 				ariaLabelledBy="title">
 				<t:extension>
 					<OverflowToolbar style="Clear" height="5em">
 						<Title id="title" text="Document" level="H1"/>
 						<ToolbarSpacer/>
+						<Button
+							icon="sap-icon://decline"
+							tooltip="Clear all sortings"
+							press="clearAllSortings"/>
 						<Button type="Accept" text="Create Slip" press="onPressAcceptBtn"/>
 					</OverflowToolbar>
 				</t:extension>
@@ -207,7 +212,7 @@
 							<!-- <Text text="{slipBefore>Status}" wrapping="false" /> -->
 						</t:template>
 					</t:Column>
-					<t:Column width="11rem" hAlign="Center">
+					<t:Column sortProperty="Docnum" sorted="true" width="11rem" hAlign="Center">
 						<Label text="문서번호" />
 						<t:template>
 							<Text text="{slipBefore>Docnum}" wrapping="false" />
@@ -219,7 +224,7 @@
 							<Button text="Show Details" press="onDetailBtn"/>
 						</t:template>
 					</t:Column>
-					<t:Column width="12rem" hAlign="Center">
+					<t:Column sortProperty="Partid" sorted="true" width="12rem" hAlign="Center">
 						<Label text="협력사" />
 						<t:template>
 							<ObjectIdentifier  title="{slipBefore>Partid}" text="{slipBefore>Partname}"/>
@@ -231,7 +236,7 @@
 							<ObjectIdentifier  title="{slipBefore>Sliptype}" text="{slipBefore>Sliptypedesc}"/>
 						</t:template>
 					</t:Column>
-					<t:Column width="11rem" hAlign="Center">
+					<t:Column sortProperty="Prfdate" sorted="true" width="11rem" hAlign="Center">
 						<Label text="증빙일자" />
 						<t:template>
 							<Text text="{
@@ -241,14 +246,15 @@
 								wrapping="false" />
 						</t:template>
 					</t:Column>
-					<t:Column width="9rem" hAlign="Center">
+					<t:Column sortProperty="Amount"
+						 width="9rem" hAlign="Center" sorted="true">
 						<Label text="금액" />
 						<t:template>
 							<ObjectNumber
 								textAlign="End"
 								number="{
-									parts:[{path:'slipBefore>Amount'},{path:'slipBefore>Curkey'}],
-									type: 'sap.ui.model.type.Currency',
+									parts:[{path:'slipBefore>Amount'}],
+									type: 'sap.ui.model.type.Float',
 									formatOptions: {showMeasure: false}
 								}"
 								unit="{slipBefore>Curkey}" />
