@@ -345,12 +345,12 @@ sap.ui.define([
                     // debugger;
 
                 for (var p = 0; p < aPartnerList.length; p++) {
-                    if(aPartnerList[p].Inoutcome === 'O'){
+                    if(aPartnerList[p].Inoutcome === 'I'){
                         // debugger;
                         var measure = aPartnerList[p].Partid;
                         var measureData = {
                           name: measure,
-                          value: "{slipAll>Partid}"
+                          value: "{slipAll>"+measure+"}"
                         };
                         aMeasureD.push(measureData);
                         aMeasureV.push(measure);
@@ -359,27 +359,10 @@ sap.ui.define([
                 var oColDataset = new FlattenedDataset({
                     dimensions : [
                         {name : "Month" , value : "{slipAll>Month}"}],
-                    // dimensions : [
-                    //     { name: 'Month', value: "{slipAll>Month}"}],
-                    // dimensions : [
-                    //     {name : "1" , value : "{slipAll>1}"},
-                    //     {name : "2" , value : "{slipAll>2}"},
-                    //     {name : "3" , value : "{slipAll>3}"},
-                    //     {name : "4" , value : "{slipAll>4}"},
-                    //     {name : "5" , value : "{slipAll>5}"},
-                    //     {name : "6" , value : "{slipAll>6}"},
-                    //     {name : "7" , value : "{slipAll>7}"},
-                    //     {name : "8" , value : "{slipAll>8}"},
-                    //     {name : "9" , value : "{slipAll>9}"},
-                    //     {name : "10" , value : "{slipAll>10}"},
-                    //     {name : "11" , value : "{slipAll>11}"},
-                    //     {name : "12" , value : "{slipAll>12}"}],
-                    // measures : aMeasureD, 
+                    measures : aMeasureD, 
                     // measures : [
-                    //     { name: 'Amount', value: "{slipAll>Amount}"}],
-                    measures : [
-                        { name: 'Partid', value: "{slipAll>PAT05}"},
-                        { name: 'Partid2', value: "{slipAll>PAT00}"}],
+                    //     { name: 'Partid', value: "{slipAll>PAT05}"},
+                    //     { name: 'Partid2', value: "{slipAll>PAT00}"}],
                     data : {
                         path : "slipAll>/ichart2list"
                     }
@@ -389,16 +372,13 @@ sap.ui.define([
                 var oFeedValueAxis = new FeedItem({
                     type : "Measure",
                     uid : "valueAxis",
-                    values : ["Partid","Partid2"]
-                    // values : aMeasureV
-                    // values : ["Amount"]
+                    values : aMeasureV
+                    // values : ["Partid","Partid2"]
                 });
                 var oFeedCategoryAxis = new FeedItem({
                     type : "Dimension",
                     uid : "categoryAxis",
                     values : ["Month"]
-                    //  values : ["1","2","3","4","5","6","7","8","9","10","11","12"]
-                    // values : ["Month"]
                 });
 
                 oChart.addFeed(oFeedValueAxis);
@@ -408,8 +388,19 @@ sap.ui.define([
                     title: {text: '실적차트'},
                     plotArea : {
                         drawingEffect: 'glossy',
-                        dataLabel: { visible: true, type:'value'}
-                    }
+                        dataLabel: { visible: true, type:'value',position:"outsideFirst" },
+                        gap : { barSpacing : 0.01, groupSpacing:0.01, innerGroupSpacing:0.01 },
+                        gridline:{size:0.5},
+                        background:{border:{strokeWidth : 0.1}}
+                    },
+                    legend : {
+                        // hoverShadow : true,
+                        hoverShadow : { visible: true, color:'#BFBFBF'},
+                        // marker : true,
+                        marker : {shape : "squareWithRadius", size:0.0001}
+                    },
+                    // general : { tabIndex: 1}
+                    // valueAxis:{layout:{maxHeight:0.1}}
                 });
             },
             _datefomatter: function(date){

@@ -70,7 +70,7 @@
         <f:content>
             <HBox >
                 <VBox width="25%">
-                    <VBox height="30%" >
+                    <VBox height="40%" >
                         <Toolbar>
                             <Title text="매출" level="H1" />
                         </Toolbar>
@@ -102,7 +102,7 @@
                 </VBox>
                 <!-- <VBox width="100%" > -->
                 <VBox width="40%" >
-                    <VBox height="30%">
+                    <VBox height="40%">
                         <t:Table
                             id="idTable1"
                             rows="{slipAll>/ilist}"
@@ -551,7 +551,7 @@
                     <VBox height="10%">
                         <viz:VizFrame
                         id="idViewChart1"
-                        vizType="line" uiConfig="{applicationSet:'fiori'}"
+                        vizType="column" uiConfig="{applicationSet:'fiori'}"
                         visible="true">
                         </viz:VizFrame>
                     </VBox>
@@ -568,21 +568,4 @@
             </HBox>
         </f:content>
     </f:DynamicPage>
-    <!-- <Page id="page" title="{i18n>title}">
-        <content> -->
-
-
-        <!-- <DatePicker
-					id="DP10"
-					value="{
-						'path': '/valueDP10',
-						'type': 'sap.ui.model.type.Date',
-						'formatOptions': {
-							'pattern': 'MM-y'
-						}
-					}"
-					change="handleChange"
-					class="sapUiSmallMarginBottom"/> -->
-        <!-- </content>
-    </Page> -->
 </mvc:View>
