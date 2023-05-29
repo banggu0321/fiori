@@ -131,13 +131,14 @@
                                                 path: 'slipAll>Total',
                                                 type: 'sap.ui.model.type.Float',
                                                 formatOptions: {
-                                                showMeasure: false
+                                                    showMeasure: false
                                                 }
                                             }"
                                             textAlign="End"
-                                            unit=" "
+                                            unit=""
+                                            state="Warning"
                                             />
-                                        <!-- <Text text="{slipAll>Total}" wrapping="false" /> -->
+                                        <!-- inverted="true" <Text text="{slipAll>Total}" wrapping="false" /> -->
                                     </t:template>
                                 </t:Column>
                                 <t:Column width="6rem" hAlign="Center">
@@ -357,6 +358,7 @@
                                             }"
                                             textAlign="End"
                                             unit=" "
+                                            state="Warning"
                                             />
                                         <!-- <Text text="{slipAll>Total}" wrapping="false" /> -->
                                     </t:template>
@@ -546,7 +548,7 @@
                     </VBox>
                 </VBox>
                 <VBox width="100%">
-                    <VBox height="30%">
+                    <VBox height="10%">
                         <viz:VizFrame
                         id="idViewChart1"
                         vizType="line" uiConfig="{applicationSet:'fiori'}"

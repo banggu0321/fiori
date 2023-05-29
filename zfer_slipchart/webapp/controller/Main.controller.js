@@ -146,18 +146,16 @@ sap.ui.define([
                         var Month = oReturn.results[i].Month;
                         for(var j = 0; j<aPartnerMonth.length;j++){
                             if(aPartnerMonth[j].Partid === Partid){
-                                // debugger;
-                                // debugger;
                                 aPartnerMonth[j][Month] += Number(oReturn.results[i].Amt);
                                 aPartnerMonth[j].Total += Number(oReturn.results[i].Amt);
                                 aPartnerMonth[j].Curkey = oReturn.results[i].Curkey;
-                                // debugger;
                             }
                         }
                     }
-                    var data = [];
+                    var adataI = []; var adataO = [];
+                    var adataI2 = []; var adataO2 = [];
                     aPartnerMonth.forEach(function(item){
-                        var partid = item.Partid;
+                        var vPartid = item.Partid;
                         if(item.Inoutcome === 'I'){
                             aPartnerMonthI.push(item);
                         }else{
@@ -165,22 +163,70 @@ sap.ui.define([
                         }
                         //확인하세요~~~~~ 여기부터~
 
-                        // for (var i = 1; i <= 12; i++) {
-                        //     var amount = item[i];
-                        //     data.push({ Partid: partid, month: i, amount: amount });
-                        // }
-
-                    });
-                    this.oslipAll.setProperty("/ilist", aPartnerMonthI);
-                    this.oslipAll.setProperty("/olist", aPartnerMonthO);
-
-                    aPartnerMonth.forEach(function (item) {
-                        var partid = item.Partid;
                         for (var i = 1; i <= 12; i++) {
                             var amount = item[i];
-                            data.push({ Partid: partid, month: i, amount: amount });
+                            if(item.Inoutcome === 'I'){
+                                adataI.push({ Partid: vPartid, Month: i, Amount: amount }); ///
+                                var existingData = adataI2.find(function(o) {
+                                    return o.Month === i;
+                                });
+
+                                if (existingData) {
+                                    existingData[vPartid] = amount;
+                                } else {
+                                    var newData = { Month: i };
+                                    newData[vPartid] = amount;
+                                    adataI2.push(newData);
+                                }
+                                // odata2[vPartid] = amount;
+                                // adataI2.push(odata2);
+                            }else{
+                                adataO.push({ Partid: vPartid, Month: i, Amount: amount }); ///
+
+                                var existingData = adataO2.find(function(o) {
+                                    return o.Month === i;
+                                });
+
+                                if (existingData) {
+                                    existingData[vPartid] = amount;
+                                } else {
+                                    var newData = { Month: i };
+                                    newData[vPartid] = amount;
+                                    adataO2.push(newData);
+                                }
+                                // odata2[vPartid] = amount;
+                                // adataO2.push(odata2);
+                            }
                         }
                     });
+                    // for (var i = 1; i <= 12; i++) {
+                    //     var odata3 = { Month: i };
+                    //     adataI2.forEach(function(item){
+                    //         if(item.Month === i){
+                    //             odata3[]
+                    //         }
+                    //     });
+                    // }
+
+                    adataI2.forEach(function(item){
+
+                    });
+                    // debugger;
+                    this.oslipAll.setProperty("/ilist", aPartnerMonthI);
+                    this.oslipAll.setProperty("/olist", aPartnerMonthO);
+                    this.oslipAll.setProperty("/ichartlist", adataI);
+                    this.oslipAll.setProperty("/ochartlist", adataO);
+                    this.oslipAll.setProperty("/ichart2list", adataI2);
+                    this.oslipAll.setProperty("/ochart2list", adataO2);
+
+                    // aPartnerMonth.forEach(function (item) {
+                    //     var partid = item.Partid;
+                    //     for (var i = 1; i <= 12; i++) {
+                    //         var amount = item[i];
+                    //         data.push({ Partid: partid, month: i, amount: amount });
+                    //     }
+                    // });
+                    this._setCharrInController();
 
                   }.bind(this),
                   error: function(error) {
@@ -188,7 +234,6 @@ sap.ui.define([
                   }
                 });
                 // debugger;
-                this._setCharrInController();
               },
             // _getData : function(){
             //     var aPartnerI = [];
@@ -293,7 +338,7 @@ sap.ui.define([
             // },
             _setCharrInController : function(){
                 // debugger;
-                var oChart = this.byId("idViewChart2");
+                var oChart = this.byId("idViewChart1");
                 var aMeasureD = []; //[{name : "PAT07" , value : "{slipPartnerList>PAT07}"}]
                 var aMeasureV = []; //["PAT07","PAT07","PAT07"...]
                 var aPartnerList = this.opartnerList.getData().list.results;
@@ -304,44 +349,56 @@ sap.ui.define([
                         // debugger;
                         var measure = aPartnerList[p].Partid;
                         var measureData = {
-                          name: Partid,
+                          name: measure,
                           value: "{slipAll>Partid}"
                         };
                         aMeasureD.push(measureData);
                         aMeasureV.push(measure);
                     }
-                    // debugger;
                 }
                 var oColDataset = new FlattenedDataset({
                     dimensions : [
-                        {name : "1" , value : "{slipAll>1}월"},
-                        {name : "2" , value : "{slipAll>2}월"},
-                        {name : "3" , value : "{slipAll>3}월"},
-                        {name : "4" , value : "{slipAll>4}월"},
-                        {name : "5" , value : "{slipAll>5}월"},
-                        {name : "6" , value : "{slipAll>6}월"},
-                        {name : "7" , value : "{slipAll>7}월"},
-                        {name : "8" , value : "{slipAll>8}월"},
-                        {name : "9" , value : "{slipAll>9}월"},
-                        {name : "10" , value : "{slipAll>10}월"},
-                        {name : "11" , value : "{slipAll>11}월"},
-                        {name : "12" , value : "{slipAll>12}월"}],
-                    measures : aMeasureD, 
+                        {name : "Month" , value : "{slipAll>Month}"}],
+                    // dimensions : [
+                    //     { name: 'Month', value: "{slipAll>Month}"}],
+                    // dimensions : [
+                    //     {name : "1" , value : "{slipAll>1}"},
+                    //     {name : "2" , value : "{slipAll>2}"},
+                    //     {name : "3" , value : "{slipAll>3}"},
+                    //     {name : "4" , value : "{slipAll>4}"},
+                    //     {name : "5" , value : "{slipAll>5}"},
+                    //     {name : "6" , value : "{slipAll>6}"},
+                    //     {name : "7" , value : "{slipAll>7}"},
+                    //     {name : "8" , value : "{slipAll>8}"},
+                    //     {name : "9" , value : "{slipAll>9}"},
+                    //     {name : "10" , value : "{slipAll>10}"},
+                    //     {name : "11" , value : "{slipAll>11}"},
+                    //     {name : "12" , value : "{slipAll>12}"}],
+                    // measures : aMeasureD, 
+                    // measures : [
+                    //     { name: 'Amount', value: "{slipAll>Amount}"}],
+                    measures : [
+                        { name: 'Partid', value: "{slipAll>PAT05}"},
+                        { name: 'Partid2', value: "{slipAll>PAT00}"}],
                     data : {
-                        path : "slipAll>/olist"
+                        path : "slipAll>/ichart2list"
                     }
                 });
                 oChart.setDataset(oColDataset);
 
                 var oFeedValueAxis = new FeedItem({
-                   type : "Measure",
+                    type : "Measure",
                     uid : "valueAxis",
-                    values : aMeasureV
+                    values : ["Partid","Partid2"]
+                    // values : aMeasureV
+                    // values : ["Amount"]
                 });
                 var oFeedCategoryAxis = new FeedItem({
                     type : "Dimension",
-                     uid : "categoryAxis",
-                     values : ["1","2","3","4","5","6","7","8","9","10","11","12"]
+                    uid : "categoryAxis",
+                    values : ["Month"]
+                    //  values : ["1","2","3","4","5","6","7","8","9","10","11","12"]
+                    // values : ["Month"]
                 });
 
                 oChart.addFeed(oFeedValueAxis);
@@ -368,9 +425,6 @@ sap.ui.define([
             onSearch : function(){
                 
                 this._getSlipData();
-
-                
-                
                 // oTable.getBinding("rows").filter(aFilter);
             },
             onSelectionChange1 : function(oEvent){
