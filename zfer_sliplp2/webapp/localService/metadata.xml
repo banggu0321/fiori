@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZGWER_SLIP_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="auto" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Mandt"/>
+                    <PropertyRef Name="Autonum"/>
+                </Key>
+                <Property Name="Mandt" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Client" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Autonum" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="오더번호" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Branch" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="지점 코드" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Partid" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="협력사ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Autodat" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="구매 일자" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Amount" Type="Edm.Decimal" Nullable="false" Precision="11" Scale="3" sap:unicode="false" sap:unit="Curkey" sap:label="금액" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Curkey" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="통화" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="currency-code"/>
+                <Property Name="Staflag" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="전표상태구분" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="rental" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Mandt"/>
+                    <PropertyRef Name="Rentalid"/>
+                </Key>
+                <Property Name="Mandt" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Client" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Rentalid" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="예약번호" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Carid" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="차량ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Custid" Type="Edm.String" Nullable="false" MaxLength="6" sap:unicode="false" sap:label="고객ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Bkdate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="예약 일자" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Rndate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="대여 일자" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Rtdate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="반납 일자" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Fdate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="실 반납 일자" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Staoz" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="START존" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Retoz" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="RETURN존" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Statime" Type="Edm.Time" Nullable="false" Precision="0" sap:unicode="false" sap:label="예약시작시각" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Endtime" Type="Edm.Time" Nullable="false" Precision="0" sap:unicode="false" sap:label="예약종료시각" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Bktime" Type="Edm.Int32" Nullable="false" sap:unicode="false" sap:label="예약시간" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Grade" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="고객등급" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Insurance" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="보험코드" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Retfee" Type="Edm.Decimal" Nullable="false" Precision="11" Scale="3" sap:unicode="false" sap:unit="Curkey" sap:label="대여 요금" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Retstatime" Type="Edm.Time" Nullable="false" Precision="0" sap:unicode="false" sap:label="대여시작시각" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Retendtime" Type="Edm.Time" Nullable="false" Precision="0" sap:unicode="false" sap:label="대여종료시각" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Drivdist" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="0" sap:unicode="false" sap:unit="Distunit" sap:label="주행 거리" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Distunit" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="단위" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure"/>
+                <Property Name="Drivfee" Type="Edm.Decimal" Nullable="false" Precision="11" Scale="3" sap:unicode="false" sap:unit="Curkey" sap:label="주행 요금" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Curkey" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="통화" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="currency-code"/>
+                <Property Name="Delflag" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Delete Flag" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Staflag" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="전표상태구분" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Note" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="비고" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="wbatso" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Batterysoid"/>
+                </Key>
+                <Property Name="Batterysoid" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="폐배터리 판매오더ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Partnerid" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="협력사ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Employeeid" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="담당자ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Indate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="증빙 일자" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Staflag" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="전표상태구분" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Ctyid" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="차종ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Qty" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="0" sap:unicode="false" sap:unit="Unit" sap:label="수량" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Unit" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="단위" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure"/>
+                <Property Name="Price" Type="Edm.Decimal" Nullable="false" Precision="11" Scale="3" sap:unicode="false" sap:unit="Curkey" sap:label="단가" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Curkey" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="통화" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="currency-code"/>
+                <Property Name="Istaflag" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="전표상태구분" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="sliph" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Slipid"/>
+                </Key>
+                <Property Name="Slipid" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="전표ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Docnum" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="증빙문서번호" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Sliptype" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="전표유형" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Prfdate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="증빙 일자" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Pstdate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="전기 일자" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Managerid" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="FI담당자ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Partid" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="협력사ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="slipi" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Slipid"/>
+                    <PropertyRef Name="Prnum"/>
+                </Key>
+                <Property Name="Slipid" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="전표ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Prnum" Type="Edm.String" Nullable="false" MaxLength="6" sap:unicode="false" sap:label="순번" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Accocode" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="계정 코드" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Dcindicator" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="차대변 지시자" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Amt" Type="Edm.Decimal" Nullable="false" Precision="11" Scale="3" sap:unicode="false" sap:unit="Curkey" sap:label="금액" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Tax" Type="Edm.Decimal" Nullable="false" Precision="11" Scale="3" sap:unicode="false" sap:unit="Curkey" sap:label="세금" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Curkey" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="통화" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="currency-code"/>
+            </EntityType>
+            <EntityType Name="employee" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Employeeid"/>
+                </Key>
+                <Property Name="Deptid" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="부서ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Rankid" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="직급ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Positionid" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="직책ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Telno" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="전화번호" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Email" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="이메일" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Branch" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="지점 코드" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Sapid" Type="Edm.String" Nullable="false" MaxLength="15" sap:unicode="false" sap:label="SAPID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Name" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="성명" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Rankname" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="직급명" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Employeeid" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="직원ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Branchname" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="지점명" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Deptname" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="부서명" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="autof" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Autonum"/>
+                </Key>
+                <Property Name="Autonum" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="오더번호" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Partid" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="협력사ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Partname" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="협력사명" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Autodat" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="구매 일자" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Amount" Type="Edm.Decimal" Nullable="false" Precision="11" Scale="3" sap:unicode="false" sap:unit="Curkey" sap:label="금액" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Curkey" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="통화" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="currency-code"/>
+                <Property Name="Staflag" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="전표상태구분" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Sliptype" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="전표유형" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Sliptypedesc" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Character Field with Length 10" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="rentalf" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Rentalid"/>
+                </Key>
+                <Property Name="Rentalid" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="예약번호" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Fdate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="실 반납 일자" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Retfee" Type="Edm.Decimal" Nullable="false" Precision="11" Scale="3" sap:unicode="false" sap:unit="Curkey" sap:label="대여 요금" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Drivfee" Type="Edm.Decimal" Nullable="false" Precision="11" Scale="3" sap:unicode="false" sap:unit="Curkey" sap:label="주행 요금" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Partnerid" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="협력사ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Partname" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="협력사명" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Curkey" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="통화" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="currency-code"/>
+                <Property Name="Staflag" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="전표상태구분" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Sliptype" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="전표유형" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Sliptypedesc" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Character Field with Length 10" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="wbatsof" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Batterysoid"/>
+                </Key>
+                <Property Name="Batterysoid" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="폐배터리 판매오더ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Sliptype" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="전표유형" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Partnerid" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="협력사ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Partname" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="협력사명" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Employeeid" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="담당자ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Indate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="증빙 일자" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Staflag" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="전표상태구분" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Qty" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="0" sap:unicode="false" sap:unit="Unit" sap:label="수량" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Unit" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="단위" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure"/>
+                <Property Name="Price" Type="Edm.Decimal" Nullable="false" Precision="11" Scale="3" sap:unicode="false" sap:unit="Curkey" sap:label="단가" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Amt" Type="Edm.Decimal" Nullable="false" Precision="11" Scale="3" sap:unicode="false" sap:unit="Curkey" sap:label="금액" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Curkey" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="통화" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="currency-code"/>
+                <Property Name="Sliptypedesc" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Character Field with Length 10" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="sliphf" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Slipid"/>
+                </Key>
+                <Property Name="Slipid" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="전표ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Docnum" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="증빙문서번호" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Sliptype" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="전표유형" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Sliptypedesc" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Character Field with Length 10" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Prfdate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="증빙 일자" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Pstdate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="전기 일자" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Managerid" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="FI담당자ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Partid" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="협력사ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Partname" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="협력사명" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Amt" Type="Edm.Decimal" Nullable="false" Precision="11" Scale="3" sap:unicode="false" sap:unit="Curkey" sap:label="금액" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Curkey" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="통화" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="currency-code"/>
+            </EntityType>
+            <EntityType Name="slipif" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Slipid"/>
+                </Key>
+                <Property Name="Slipid" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="전표ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Docnum" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="증빙문서번호" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Prnum" Type="Edm.String" Nullable="false" MaxLength="6" sap:unicode="false" sap:label="순번" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Accocode" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="계정 코드" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Acconm" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="계정 이름" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Dcindicator" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="차대변 지시자" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Amt" Type="Edm.Decimal" Nullable="false" Precision="11" Scale="3" sap:unicode="false" sap:unit="Curkey" sap:label="금액" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Tax" Type="Edm.Decimal" Nullable="false" Precision="11" Scale="3" sap:unicode="false" sap:unit="Curkey" sap:label="세금" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Curkey" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="통화" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="currency-code"/>
+            </EntityType>
+            <EntityContainer Name="ZGWER_SLIP_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="autoSet" EntityType="ZGWER_SLIP_SRV.auto" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="rentalSet" EntityType="ZGWER_SLIP_SRV.rental" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="wbatsoSet" EntityType="ZGWER_SLIP_SRV.wbatso" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="sliphSet" EntityType="ZGWER_SLIP_SRV.sliph" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="slipiSet" EntityType="ZGWER_SLIP_SRV.slipi" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="employeeSet" EntityType="ZGWER_SLIP_SRV.employee" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="autofSet" EntityType="ZGWER_SLIP_SRV.autof" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="rentalfSet" EntityType="ZGWER_SLIP_SRV.rentalf" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="wbatsofSet" EntityType="ZGWER_SLIP_SRV.wbatsof" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="sliphfSet" EntityType="ZGWER_SLIP_SRV.sliphf" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="slipifSet" EntityType="ZGWER_SLIP_SRV.slipif" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+            </EntityContainer>
+            <atom:link rel="self" href="http://edu.bgis.co.kr:8001/sap/opu/odata/sap/ZGWER_SLIP_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="http://edu.bgis.co.kr:8001/sap/opu/odata/sap/ZGWER_SLIP_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

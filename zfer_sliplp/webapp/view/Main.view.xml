@@ -1,0 +1,297 @@
+<mvc:View controllerName="ER.zfersliplp.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+	xmlns:f="sap.f"
+	xmlns:layout="sap.ui.layout"
+    xmlns:fb="sap.ui.comp.filterbar" xmlns:core="sap.ui.core" 
+	xmlns:t="sap.ui.table" xmlns:u="sap.ui.unified"
+	xmlns:tnt="sap.tnt"
+    xmlns="sap.m">
+    <f:DynamicPage id="idDynamicPage" showFooter="true">
+		<f:title>
+			<f:DynamicPageTitle >
+				<f:heading >
+					<Title text="전표생성"/>
+				</f:heading>
+				<f:expandedContent>
+					<!-- <ObjectAttribute id="idAtUserName" title="사용자명 " text="{/employeeSet/0/Deptid}"/>
+					<ObjectAttribute id="idAtDept"  title="소속부서 " text=""/> -->
+				</f:expandedContent>
+				<f:snappedContent>
+					<Label id="idLabeluname" text=""/>
+				</f:snappedContent>
+				<f:snappedTitleOnMobile>
+					<!-- <ObjectAttribute title="사용자명" text="Warehouse A"/>
+					<ObjectAttribute title="소속부서" text="23L"/> -->
+				</f:snappedTitleOnMobile>
+				<f:content>
+					<OverflowToolbar>
+						<GenericTag text="미생성"
+							status="Error"
+							press="onPressOpenPopover"
+							design="StatusIconHidden">
+							<ObjectNumber 
+								id="idObjNum"
+								number="2"
+								unit="개"
+								emphasized="false"
+								state="Error"/>
+						</GenericTag>
+					</OverflowToolbar>
+				</f:content>
+				<!-- <f:actions>
+					<Button
+							text="조회"
+							type="Emphasized"
+							press="toggleAreaPriority"/>
+				</f:actions> -->
+			</f:DynamicPageTitle>
+		</f:title>
+		<!-- DynamicPage Header -->
+		<f:header>
+			<f:DynamicPageHeader pinnable="true">
+				<HBox>
+					<FlexBox wrap="Wrap" fitContainer="true">
+						<core:Icon src="sap-icon://customer" size="100px" class="sapUiMediumMarginEnd"/>
+					</FlexBox>
+					<VBox class="sapUiLargeMarginEnd sapUiTinyMarginBottom" width="150%">
+						<Title id="idEmp" text="{/employeeSet/Employeeid}" class="sapUiTinyMarginBottom"
+							width="12rem" />
+						<Text id="idDept" width="100%" text="{/employeeSet/Deptname}" />
+						<Text id="idName" width="100%" text="{/employeeSet/Name}" />
+						<!-- <Text id="idRank" width="100%" text="{/LoginSet/Rankname} " /> -->
+					</VBox>
+					<VBox class="sapUiLargeMarginEnd sapUiTinyMarginBottom" width="150%">
+						<Title text="Contact Information" class="sapUiTinyMarginBottom" />
+						<HBox class="sapUiTinyMarginBottom">
+							<core:Icon src="sap-icon://outgoing-call" />
+							<Text id="idTel" text="{/employeeSet/Telno}" class="sapUiSmallMarginBegin" />
+						</HBox>
+						<HBox>
+							<core:Icon src="sap-icon://email" />
+							<Text id="idEmail" text="{/employeeSet/Email}" class="sapUiSmallMarginBegin" />
+						</HBox>
+					</VBox>
+				</HBox>
+				<layout:HorizontalLayout allowWrapping="true">
+					<layout:VerticalLayout class="sapUiMediumMarginEnd">
+						<!-- <ObjectAttribute title="사용자명" text="Warehouse A"/>
+						<ObjectAttribute title="소속부서" text="23L"/> -->
+						<fb:FilterBar id="filterBar" header="Search Filters" useToolbar="false"
+							search="onSearch" filterContainerWidth="10rem">
+							<fb:filterGroupItems>
+								<fb:FilterGroupItem groupName="__$INTERNAL$" name="sliptype" label="전표 유형"
+									visibleInFilterBar="true">
+									<fb:control>
+										<ComboBox
+											id="idComboBox1"
+											showSecondaryValues="true"
+											items="{
+												path: 'typeList>/list',
+												templateShareable: true
+											}">
+											<core:ListItem key="{typeList>type}" text="{typeList>type}" additionalText="{CustomerID}" />
+										</ComboBox>
+									</fb:control>
+								</fb:FilterGroupItem>
+								<fb:FilterGroupItem groupName="__$INTERNAL$" name="slipdate" label="증빙일자"
+									visibleInFilterBar="true">
+									<fb:control>
+										<DateRangeSelection
+											id="idDateRangeSelection"
+											class="DRS1"
+											value= "{
+												'type': 'sap.ui.model.type.DateInterval',
+												'formatOptions': {
+													'pattern': 'yyyy/MM/dd'
+												},
+												'parts': [
+													{
+														'type': 'sap.ui.model.type.Date',
+														'path': '/start'
+													},
+													{
+														'type': 'sap.ui.model.type.Date',
+														'path': '/end'
+													}
+												]
+											}"/>
+									</fb:control>
+								</fb:FilterGroupItem>
+							</fb:filterGroupItems>
+						</fb:FilterBar>
+					</layout:VerticalLayout>
+				</layout:HorizontalLayout>
+				<!-- <layout:HorizontalLayout allowWrapping="true">
+					<Button text="aa" class="sapUiMediumMarginEnd"></Button>
+				</layout:HorizontalLayout> -->
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content>
+			<t:Table
+				id="idSlipbeforeTable"
+				rows="{slipBefore>/blist}"
+				rowActionCount="1"
+				selectionMode="MultiToggle" 
+				visibleRowCountMode="Auto"
+				paste="onPaste"
+				ariaLabelledBy="title">
+				<!-- visibleRowCount="50" -->
+				<t:extension>
+					<OverflowToolbar style="Clear" height="3em">
+						<Title id="title" text="Document" level="H1"/>
+						<ToolbarSpacer/>
+						<Button
+							icon="sap-icon://activities"
+							text="All Necessary"
+							tooltip="Select Row Creation Required"
+							press="SelectRequiredIndices"/>
+						<Button
+							icon="sap-icon://filter"
+							text="Filter Off"
+							tooltip="Clear all sortings"
+							press="clearAllSortings"/>
+						<Button
+							icon="sap-icon://decline"
+							text="Deselect All"
+							tooltip="clear selection"
+							press="clearSelection"/>
+						<Button type="Accept" text="Create Slip" press="onPressAcceptBtn"/>
+					</OverflowToolbar>
+				</t:extension>
+				<t:columns>
+					<t:Column id="statusColumn" sortProperty="Status" sorted="true" width="7rem" hAlign="Center">
+						<Label text="상태" />
+						<t:template >
+							<tnt:InfoLabel id="infolabel" renderMode="Loose" 
+								colorScheme="{= (${slipBefore>Status}) === 'Necessary' ? 3 : 1}"
+									displayOnly= "{= (${slipBefore>Status}) === 'Necessary' ? false : true}" 
+								text="{slipBefore>Status}" />
+						</t:template>
+					</t:Column>
+					<t:Column sortProperty="Docnum" sorted="true" width="11rem" hAlign="Center">
+						<Label text="문서번호" />
+						<t:template>
+							<Text text="{slipBefore>Docnum}" wrapping="false" />
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" hAlign="Center">
+						<Label text="전표상세" />
+						<t:template>
+							<!-- <t:Table
+								id="idSlipDetailTable"
+								rows="{slipI>/select}"
+								selectionMode="None"
+								visibleRowCount="3"
+								paste="onPaste"
+								selectionBehavior="RowOnly"
+								ariaLabelledBy="title"
+								rowSelectionChange="onSelectionChange">
+								<t:columns>
+									<t:Column width="3rem">
+										<Label text="계정코드" />
+										<t:template>
+											<Text text="{slipI>Accocode}({slipI>Acconm})" wrapping="false" />
+										</t:template>
+									</t:Column>
+									<t:Column width="4rem">
+										<Label text="차변" />
+										<t:template>
+											<Input id="idDetailTableInput1" 
+												value="{
+													parts: [
+														{ path: 'slipI>Dcindicator' },
+														{ path: 'slipI>Amt' },
+														{ path: 'slipI>Tax' }
+													],
+													formatter: '.formatter.dcindicator3Text'
+													}" 
+												enabled="false" 
+												change="onChange"/>
+										</t:template>
+									</t:Column>
+									<t:Column width="4rem">
+										<Label text="대변" />
+										<t:template>
+											<Input id="idDetailTableInput2" 
+												value="{
+													parts: [
+														{ path: 'slipI>Dcindicator' },
+														{ path: 'slipI>Amt' },
+														{ path: 'slipI>Tax' }
+													],
+													formatter: '.formatter.dcindicator4Text'
+													}" 
+												enabled="false"
+												change="onChange" />
+										</t:template>
+									</t:Column>
+								</t:columns>
+							</t:Table>  -->
+							<Button text="Show Details" press="onDetailBtn"/>
+						</t:template>
+					</t:Column>
+					<t:Column sortProperty="Partid" sorted="true" width="12rem" hAlign="Center">
+						<Label text="협력사" />
+						<t:template>
+							<ObjectIdentifier  title="{slipBefore>Partid}" text="{slipBefore>Partname}"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" hAlign="Center">
+						<Label text="전표유형" />
+						<t:template>
+							<ObjectIdentifier  title="{slipBefore>Sliptype}" text="{slipBefore>Sliptypedesc}"/>
+						</t:template>
+					</t:Column>
+					<t:Column id="PrfdateColumn" sortProperty="Prfdate" sorted="true" width="11rem" hAlign="Center">
+						<Label text="증빙일자" />
+						<t:template>
+							<Text text="{
+									path : 'slipBefore>Prfdate',
+									formatter : '.formatter.dateTime'
+									}" 
+								wrapping="false" />
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="금액" />
+						<t:template>
+							<ObjectNumber
+								textAlign="End"
+								number="{
+									parts:[{path:'slipBefore>Amount'},{path:'slipBefore>Curkey'}],
+									type: 'sap.ui.model.type.Currency',
+									formatOptions: {showMeasure: false}
+								}"
+								unit="{slipBefore>Curkey}" />
+						</t:template>
+					</t:Column>
+				</t:columns>
+			</t:Table>           
+		</f:content>
+		<!-- DynamicPage Footer toggle footer클릭시-->
+		<!-- <f:footer>
+			<Toolbar height="4rem">
+				<Button icon="sap-icon://message-popup"
+						text="{messagesLength}"
+						type="Emphasized"
+						press="onMessageButtonPress"
+						visible="{= !!$messagesLength}}"/>
+				<ToolbarSpacer/>
+				<Button type="Accept" text="Accept" press="onPressAcceptBtn"/>
+				<Button type="Reject" text="Reject"/>
+			</Toolbar>
+		</f:footer> -->
+		<!-- <f:footer> 
+			<OverflowToolbar>
+				<Button icon="sap-icon://message-popup"
+						text="{/messagesLength}"
+						type="Emphasized"
+						press="onMessageButtonPress"
+						visible="true"/>
+				<ToolbarSpacer/>
+				<Button type="Accept" text="Accept"/>
+				<Button type="Reject" text="Reject"/>
+			</OverflowToolbar>
+		</f:footer> -->
+	</f:DynamicPage>
+</mvc:View>

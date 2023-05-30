@@ -11,7 +11,7 @@ sap.ui.define([
     function (Controller, Filter, JSONModel, MessageToast, Fragment) {
         "use strict";
 
-        return Controller.extend("ER.zferslip.controller.Main", {
+        return Controller.extend("ER.zfersliplp2.controller.Main", {
             formatter: {
                 dateTime: function(oDate) {
                     let oDateTimeInstance;
@@ -138,8 +138,6 @@ sap.ui.define([
                                 Partid : oReturn.results[i].Partnerid,
                                 Partname : oReturn.results[i].Partname
                             });
-                            this.oslipH.setProperty("/hlist",sliphdatas);
-                            
                             slipidatas.push({
                                 Slipid : 'BON'+i,
                                 Docnum : oReturn.results[i].Batterysoid,
@@ -177,6 +175,7 @@ sap.ui.define([
                             snum += 1;
                         };
                         this.oSlipBefore.setProperty("/blist",tabledatas);
+                        this.oslipH.setProperty("/hlist",sliphdatas);
                         this.byId("idObjNum").setNumber(snum);
                         this._sortStatus();
                     }.bind(this)
@@ -221,7 +220,6 @@ sap.ui.define([
                                 Partid : oReturn.results[i].Partnerid,
                                 Partname : oReturn.results[i].Partname
                             });
-                            this.oslipH.setProperty("/hlist",sliphdatas);
                             
                             slipidatas.push({
                                 Slipid : 'REN'+i,
@@ -260,6 +258,7 @@ sap.ui.define([
                             snum += 1;
                         };
                         this.oSlipBefore.setProperty("/blist",tabledatas);
+                        this.oslipH.setProperty("/hlist",sliphdatas);
                         this.byId("idObjNum").setNumber(snum);
                         this._sortStatus();
                     }.bind(this)
@@ -304,7 +303,6 @@ sap.ui.define([
                                 Partid : oReturn.results[i].Partid,
                                 Partname : oReturn.results[i].Partname
                             });
-                            this.oslipH.setProperty("/hlist",sliphdatas);
                             
                             slipidatas.push({
                                 Slipid : 'MON'+i,
@@ -343,6 +341,7 @@ sap.ui.define([
                             snum += 1;
                         };
                         this.oSlipBefore.setProperty("/blist",tabledatas);
+                        this.oslipH.setProperty("/hlist",sliphdatas);
                         this.byId("idObjNum").setNumber(snum);
                         this._sortStatus();
                     }.bind(this)
@@ -413,8 +412,19 @@ sap.ui.define([
                 // }
             },
             onDetailBtn :function(oEvent){
-                // debugger;
-                var oSelectData = oEvent.getSource().getParent().getRowBindingContext().getObject();
+                var oSelectData ;
+                var oColumn = oEvent.getSource().getParent();
+                var oTable = oColumn.getParent();
+                var oBindingInfo = oTable.getBindingInfo("rows");
+              
+                if (oBindingInfo) {
+                  var iRowIndex = oTable.indexOfRow(oColumn);
+              
+                  if (iRowIndex !== -1) {
+                    oSelectData = oTable.getContextByIndex(iRowIndex).getObject();
+                  }
+                }
+                // var oSelectData = oEvent.getSource().getParent().getRowBindingContext().getObject();
                 var aSlipHData = this.oslipH.getData().hlist;
                 var aSlipIData = this.oslipI.getData().ilist;
                 var aSlipBeforeData = this.oSlipBefore.getData().blist;
@@ -445,22 +455,40 @@ sap.ui.define([
                     };
                 }
 
-                var oDialog = this.byId("DetailDialog"); //DialogID
+                var oDetailDialog = this.byId("DetailDialog"); //DialogID
+                var oView = this.getView();
 
-                if (oDialog){
-                    oDialog.open();
+                if(!oDetailDialog){
+                    Fragment.load({
+                        id: oView.getId(),
+                        name: "ER.zfersliplp2/view/fragment/Detail",
+                        controller: this
+                    }).then(function(oDialog){
+                        oView.addDependent(oDialog);
+                        oDialog.open();
+                    })
+                }else{
+                    oDetailDialog.open();
                     var oDTable = this.byId("idSlipDetailTable");
                     oDTable.unbindRows();
                     oDTable.bindRows("slipI>/select");
                     return;                    
                 }
+
+                // if (oDialog){
+                //     oDialog.open();
+                //     var oDTable = this.byId("idSlipDetailTable");
+                //     oDTable.unbindRows();
+                //     oDTable.bindRows("slipI>/select");
+                //     return;                    
+                // }
                 
-                this.loadFragment({
-                    name: "ER.zferslip.view.fragment.Detail"
-                }).then(function(oDialog){
-                    oDialog.open();
-                    // debugger;
-                },this);
+                // this.loadFragment({
+                //     name: "ER.zfersliplp2.view.fragment.Detail"
+                // }).then(function(oDialog){
+                //     oDialog.open();
+                //     // debugger;
+                // },this);
             },
             onClose: function(oEvent){
                 this._popupconfirm("변경 사항을 취소", function (bConfirm) {
@@ -530,11 +558,9 @@ sap.ui.define([
                                 var sState = oTable.getRows()[i].getCells()[j].getValueState();
                                 if(sState === 'Error'){
                                     sError += 1;
-                                    // debugger;
                                 }
                             }
                         }
-                        // debugger;
 
                         if(sError > 0){
                             MessageToast.show("총액을 확인하세요");
@@ -563,17 +589,29 @@ sap.ui.define([
                             //     }
                             // }
 
-                            var oDialog = this.byId("DetailDialog"); //Dialog        
+                            var oDialog = this.byId("DetailDialog"); //Dialog    
+                            var sDocnum = this.byId("idDocnum").getValue();    
+                            var sTotalValue = this.byId("idTotalAmt").getValue();    
+                            var aSlipBefore = this.oSlipBefore.getData().blist;
+                            // debugger;
                             // var oDialog = this.byId("ProductsDialog");      
                             for(var j = index.length - 1 ; j >= 0 ; j--){
                                 oTable.getRows()[index[j]].getCells()[2].setEnabled(false);
                                 oTable.getRows()[index[j]].getCells()[3].setEnabled(false);
                             };
+                            for(var k = 0; k <aSlipBefore.length; k++){
+                                if(aSlipBefore[k].Docnum === sDocnum){
+                                    aSlipBefore[k].Amount = sTotalValue;
+                                    break;
+                                }
+                            };
+
                             oDialog.close();
                             MessageToast.show("변경 저장");
                             oTable.clearSelection();
-                            oTable.unbindRows();
-                            oTable.bindRows("slipBefore>/blist");
+                            var oBeforeTable = this.byId("idSlipbeforeTable");
+                            oBeforeTable.unbindRows();
+                            oBeforeTable.bindRows("slipBefore>/blist");
                         }
                     }
                 }.bind(this));
@@ -633,8 +671,8 @@ sap.ui.define([
             onPressAcceptBtn : function(){
                 this._popupconfirm("전표를 생성", function (bConfirm) {
                     if (bConfirm) {
-                        var aSlipHData = this.oslipH.getData().hlist;
-                        var aSlipIData = this.oslipI.getData().ilist;
+                        // var aSlipHData = this.oslipH.getData().hlist;
+                        // var aSlipIData = this.oslipI.getData().ilist;
                         var oSlipCreateHData , oSlipCreateIData;
                         var oSlipReadHData ;
                         var sError = 0;
@@ -652,7 +690,17 @@ sap.ui.define([
                             let sPath = this.oTable.getContextByIndex(index[i]).getPath();
                             let skey = Number(sPath.substr(7));
         
-                            oSlipCreateHData = aSlipHData[skey];
+                            // 
+                            var oSlipCreateBData = this.oSlipBefore.getData().blist[skey];
+
+                            for(var k = 0; k < this.oslipH.getData().hlist.length; k++){
+                                if(this.oslipH.getData().hlist[k].Docnum === oSlipCreateBData.Docnum ){
+                                    oSlipCreateHData = this.oslipH.getData().hlist[k];
+                                    break;
+                                }
+                            }
+                            debugger;
+                            // oSlipCreateHData = this.oSlipBefore.getData().blist[skey];
                             
                             oSlipCreateHData.Prfdate = new Date(oSlipCreateHData.Prfdate);
                             oSlipCreateHData.Pstdate = new Date();
@@ -661,26 +709,21 @@ sap.ui.define([
                             var promise = new Promise(function(resolve, reject) {
                                 this.oModel.create("/sliphfSet", oSlipCreateHData, {
                                     success: function(oReturn){
-        
                                         console.log("create head");
                                         oSlipReadHData = oReturn;
-                                        // debugger;   
-                                        // debugger;
-                                        for(var j = 0; j < aSlipIData.length; j++){
-                                            if(aSlipIData[j].Docnum === oSlipReadHData.Docnum){
-                                                // debugger;
-                                                oSlipCreateIData = aSlipIData[j];
+                                        for(var j = 0; j < this.oslipI.getData().ilist.length; j++){
+                                            if(this.oslipI.getData().ilist[j].Docnum === oSlipReadHData.Docnum){
+                                                oSlipCreateIData = this.oslipI.getData().ilist[j];
                                                 oSlipCreateIData.Slipid = oSlipReadHData.Slipid;
                                                 oSlipCreateIData.Amt = String(oSlipCreateIData.Amt);
                                                 oSlipCreateIData.Tax = String(oSlipCreateIData.Tax);
-                                                // debugger;   
         
                                                 this.oModel.create("/slipifSet", oSlipCreateIData, {
                                                     success: function(){
-                                                        // console.log("Create item uccess!!");
+                                                        console.log("Create item uccess!!");
                                                     },
                                                     error: function(){
-                                                        // console.log("Item Error~!");
+                                                        console.log("Item Error~!");
                                                         sError += 1;
                                                     }
                                                 });
@@ -696,7 +739,6 @@ sap.ui.define([
                                     }
                                 });
                             }.bind(this));
-        
                             promises.push(promise);
                         }
                         Promise.all(promises).then(function() {
@@ -709,6 +751,7 @@ sap.ui.define([
                                 MessageToast.show("전표 생성 완료");
                                 this._getdata();
                                 this.oSlipBefore.refresh();
+                                this.oTable.clearSelection();
                             }
                         }.bind(this));
                     }

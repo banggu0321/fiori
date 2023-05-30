@@ -47,7 +47,7 @@
                     </l:BlockLayoutCell>
                 </l:BlockLayoutRow>
                 <l:BlockLayoutRow>
-                    <l:BlockLayoutCell>
+                    <l:BlockLayoutCell width="1">
                         <Toolbar>
                             <Title text="매출" level="H1" />
                         </Toolbar>
@@ -61,9 +61,14 @@
                             </items>
                         </Tree>
                     </l:BlockLayoutCell>
-                    <l:BlockLayoutCell>
-                        <!-- <l:content> -->
-                            <t:Table
+                    <l:BlockLayoutCell 
+                        width="6"
+                        title="매출실적"
+                        titleAlignment="Center"
+                        titleLevel="H6">
+                        <HBox >
+                            <VBox width="50%" class="sapUiMediumMarginEnd">
+                                <t:Table
                                 id="idTable1"
                                 rows="{slipAll>/ilist}"
                                 rowActionCount="1"
@@ -72,9 +77,9 @@
                                 paste="onPaste"
                                 ariaLabelledBy="title">
                                 <t:extension>
-                                    <OverflowToolbar style="Clear" height="2em">
+                                    <!-- <OverflowToolbar style="Clear" height="2em">
                                         <Title id="idTitle1" text="매출" level="H4"/>
-                                    </OverflowToolbar>
+                                    </OverflowToolbar> -->
                                 </t:extension>
                                 <t:columns>
                                     <t:Column width="5rem" hAlign="Center">
@@ -282,24 +287,21 @@
                                         </t:template>
                                     </t:Column>
                                 </t:columns>
-                            </t:Table> 
-                        <!-- </l:content> -->
-                        <!-- <l:content> -->
-                            <viz:VizFrame
-                                id="idViewChart1"
-                                vizType="line" uiConfig="{applicationSet:'fiori'}"
-                                visible="true">
-                            </viz:VizFrame>
-                        <!-- </l:content> -->
-                        
+                                </t:Table>
+                            </VBox>
+                            <VBox>
+                                <viz:VizFrame
+                                    id="idViewChart1"
+                                    vizType="line" uiConfig="{applicationSet:'fiori'}"
+                                    visible="true"
+                                    height = "250px">
+                                </viz:VizFrame>
+                            </VBox>
+                        </HBox>
                     </l:BlockLayoutCell>
-
-
-
-
                 </l:BlockLayoutRow>
                 <l:BlockLayoutRow>
-                    <l:BlockLayoutCell>
+                    <l:BlockLayoutCell width="1">
                         <Toolbar>
                             <Title text="매입" level="H1" />
                         </Toolbar>
@@ -313,232 +315,243 @@
                             </items>
                         </Tree>
                     </l:BlockLayoutCell>
-                    <l:BlockLayoutCell>
-                        <t:Table
-                            id="idTable2"
-                            rows="{slipAll>/olist}"
-                            rowActionCount="1"
-                            selectionMode="None"
-                            visibleRowCountMode="Auto"
-                            paste="onPaste"
-                            ariaLabelledBy="title">
-                            <t:extension>
-                                <OverflowToolbar style="Clear" height="2em">
-                                    <Title id="idTitle2" text="매입" level="H4"/>
-                                </OverflowToolbar>
-                            </t:extension>
-                            <t:columns>
-                                <t:Column width="5rem" hAlign="Center">
-                                    <Label text="협력사" />
-                                    <t:template >
-                                        <Text text="{slipAll>Partid}" wrapping="false" />
-                                    </t:template>
-                                </t:Column>
-                                <t:Column width="7rem" hAlign="Center">
-                                    <Label text="누계" />
-                                    <t:template>
-                                        <ObjectNumber
-                                            number="{
-                                                path: 'slipAll>Total',
-                                                type: 'sap.ui.model.type.Float',
-                                                formatOptions: {
-                                                showMeasure: false
-                                                }
-                                            }"
-                                            textAlign="End"
-                                            unit=" "
-                                            state="Warning"
-                                            />
-                                        <!-- <Text text="{slipAll>Total}" wrapping="false" /> -->
-                                    </t:template>
-                                </t:Column>
-                                <t:Column width="6rem" hAlign="Center">
-                                    <Label text="1월" />
-                                    <t:template>
-                                        <ObjectNumber
-                                            number="{
-                                                path: 'slipAll>1',
-                                                type: 'sap.ui.model.type.Float',
-                                                formatOptions: {
-                                                showMeasure: false
-                                                }
-                                            }"
-                                            textAlign="End"
-                                            unit=" "/>
-                                    </t:template>
-                                </t:Column>
-                                <t:Column width="6rem" hAlign="Center">
-                                    <Label text="2월" />
-                                    <t:template>
-                                        <ObjectNumber
-                                            number="{
-                                                path: 'slipAll>2',
-                                                type: 'sap.ui.model.type.Float',
-                                                formatOptions: {
-                                                showMeasure: false
-                                                }
-                                            }"
-                                            textAlign="End"
-                                            unit=" "/>
-                                    </t:template>
-                                </t:Column>
-                                <t:Column width="6rem" hAlign="Center">
-                                    <Label text="3월" />
-                                    <t:template>
-                                        <ObjectNumber
-                                            number="{
-                                                path: 'slipAll>3',
-                                                type: 'sap.ui.model.type.Float',
-                                                formatOptions: {
-                                                showMeasure: false
-                                                }
-                                            }"
-                                            textAlign="End"
-                                            unit=" "/>
-                                    </t:template>
-                                </t:Column>
-                                <t:Column width="6rem" hAlign="Center">
-                                    <Label text="4월" />
-                                    <t:template>
-                                        <ObjectNumber
-                                            number="{
-                                                path: 'slipAll>4',
-                                                type: 'sap.ui.model.type.Float',
-                                                formatOptions: {
-                                                showMeasure: false
-                                                }
-                                            }"
-                                            textAlign="End"
-                                            unit=" "/>
-                                    </t:template>
-                                </t:Column>
-                                <t:Column width="6rem" hAlign="Center">
-                                    <Label text="5월" />
-                                    <t:template>
-                                        <ObjectNumber
-                                            number="{
-                                                path: 'slipAll>5',
-                                                type: 'sap.ui.model.type.Float',
-                                                formatOptions: {
-                                                showMeasure: false
-                                                }
-                                            }"
-                                            textAlign="End"
-                                            unit=" "/>
-                                    </t:template>
-                                </t:Column>
-                                <t:Column width="6rem" hAlign="Center">
-                                    <Label text="6월" />
-                                    <t:template>
-                                        <ObjectNumber
-                                            number="{
-                                                path: 'slipAll>6',
-                                                type: 'sap.ui.model.type.Float',
-                                                formatOptions: {
-                                                showMeasure: false
-                                                }
-                                            }"
-                                            textAlign="End"
-                                            unit=" "/>
-                                    </t:template>
-                                </t:Column>
-                                <t:Column width="6rem" hAlign="Center">
-                                    <Label text="7월" />
-                                    <t:template>
-                                        <ObjectNumber
-                                            number="{
-                                                path: 'slipAll>7',
-                                                type: 'sap.ui.model.type.Float',
-                                                formatOptions: {
-                                                showMeasure: false
-                                                }
-                                            }"
-                                            textAlign="End"
-                                            unit=" "/>
-                                    </t:template>
-                                </t:Column>
-                                <t:Column width="6rem" hAlign="Center">
-                                    <Label text="8월" />
-                                    <t:template>
-                                        <ObjectNumber
-                                            number="{
-                                                path: 'slipAll>8',
-                                                type: 'sap.ui.model.type.Float',
-                                                formatOptions: {
-                                                showMeasure: false
-                                                }
-                                            }"
-                                            textAlign="End"
-                                            unit=" "/>
-                                    </t:template>
-                                </t:Column>
-                                <t:Column width="6rem" hAlign="Center">
-                                    <Label text="9월" />
-                                    <t:template>
-                                        <ObjectNumber
-                                            number="{
-                                                path: 'slipAll>9',
-                                                type: 'sap.ui.model.type.Float',
-                                                formatOptions: {
-                                                showMeasure: false
-                                                }
-                                            }"
-                                            textAlign="End"
-                                            unit=" "/>
-                                    </t:template>
-                                </t:Column>
-                                <t:Column width="6rem" hAlign="Center">
-                                    <Label text="10월" />
-                                    <t:template>
-                                        <ObjectNumber
-                                            number="{
-                                                path: 'slipAll>10',
-                                                type: 'sap.ui.model.type.Float',
-                                                formatOptions: {
-                                                showMeasure: false
-                                                }
-                                            }"
-                                            textAlign="End"
-                                            unit=" "/>
-                                    </t:template>
-                                </t:Column>
-                                <t:Column width="6rem" hAlign="Center">
-                                    <Label text="11월" />
-                                    <t:template>
-                                        <ObjectNumber
-                                            number="{
-                                                path: 'slipAll>11',
-                                                type: 'sap.ui.model.type.Float',
-                                                formatOptions: {
-                                                showMeasure: false
-                                                }
-                                            }"
-                                            textAlign="End"
-                                            unit=" "/>
-                                    </t:template>
-                                </t:Column>
-                                <t:Column width="6rem" hAlign="Center">
-                                    <Label text="12월" />
-                                    <t:template>
-                                        <ObjectNumber
-                                            number="{
-                                                path: 'slipAll>12',
-                                                type: 'sap.ui.model.type.Float',
-                                                formatOptions: {
-                                                showMeasure: false
-                                                }
-                                            }"
-                                            textAlign="End"
-                                            unit=" "/>
-                                    </t:template>
-                                </t:Column>
-                            </t:columns>
-                        </t:Table> 
-                        <viz:VizFrame
-                            id="idViewChart2"
-                            vizType="line" uiConfig="{applicationSet:'fiori'}"
-                            visible="true">
-                        </viz:VizFrame>
+                    <l:BlockLayoutCell
+                        width="6"
+                        title="매출실적"
+                        titleAlignment="Center"
+                        titleLevel="H6">
+                        <HBox >
+                            <VBox width="50%" class="sapUiMediumMarginEnd">
+                                <t:Table
+                                    id="idTable2"
+                                    rows="{slipAll>/olist}"
+                                    rowActionCount="1"
+                                    selectionMode="None"
+                                    visibleRowCountMode="Auto"
+                                    paste="onPaste"
+                                    ariaLabelledBy="title">
+                                    <t:extension>
+                                        <!-- <OverflowToolbar style="Clear" height="2em">
+                                            <Title id="idTitle2" text="매입" level="H4"/>
+                                        </OverflowToolbar> -->
+                                    </t:extension>
+                                    <t:columns>
+                                        <t:Column width="5rem" hAlign="Center">
+                                            <Label text="협력사" />
+                                            <t:template >
+                                                <Text text="{slipAll>Partid}" wrapping="false" />
+                                            </t:template>
+                                        </t:Column>
+                                        <t:Column width="7rem" hAlign="Center">
+                                            <Label text="누계" />
+                                            <t:template>
+                                                <ObjectNumber
+                                                    number="{
+                                                        path: 'slipAll>Total',
+                                                        type: 'sap.ui.model.type.Float',
+                                                        formatOptions: {
+                                                        showMeasure: false
+                                                        }
+                                                    }"
+                                                    textAlign="End"
+                                                    unit=" "
+                                                    state="Warning"
+                                                    />
+                                                <!-- <Text text="{slipAll>Total}" wrapping="false" /> -->
+                                            </t:template>
+                                        </t:Column>
+                                        <t:Column width="6rem" hAlign="Center">
+                                            <Label text="1월" />
+                                            <t:template>
+                                                <ObjectNumber
+                                                    number="{
+                                                        path: 'slipAll>1',
+                                                        type: 'sap.ui.model.type.Float',
+                                                        formatOptions: {
+                                                        showMeasure: false
+                                                        }
+                                                    }"
+                                                    textAlign="End"
+                                                    unit=" "/>
+                                            </t:template>
+                                        </t:Column>
+                                        <t:Column width="6rem" hAlign="Center">
+                                            <Label text="2월" />
+                                            <t:template>
+                                                <ObjectNumber
+                                                    number="{
+                                                        path: 'slipAll>2',
+                                                        type: 'sap.ui.model.type.Float',
+                                                        formatOptions: {
+                                                        showMeasure: false
+                                                        }
+                                                    }"
+                                                    textAlign="End"
+                                                    unit=" "/>
+                                            </t:template>
+                                        </t:Column>
+                                        <t:Column width="6rem" hAlign="Center">
+                                            <Label text="3월" />
+                                            <t:template>
+                                                <ObjectNumber
+                                                    number="{
+                                                        path: 'slipAll>3',
+                                                        type: 'sap.ui.model.type.Float',
+                                                        formatOptions: {
+                                                        showMeasure: false
+                                                        }
+                                                    }"
+                                                    textAlign="End"
+                                                    unit=" "/>
+                                            </t:template>
+                                        </t:Column>
+                                        <t:Column width="6rem" hAlign="Center">
+                                            <Label text="4월" />
+                                            <t:template>
+                                                <ObjectNumber
+                                                    number="{
+                                                        path: 'slipAll>4',
+                                                        type: 'sap.ui.model.type.Float',
+                                                        formatOptions: {
+                                                        showMeasure: false
+                                                        }
+                                                    }"
+                                                    textAlign="End"
+                                                    unit=" "/>
+                                            </t:template>
+                                        </t:Column>
+                                        <t:Column width="6rem" hAlign="Center">
+                                            <Label text="5월" />
+                                            <t:template>
+                                                <ObjectNumber
+                                                    number="{
+                                                        path: 'slipAll>5',
+                                                        type: 'sap.ui.model.type.Float',
+                                                        formatOptions: {
+                                                        showMeasure: false
+                                                        }
+                                                    }"
+                                                    textAlign="End"
+                                                    unit=" "/>
+                                            </t:template>
+                                        </t:Column>
+                                        <t:Column width="6rem" hAlign="Center">
+                                            <Label text="6월" />
+                                            <t:template>
+                                                <ObjectNumber
+                                                    number="{
+                                                        path: 'slipAll>6',
+                                                        type: 'sap.ui.model.type.Float',
+                                                        formatOptions: {
+                                                        showMeasure: false
+                                                        }
+                                                    }"
+                                                    textAlign="End"
+                                                    unit=" "/>
+                                            </t:template>
+                                        </t:Column>
+                                        <t:Column width="6rem" hAlign="Center">
+                                            <Label text="7월" />
+                                            <t:template>
+                                                <ObjectNumber
+                                                    number="{
+                                                        path: 'slipAll>7',
+                                                        type: 'sap.ui.model.type.Float',
+                                                        formatOptions: {
+                                                        showMeasure: false
+                                                        }
+                                                    }"
+                                                    textAlign="End"
+                                                    unit=" "/>
+                                            </t:template>
+                                        </t:Column>
+                                        <t:Column width="6rem" hAlign="Center">
+                                            <Label text="8월" />
+                                            <t:template>
+                                                <ObjectNumber
+                                                    number="{
+                                                        path: 'slipAll>8',
+                                                        type: 'sap.ui.model.type.Float',
+                                                        formatOptions: {
+                                                        showMeasure: false
+                                                        }
+                                                    }"
+                                                    textAlign="End"
+                                                    unit=" "/>
+                                            </t:template>
+                                        </t:Column>
+                                        <t:Column width="6rem" hAlign="Center">
+                                            <Label text="9월" />
+                                            <t:template>
+                                                <ObjectNumber
+                                                    number="{
+                                                        path: 'slipAll>9',
+                                                        type: 'sap.ui.model.type.Float',
+                                                        formatOptions: {
+                                                        showMeasure: false
+                                                        }
+                                                    }"
+                                                    textAlign="End"
+                                                    unit=" "/>
+                                            </t:template>
+                                        </t:Column>
+                                        <t:Column width="6rem" hAlign="Center">
+                                            <Label text="10월" />
+                                            <t:template>
+                                                <ObjectNumber
+                                                    number="{
+                                                        path: 'slipAll>10',
+                                                        type: 'sap.ui.model.type.Float',
+                                                        formatOptions: {
+                                                        showMeasure: false
+                                                        }
+                                                    }"
+                                                    textAlign="End"
+                                                    unit=" "/>
+                                            </t:template>
+                                        </t:Column>
+                                        <t:Column width="6rem" hAlign="Center">
+                                            <Label text="11월" />
+                                            <t:template>
+                                                <ObjectNumber
+                                                    number="{
+                                                        path: 'slipAll>11',
+                                                        type: 'sap.ui.model.type.Float',
+                                                        formatOptions: {
+                                                        showMeasure: false
+                                                        }
+                                                    }"
+                                                    textAlign="End"
+                                                    unit=" "/>
+                                            </t:template>
+                                        </t:Column>
+                                        <t:Column width="6rem" hAlign="Center">
+                                            <Label text="12월" />
+                                            <t:template>
+                                                <ObjectNumber
+                                                    number="{
+                                                        path: 'slipAll>12',
+                                                        type: 'sap.ui.model.type.Float',
+                                                        formatOptions: {
+                                                        showMeasure: false
+                                                        }
+                                                    }"
+                                                    textAlign="End"
+                                                    unit=" "/>
+                                            </t:template>
+                                        </t:Column>
+                                    </t:columns>
+                                </t:Table> 
+                            </VBox>
+                            <VBox>
+                                <viz:VizFrame
+                                    id="idViewChart2"
+                                    vizType="line" uiConfig="{applicationSet:'fiori'}"
+                                    visible="true"
+                                    height = "250px">
+                                </viz:VizFrame>
+                            </VBox>
+                        </HBox>
                     </l:BlockLayoutCell>
                 </l:BlockLayoutRow>
             </l:BlockLayout>

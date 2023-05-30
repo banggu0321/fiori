@@ -11,7 +11,7 @@ sap.ui.define([
     function (Controller, Filter, JSONModel, MessageToast, Fragment) {
         "use strict";
 
-        return Controller.extend("ER.zferslip.controller.Main", {
+        return Controller.extend("ER.zfersliplp.controller.Main", {
             formatter: {
                 dateTime: function(oDate) {
                     let oDateTimeInstance;
@@ -413,8 +413,19 @@ sap.ui.define([
                 // }
             },
             onDetailBtn :function(oEvent){
-                // debugger;
-                var oSelectData = oEvent.getSource().getParent().getRowBindingContext().getObject();
+                var oSelectData ;
+                var oColumn = oEvent.getSource().getParent();
+                var oTable = oColumn.getParent();
+                var oBindingInfo = oTable.getBindingInfo("rows");
+              
+                if (oBindingInfo) {
+                  var iRowIndex = oTable.indexOfRow(oColumn);
+              
+                  if (iRowIndex !== -1) {
+                    oSelectData = oTable.getContextByIndex(iRowIndex).getObject();
+                  }
+                }
+                // var oSelectData = oEvent.getSource().getParent().getRowBindingContext().getObject();
                 var aSlipHData = this.oslipH.getData().hlist;
                 var aSlipIData = this.oslipI.getData().ilist;
                 var aSlipBeforeData = this.oSlipBefore.getData().blist;
@@ -445,22 +456,40 @@ sap.ui.define([
                     };
                 }
 
-                var oDialog = this.byId("DetailDialog"); //DialogID
+                var oDetailDialog = this.byId("DetailDialog"); //DialogID
+                var oView = this.getView();
 
-                if (oDialog){
-                    oDialog.open();
+                if(!oDetailDialog){
+                    Fragment.load({
+                        id: oView.getId(),
+                        name: "ER.zfersliplp/view/fragment/Detail",
+                        controller: this
+                    }).then(function(oDialog){
+                        oView.addDependent(oDialog);
+                        oDialog.open();
+                    })
+                }else{
+                    oDetailDialog.open();
                     var oDTable = this.byId("idSlipDetailTable");
                     oDTable.unbindRows();
                     oDTable.bindRows("slipI>/select");
                     return;                    
                 }
+
+                // if (oDialog){
+                //     oDialog.open();
+                //     var oDTable = this.byId("idSlipDetailTable");
+                //     oDTable.unbindRows();
+                //     oDTable.bindRows("slipI>/select");
+                //     return;                    
+                // }
                 
-                this.loadFragment({
-                    name: "ER.zferslip.view.fragment.Detail"
-                }).then(function(oDialog){
-                    oDialog.open();
-                    // debugger;
-                },this);
+                // this.loadFragment({
+                //     name: "ER.zfersliplp.view.fragment.Detail"
+                // }).then(function(oDialog){
+                //     oDialog.open();
+                //     // debugger;
+                // },this);
             },
             onClose: function(oEvent){
                 this._popupconfirm("변경 사항을 취소", function (bConfirm) {
