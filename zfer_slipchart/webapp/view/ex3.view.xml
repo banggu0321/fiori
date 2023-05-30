@@ -1,0 +1,178 @@
+<mvc:View
+	controllerName="ER.zfermatuschart.controller.Main"
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+	xmlns:viz.data="sap.viz.ui5.data"
+	xmlns:viz="sap.viz.ui5.controls"
+	xmlns:core="sap.ui.core"
+	xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:u="sap.ui.table">
+	<Page title="EReON 자재 사용량 차트">
+        <l:VerticalLayout id="VerticalLayout" width="100%">
+            <l:BlockLayout id="BlockLayout" background="Dashboard">
+                <l:BlockLayoutRow accentCells="Accent1">
+                    <l:BlockLayoutCell
+                        id="SearchList"
+                        width="2"
+                        title="조회 조건"
+                        titleAlignment="Begin">
+                        <HBox>
+                            <VBox >
+                                <fb:FilterBar id="filterBar" header="Search Filters" useToolbar="false"
+                                    search="onSearch" filterContainerWidth="10rem" showGoButton="false" showFilterConfiguration="false">
+                                    <fb:filterGroupItems>
+                                        <fb:FilterGroupItem groupName="__$INTERNAL$" name="Branch" label="Branch"
+                                            visibleInFilterBar="true">
+                                            <fb:control>
+                                                <ComboBox
+                                                    id="idComboBox"
+                                                    showSecondaryValues="true"
+                                                    items="{
+                                                            path: 'typeList>/list',
+                                                            templateShareable: true
+                                                        }"
+                                                    required="true"
+                                                    selectedKey="column"
+                                                    placeholder="지점 별 조회">
+                                                    <core:ListItem key="{typeList>type}" text="{typeList>type}" />
+                                                </ComboBox>
+                                            </fb:control>
+                                        </fb:FilterGroupItem>
+                                        <fb:FilterGroupItem groupName="__$INTERNAL$" name="State" label="Branch"
+                                            visibleInFilterBar="true">
+                                            <fb:control>
+                                                <DateRangeSelection
+                                                    width="13rem"
+                                                    valueState="{valueState}"
+                                                    valueStateText="{valueStateText}"
+                                                    change="onDateChange"
+                                                    displayFormat="MM/yyyy"
+                                                    placeholder="월 별 조회" />
+                                            </fb:control>
+                                        </fb:FilterGroupItem>
+                                    </fb:filterGroupItems>
+                                </fb:FilterBar>
+                            </VBox>
+                        </HBox>
+                            
+                    </l:BlockLayoutCell>
+                </l:BlockLayoutRow>
+                <l:BlockLayoutRow>
+                    <l:BlockLayoutCell title="월별 자재 사용량 차트" width="2">
+                        <viz:VizFrame id="idMatChart" uiConfig="{applicationSet:'fiori'}"
+                            width="1250px" height="480px" legendVisible="true" vizType="column"
+                            vizProperties="{
+                                        'title' : { text : 'Material Chart', visible : true},
+                                        'plotArea' : {
+                                            dataLabel : {visible : true},
+                                            drawingEffect : 'glossy',
+                                            colorPalette:['#56BDF7', '#5F00FF']} }">
+                            <viz:dataset>
+                                <viz.data:FlattenedDataset id="idMaterial" data="{oMatModel>/results}">
+                                    <viz.data:dimensions>
+                                        <viz.data:DimensionDefinition name="자재ID"
+                                            value="{oMatModel>Matid}" />
+                                        <viz.data:DimensionDefinition name="지점 코드"
+                                            value="{oMatModel>Branch}" />
+                                        <!-- <viz.data:DimensionDefinition name="자재명"
+                                            value="{oMatModel>Matname}" /> -->
+                                        <viz.data:DimensionDefinition name="지점명"
+                                            value="{oMatModel>Branchname}" />
+                                        <!-- <viz.data:DimensionDefinition name="수리날짜"
+                                            value="{Repdate}" />  -->
+                                        <!-- <viz.data:DimensionDefinition name="yearmonth"
+                                            value="{Yearmonth}" />  -->
+                                    </viz.data:dimensions>
+                                    <viz.data:measures>
+                                        <viz.data:MeasureDefinition name="사용 수량"
+                                            value="{oMatModel>Matusnum}" />
+                                    </viz.data:measures>
+                                </viz.data:FlattenedDataset>
+                            </viz:dataset>
+                            <viz:feeds>
+                                <viz.feeds:FeedItem id='valueAxisFeed' uid="valueAxis" type="Measure"
+                                    values="사용 수량" />
+                                <viz.feeds:FeedItem id='categoryAxisFeed' uid="categoryAxis"
+                                    type="Dimension"
+                                    values="자재ID,지점 코드,지점명" />
+                            </viz:feeds>
+                        </viz:VizFrame>
+                    </l:BlockLayoutCell>
+                </l:BlockLayoutRow>
+                <l:BlockLayoutRow accentCells="Accent3">
+                    <l:BlockLayoutCell id="Accent3">
+                        <u:Table
+                            class="sapUiTinyMargin"
+                            id="MatTable"
+                            selectionMode="MultiToggle"
+                            rows="{oMatModel>/results}"
+                            visibleRowCount="10"
+                            ariaLabelledBy="title"
+                            selectionBehavior="RowOnly"
+                            rowSelectionChange="onSelectionChange"
+                            enableCellFilter="{ui>/cellFilterOn}">
+                            <u:columns>
+                                <u:Column id="Repdate"
+                                    width="10rem"
+                                    filterProperty="Repdate"
+                                    sortProperty="Repdate"
+                                    hAlign="Center">
+                                    <Label text="수리일자" />
+                                    <u:template>
+                                        <Text text="{
+                                                path : 'oMatModel>Repdate',
+                                                formatter : '.formatter.dateTime'}" 
+                                            wrapping="false" />
+                                    </u:template>
+                                </u:Column>
+                                <u:Column width="10rem" hAlign="Center"
+                                    filterProperty="Branch"
+                                    sortProperty="Branch"
+                                    defaultFilterOperator="StartsWith">
+                                    <Label text="지점코드" />
+                                    <u:template>
+                                        <Text text="{oMatModel>Branch}" wrapping="false" />
+                                    </u:template>
+                                </u:Column>
+                                <u:Column id="Branchname"
+                                    width="10rem"
+                                    filterProperty="Branchname"
+                                    sortProperty="Branchname"
+                                    hAlign="Center">
+                                    <Label text="지점명" />
+                                    <u:template>
+                                        <Text text="{oMatModel>Branchname}" wrapping="false" />
+                                    </u:template>
+                                </u:Column>
+                                <u:Column width="10rem" hAlign="Center" filterProperty="Matid"
+                                    sortProperty="Matid">
+                                    <Label text="자재id" />
+                                    <u:template>
+                                        <ObjectStatus text="{oMatModel>Matid}" />
+                                    </u:template>
+                                </u:Column>
+                                <u:Column width="10rem" hAlign="Center" filterProperty="Matname"
+                                    sortProperty="Matname">
+                                    <Label text="자재명" />
+                                    <u:template>
+                                        <ObjectStatus text="{oMatModel>Matname}" />
+                                    </u:template>
+                                </u:Column>
+                                <u:Column width="10rem" hAlign="Center" filterProperty="Matusnum"
+                                    sortProperty="Matusnum">
+                                    <Label text="사용수량" />
+                                    <u:template>
+                                        <ObjectStatus text="{oMatModel>Matusnum}" />
+                                    </u:template>
+                                </u:Column>
+                            </u:columns>
+                        </u:Table>
+                    </l:BlockLayoutCell>
+                </l:BlockLayoutRow>
+            </l:BlockLayout>
+        </l:VerticalLayout>
+    </Page>
+</mvc:View>

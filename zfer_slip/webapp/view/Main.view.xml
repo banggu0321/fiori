@@ -16,8 +16,8 @@
 					<Title text="전표생성"/>
 				</f:heading>
 				<f:expandedContent>
-					<ObjectAttribute id="idAtUserName" title="사용자명 " text="{/employeeSet/0/Deptid}"/>
-					<ObjectAttribute id="idAtDept"  title="소속부서 " text=""/>
+					<!-- <ObjectAttribute id="idAtUserName" title="사용자명 " text="{/employeeSet/0/Deptid}"/>
+					<ObjectAttribute id="idAtDept"  title="소속부서 " text=""/> -->
 				</f:expandedContent>
 				<f:snappedContent>
 					<Label id="idLabeluname" text=""/>
@@ -31,8 +31,7 @@
 						<GenericTag text="미생성"
 							status="Error"
 							press="onPressOpenPopover"
-							design="StatusIconHidden"
-							class="sapUiSmallMarginTop">
+							design="StatusIconHidden">
 							<ObjectNumber 
 								id="idObjNum"
 								number="2"
@@ -53,6 +52,29 @@
 		<!-- DynamicPage Header -->
 		<f:header>
 			<f:DynamicPageHeader pinnable="true">
+				<HBox>
+					<FlexBox wrap="Wrap" fitContainer="true">
+						<core:Icon src="sap-icon://customer" size="100px" class="sapUiMediumMarginEnd"/>
+					</FlexBox>
+					<VBox class="sapUiLargeMarginEnd sapUiTinyMarginBottom" width="150%">
+						<Title id="idEmp" text="{/employeeSet/Employeeid}" class="sapUiTinyMarginBottom"
+							width="12rem" />
+						<Text id="idDept" width="100%" text="{/employeeSet/Deptname}" />
+						<Text id="idName" width="100%" text="{/employeeSet/Name}" />
+						<!-- <Text id="idRank" width="100%" text="{/LoginSet/Rankname} " /> -->
+					</VBox>
+					<VBox class="sapUiLargeMarginEnd sapUiTinyMarginBottom" width="150%">
+						<Title text="Contact Information" class="sapUiTinyMarginBottom" />
+						<HBox class="sapUiTinyMarginBottom">
+							<core:Icon src="sap-icon://outgoing-call" />
+							<Text id="idTel" text="{/employeeSet/Telno}" class="sapUiSmallMarginBegin" />
+						</HBox>
+						<HBox>
+							<core:Icon src="sap-icon://email" />
+							<Text id="idEmail" text="{/employeeSet/Email}" class="sapUiSmallMarginBegin" />
+						</HBox>
+					</VBox>
+				</HBox>
 				<layout:HorizontalLayout allowWrapping="true">
 					<layout:VerticalLayout class="sapUiMediumMarginEnd">
 						<!-- <ObjectAttribute title="사용자명" text="Warehouse A"/>

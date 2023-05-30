@@ -48,23 +48,23 @@ sap.ui.define([
                 this.oslipAll = this.getView().getModel("slipAll"); //slipAll
             },
             _getData: function() {
-                this._getEmployeeData();
+                // this._getEmployeeData();
                 this._getPartnerData();
                 // this._setCharrInController();
               },
-              _getEmployeeData: function() {
-                this.getOwnerComponent().getModel().read("/employeeSet", {
-                  success: function(oReturn) {
-                    this.empid = oReturn.results[0].Employeeid;
-                    this.byId("idAtUserName").setText(`${oReturn.results[0].Name}(${this.empid})`);
-                    this.byId("idAtDept").setText(`${oReturn.results[0].Deptname}`);
-                    this.byId("idLabeluname").setText(`${oReturn.results[0].Deptname} ${oReturn.results[0].Name}(${oReturn.results[0].Employeeid})`);
-                  }.bind(this),
-                  error: function(error) {
-                    console.error("Failed to get employee data:", error);
-                  }
-                });
-              },
+            //   _getEmployeeData: function() {
+            //     this.getOwnerComponent().getModel().read("/employeeSet", {
+            //       success: function(oReturn) {
+            //         this.empid = oReturn.results[0].Employeeid;
+            //         this.byId("idAtUserName").setText(`${oReturn.results[0].Name}(${this.empid})`);
+            //         this.byId("idAtDept").setText(`${oReturn.results[0].Deptname}`);
+            //         this.byId("idLabeluname").setText(`${oReturn.results[0].Deptname} ${oReturn.results[0].Name}(${oReturn.results[0].Employeeid})`);
+            //       }.bind(this),
+            //       error: function(error) {
+            //         console.error("Failed to get employee data:", error);
+            //       }
+            //     });
+            //   },
               _getPartnerData: function() {
                 var aPartnerI = [];
                 var aPartnerO = [];
@@ -194,19 +194,9 @@ sap.ui.define([
                                     newData[vPartid] = amount;
                                     adataO2.push(newData);
                                 }
-                                // odata2[vPartid] = amount;
-                                // adataO2.push(odata2);
                             }
                         }
                     });
-                    // for (var i = 1; i <= 12; i++) {
-                    //     var odata3 = { Month: i };
-                    //     adataI2.forEach(function(item){
-                    //         if(item.Month === i){
-                    //             odata3[]
-                    //         }
-                    //     });
-                    // }
 
                     adataI2.forEach(function(item){
 
