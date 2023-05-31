@@ -131,11 +131,12 @@
 				id="idSlipbeforeTable"
 				rows="{slipBefore>/blist}"
 				rowActionCount="1"
+				visibleRowCount="{slipBefore>/count}" 
 				selectionMode="MultiToggle" 
-				visibleRowCountMode="Auto"
 				paste="onPaste"
 				ariaLabelledBy="title">
-				<!-- visibleRowCount="50" -->
+				<!-- visibleRowCount="50" 
+				visibleRowCountMode="Auto"-->
 				<t:extension>
 					<OverflowToolbar style="Clear" height="3em">
 						<Title id="title" text="Document" level="H1"/>

@@ -186,6 +186,7 @@ sap.ui.define([
                         this.oSlipBefore.setProperty("/blist",tabledatas);
                         this.oslipH.setProperty("/hlist",sliphdatas);
                         this.byId("idObjNum").setNumber(snum);
+                        this.oSlipBefore.setProperty("/count",snum);
                         this._sortStatus();
                     }.bind(this)
                 });
@@ -272,6 +273,7 @@ sap.ui.define([
                         this.oSlipBefore.setProperty("/blist",tabledatas);
                         this.oslipH.setProperty("/hlist",sliphdatas);
                         this.byId("idObjNum").setNumber(snum);
+                        this.oSlipBefore.setProperty("/count",snum);
                         this._sortStatus();
                     }.bind(this)
                 });
@@ -358,6 +360,7 @@ sap.ui.define([
                         this.oSlipBefore.setProperty("/blist",tabledatas);
                         this.oslipH.setProperty("/hlist",sliphdatas);
                         this.byId("idObjNum").setNumber(snum);
+                        this.oSlipBefore.setProperty("/count",snum);
                         this._sortStatus();
                     }.bind(this)
                 });
