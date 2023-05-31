@@ -102,20 +102,29 @@ sap.ui.define([
                 var sliphdatas = [];
                 var slipidatas = [];
                 var snum = 0;
-
+                var sDate = new Date();
+                // var sLastDate = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1); // 5.31
+                // 4.31 -> 4.31부터 가능
+                // 4.1  -> 4.30 ~ 5 됨 ( 막일 - 1  < 오늘날짜)
+                // 5.1  -> 5.31 ~ 6 됨
                 var sPath = "/wbatsofSet"; 
                 this.oModel.read(sPath,{ 
                     success:function(oReturn){
-                        // debugger;
                         console.log("wbatso데이터성공");
                         for(var i = 0 ; i < oReturn.results.length; i++){
                             var sStatus;
-                            if(oReturn.results[i].Indate < new Date(new Date().getFullYear(), new Date().getMonth(), 1)){
-                                sStatus = "Necessary";
+                            // var sRdate = new Date(oReturn.results[i].Indate);
+                            // var lastDayOfMonth = new Date(sRdate.getFullYear(), sRdate.getMonth() + 1, 1);
+                            var indate = new Date(oReturn.results[i].Indate);
+                            var currentYear = indate.getFullYear();
+                            var currentMonth = indate.getMonth() + 1;
+                            var lastDayOfCurrentMonth = new Date(currentYear, currentMonth, 0);
+                            var lastDayOfMonth = new Date(currentYear, currentMonth - 1, lastDayOfCurrentMonth.getDate() - 1);
+                            if(lastDayOfMonth < sDate){
+                                sStatus = "Urgent";
                             }else{
-                                sStatus = "Irrelevant"; //Irrelevant
+                                sStatus = "Necessary"; //IrrelevantUrgent
                             }
-                            // debugger;
                             tabledatas.push({
                                 Status : sStatus,
                                 Docnum : oReturn.results[i].Batterysoid,
@@ -187,16 +196,19 @@ sap.ui.define([
                 slipidatas = [];
                 this.oModel.read(sPath,{
                     success:function(oReturn){
-                        // debugger;
                         console.log("rental데이터성공");
                         for(var i = 0 ; i < oReturn.results.length; i++){
                             var sStatus;
-                            if(oReturn.results[i].Fdate < new Date(new Date().getFullYear(), new Date().getMonth(), 1)){
-                                sStatus = "Necessary";
+                            var indate = new Date(oReturn.results[i].Fdate);
+                            var currentYear = indate.getFullYear();
+                            var currentMonth = indate.getMonth() + 1;
+                            var lastDayOfCurrentMonth = new Date(currentYear, currentMonth, 0);
+                            var lastDayOfMonth = new Date(currentYear, currentMonth - 1, lastDayOfCurrentMonth.getDate() - 1);
+                            if(lastDayOfMonth < sDate){
+                                sStatus = "Urgent";
                             }else{
-                                sStatus = "Irrelevant";
+                                sStatus = "Necessary";
                             }
-                            // debugger;
                             tabledatas.push({
                                 Status : sStatus,
                                 Docnum : oReturn.results[i].Rentalid,
@@ -270,16 +282,19 @@ sap.ui.define([
                 slipidatas = [];
                 this.oModel.read(sPath,{
                     success:function(oReturn){
-                        // debugger;
                         console.log("auto데이터성공");
                         for(var i = 0 ; i < oReturn.results.length; i++){
                             var sStatus;
-                            if(oReturn.results[i].Autodat < new Date(new Date().getFullYear(), new Date().getMonth(), 1)){
-                                sStatus = "Necessary";
+                            var indate = new Date(oReturn.results[i].Autodat);
+                            var currentYear = indate.getFullYear();
+                            var currentMonth = indate.getMonth() + 1;
+                            var lastDayOfCurrentMonth = new Date(currentYear, currentMonth, 0);
+                            var lastDayOfMonth = new Date(currentYear, currentMonth - 1, lastDayOfCurrentMonth.getDate() - 1);
+                            if(lastDayOfMonth < sDate){
+                                sStatus = "Urgent";
                             }else{
-                                sStatus = "Irrelevant";
+                                sStatus = "Necessary";
                             }
-                            // debugger;
                             tabledatas.push({
                                 Status : sStatus,
                                 Docnum : oReturn.results[i].Autonum,
@@ -346,7 +361,6 @@ sap.ui.define([
                         this._sortStatus();
                     }.bind(this)
                 });
-                // debugger;
             },
             _sortStatus:function(){
                 this.oSlipBefore.getData().blist.sort(function(a, b) {
@@ -427,7 +441,7 @@ sap.ui.define([
                 // var oSelectData = oEvent.getSource().getParent().getRowBindingContext().getObject();
                 var aSlipHData = this.oslipH.getData().hlist;
                 var aSlipIData = this.oslipI.getData().ilist;
-                var aSlipBeforeData = this.oSlipBefore.getData().blist;
+                // var aSlipBeforeData = this.oSlipBefore.getData().blist;
                 var aSlipidatas = [];
 
                 var selectedIndices = this.oTable.getSelectedIndices();
@@ -440,13 +454,13 @@ sap.ui.define([
 
                 // this.oTable.setSelectedIndex(oEvent.getSource().getParent().getIndex());
                 for(var i = 0; i < aSlipHData.length; i++){
-                    if(aSlipHData[i].Docnum == oSelectData.Docnum){
+                    if(aSlipHData[i].Docnum === oSelectData.Docnum){
                         this.oslipH.setProperty("/select",aSlipHData[i]);
-                        this.oslipH.setProperty("/selectBefore",aSlipBeforeData[i]);
-                        this.sRollbackAmt = aSlipBeforeData[i].Amount;
+                        this.oslipH.setProperty("/selectBefore",oSelectData);
+                        this.sRollbackAmt = oSelectData.Amount;
 
                         for(var j = 0; j < aSlipIData.length ; j++){
-                            if(aSlipIData[j].Slipid == aSlipHData[i].Slipid){
+                            if(aSlipIData[j].Slipid === aSlipHData[i].Slipid){
                                 aSlipidatas.push(aSlipIData[j]);
                             }
                         }
@@ -609,9 +623,10 @@ sap.ui.define([
                             oDialog.close();
                             MessageToast.show("변경 저장");
                             oTable.clearSelection();
-                            var oBeforeTable = this.byId("idSlipbeforeTable");
-                            oBeforeTable.unbindRows();
-                            oBeforeTable.bindRows("slipBefore>/blist");
+                            var oBeforeTable = this.byId("idSlipbeforeTable");                            
+                            this.oSlipBefore.refresh();
+                            // oBeforeTable.unbindRows();
+                            // oBeforeTable.bindRows("slipBefore>/blist");
                         }
                     }
                 }.bind(this));
@@ -774,7 +789,7 @@ sap.ui.define([
                 var aSelectedRows = [];
 
                 for (var i = 0; i < aData.length; i++) {
-                  if (aData[i].Status === 'Necessary') {
+                  if (aData[i].Status === 'Urgent') {
                     aSelectedRows.push(aData[i]);
                     this.oTable.addSelectionInterval(i, i);
                   }

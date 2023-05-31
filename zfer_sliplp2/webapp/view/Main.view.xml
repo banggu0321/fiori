@@ -163,8 +163,8 @@
 						<Label text="상태" />
 						<t:template >
 							<tnt:InfoLabel id="infolabel" renderMode="Loose" 
-								colorScheme="{= (${slipBefore>Status}) === 'Necessary' ? 3 : 1}"
-									displayOnly= "{= (${slipBefore>Status}) === 'Necessary' ? false : true}" 
+								colorScheme="{= (${slipBefore>Status}) === 'Urgent' ? 3 : 1}"
+									displayOnly= "{= (${slipBefore>Status}) === 'Urgent' ? false : true}" 
 								text="{slipBefore>Status}" />
 						</t:template>
 					</t:Column>
@@ -174,7 +174,7 @@
 							<Text text="{slipBefore>Docnum}" wrapping="false" />
 						</t:template>
 					</t:Column>
-					<t:Column width="11rem" hAlign="Center">
+					<t:Column width="10rem" hAlign="Center">
 						<Label text="전표상세" />
 						<t:template>
 							<!-- <t:Table

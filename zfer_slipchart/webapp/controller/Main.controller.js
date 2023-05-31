@@ -226,16 +226,20 @@ sap.ui.define([
                     title: {text: '실적차트', visible:"false"},
                     plotArea : {
                         drawingEffect: 'glossy',
-                        dataLabel: { visible: true, type:'value',position:"outsideFirst" },
+                        dataLabel: { visible: true, type:'value', position:"outsideFirst" },
                         gap : { barSpacing : 0.01, groupSpacing:0.01, innerGroupSpacing:0.01 },
                         gridline:{size:0.5},
-                        background:{border:{strokeWidth : 0.1}}
+                        background:{border:{strokeWidth : 0.1}},
+                        colorPalette : ['#56BDF7', '#C68CFF', '#80F4FF', '#5CE6A1', '#F2F249', '#FF9966', '#FAF4C0', '#A6A6A6', '#FF99CC', '#FF8066']
+
                     },
                     legend : {
                         hoverShadow : { visible: true, color:'#BFBFBF'},
                         marker : {shape : "squareWithRadius", size:0.0001}
                     },
                 });
+                var chartUid = oChart.getVizUid();
+                this.byId("idViewPopover1").connect(chartUid);
             },
             _setCharrInController2 : function(){
                 var oChart = this.byId("idViewChart2");
@@ -282,16 +286,19 @@ sap.ui.define([
                     title: {text: '실적차트', visible:"false"},
                     plotArea : {
                         drawingEffect: 'glossy',
-                        dataLabel: { visible: true, type:'value',position:"outsideFirst" },
+                        dataLabel: { visible: true, type:'value', position:"outsideFirst" },
                         gap : { barSpacing : 0.01, groupSpacing:0.01, innerGroupSpacing:0.01 },
                         gridline:{size:0.5},
-                        background:{border:{strokeWidth : 0.1}}
+                        background:{border:{strokeWidth : 0.1}},
+                        colorPalette : [ '#FF8066', '#FF99CC', '#A6A6A6', '#FAF4C0', '#FF9966', '#F2F249', '#5CE6A1', '#80F4FF', '#C68CFF', '#56BDF7' ]
                     },
                     legend : {
                         hoverShadow : { visible: true, color:'#BFBFBF'},
                         marker : {shape : "squareWithRadius", size:0.0001}
                     },
                 });
+                var chartUid = oChart.getVizUid();
+                this.byId("idViewPopover2").connect(chartUid);
             },
             _datefomatter: function(date){
 
