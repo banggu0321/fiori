@@ -2,7 +2,7 @@
 
 specVersion: "2.6"
 metadata:
-  name: ER.zferslipchart
+  name: ER.zferslipcreate
 type: application
 builder:
   resources:
@@ -17,8 +17,8 @@ builder:
           url: http://edu.bgis.co.kr:8001/
           client: "100"
         app:
-          name: ZUIER_SLIP_CHT
-          description: EReON Slip Charts
+          name: ZUIER_SLIP
+          description: EReON Create Accounting Slip
           package: ZEREON
           transport: KYSK904530
         exclude:

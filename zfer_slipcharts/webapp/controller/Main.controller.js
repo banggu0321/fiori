@@ -11,7 +11,7 @@ sap.ui.define([
     function (Controller, JSONModel, FlattenedDataset, FeedItem, Filter) {
         "use strict";
 
-        return Controller.extend("ER.zferslipchart.controller.Main", {
+        return Controller.extend("ER.zferslipcharts.controller.Main", {
             onInit: function () {
                 this.getView().setModel(new JSONModel(),"slipAll");
                 this.getView().setModel(new JSONModel(),"partnerList");

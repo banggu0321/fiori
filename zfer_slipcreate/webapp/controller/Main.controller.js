@@ -11,7 +11,7 @@ sap.ui.define([
     function (Controller, Filter, JSONModel, MessageToast, Fragment) {
         "use strict";
 
-        return Controller.extend("ER.zfersliplp2.controller.Main", {
+        return Controller.extend("ER.zferslipcreate.controller.Main", {
             formatter: {
                 dateTime: function(oDate) {
                     let oDateTimeInstance;
@@ -484,7 +484,7 @@ sap.ui.define([
                 if(!oDetailDialog){
                     Fragment.load({
                         id: oView.getId(),
-                        name: "ER.zfersliplp2/view/fragment/Detail",
+                        name: "ER.zferslipcreate/view/fragment/Detail",
                         controller: this
                     }).then(function(oDialog){
                         oView.addDependent(oDialog);
@@ -497,21 +497,6 @@ sap.ui.define([
                     oDTable.bindRows("slipI>/select");
                     return;                    
                 }
-
-                // if (oDialog){
-                //     oDialog.open();
-                //     var oDTable = this.byId("idSlipDetailTable");
-                //     oDTable.unbindRows();
-                //     oDTable.bindRows("slipI>/select");
-                //     return;                    
-                // }
-                
-                // this.loadFragment({
-                //     name: "ER.zfersliplp2.view.fragment.Detail"
-                // }).then(function(oDialog){
-                //     oDialog.open();
-                //     // debugger;
-                // },this);
             },
             onClose: function(oEvent){
                 this._popupconfirm("변경 사항을 취소", function (bConfirm) {
@@ -526,7 +511,6 @@ sap.ui.define([
                         oTable.getRows()[index[j]].getCells()[2].setValueState('None');
                         oTable.getRows()[index[j]].getCells()[3].setValueState('None');
                       }
-                    //   debugger;
                       this.byId("idTotalAmt").setValue(this.sRollbackAmt);
                       oDialog.close();
                       MessageToast.show("변경 취소");
@@ -814,7 +798,7 @@ sap.ui.define([
                     aColumns[i].setSorted(false);
                 }
                 this.byId("idComboBox1").setSelectedKey("");
-                this.byId("idDateRangeSelection").getValue("");
+                this.byId("idDateRangeSelection").setValue("");
                 this.onSearch();
             },
             clearSelection : function(){

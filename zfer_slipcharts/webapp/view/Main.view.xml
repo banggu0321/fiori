@@ -1,4 +1,4 @@
-<mvc:View xmlns:vbm="sap.ui.vbm" controllerName="ER.zferslipchart.controller.Main"
+<mvc:View xmlns:vbm="sap.ui.vbm" controllerName="ER.zferslipcharts.controller.Main"
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true" 
     xmlns:f="sap.f"
 	xmlns:l="sap.ui.layout"

@@ -1,4 +1,4 @@
-<mvc:View controllerName="ER.zfersliplp2.controller.Main"
+<mvc:View controllerName="ER.zferslipcreate.controller.Main"
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
 	xmlns:f="sap.f"
 	xmlns:layout="sap.ui.layout"
@@ -219,30 +219,5 @@
 				</t:columns>
 			</t:Table>           
 		</f:content>
-		<!-- DynamicPage Footer toggle footer클릭시-->
-		<!-- <f:footer>
-			<Toolbar height="4rem">
-				<Button icon="sap-icon://message-popup"
-						text="{messagesLength}"
-						type="Emphasized"
-						press="onMessageButtonPress"
-						visible="{= !!$messagesLength}}"/>
-				<ToolbarSpacer/>
-				<Button type="Accept" text="Accept" press="onPressAcceptBtn"/>
-				<Button type="Reject" text="Reject"/>
-			</Toolbar>
-		</f:footer> -->
-		<!-- <f:footer> 
-			<OverflowToolbar>
-				<Button icon="sap-icon://message-popup"
-						text="{/messagesLength}"
-						type="Emphasized"
-						press="onMessageButtonPress"
-						visible="true"/>
-				<ToolbarSpacer/>
-				<Button type="Accept" text="Accept"/>
-				<Button type="Reject" text="Reject"/>
-			</OverflowToolbar>
-		</f:footer> -->
 	</f:DynamicPage>
 </mvc:View>

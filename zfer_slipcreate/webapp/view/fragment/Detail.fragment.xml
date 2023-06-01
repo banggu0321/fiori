@@ -1,0 +1,248 @@
+<core:FragmentDefinition 
+    xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+    xmlns:t="sap.ui.table"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:l="sap.ui.layout"
+    xmlns="sap.m">
+    <Dialog id="DetailDialog" contentWidth="44rem" draggable="true" resizable="true" title="Slip Details">
+        <content>
+            <VBox>
+				<f:SimpleForm 
+					editable="true"
+					layout="ColumnLayout"
+					columnsM="2"
+					columnsL="3"
+					columnsXL="4">
+					<f:content >
+						<Label text="증빙문서번호" labelFor="idDocnum"/>
+						<Input id="idDocnum" value="{slipH>/select/Docnum}" enabled="false"/>
+						<Label text="전표유형" />
+						<Input value="{slipH>/select/Sliptype}({slipH>/select/Sliptypedesc})" enabled="false"/>
+						<Label text="증빙일자" />
+						<Input
+							value="{
+								path : 'slipH>/select/Prfdate',
+								formatter : '.formatter.dateTime'
+								}"   
+							enabled="false"/>
+						<Label text="전기일자" />
+						<Input 
+							value="{
+								path : 'slipH>/select/Pstdate',
+								formatter : '.formatter.dateTime2'
+								}"  
+							enabled="false"/>
+						<Label text="협력사" />
+						<Input value="{slipH>/select/Partid}({slipH>/select/Partname})" enabled="false"/>
+						<Label text="총 금액" />
+						<Input id="idTotalAmt" value="{slipH>/selectBefore/Amount}" enabled="false"/>
+                    </f:content>
+                </f:SimpleForm>
+            </VBox>
+			<t:Table
+					id="idSlipDetailTable"
+					rows="{slipI>/select}"
+					selectionMode="MultiToggle"
+					visibleRowCount="5"
+					paste="onPaste"
+                    selectionBehavior="RowOnly"
+					ariaLabelledBy="title"
+                    rowSelectionChange="onSelectionChange">
+					<!-- <t:extension>
+						<OverflowToolbar style="Clear">
+							<Title id="deailtitle" text="전표상세" level="H2"/>
+						</OverflowToolbar>
+					</t:extension> -->
+					<t:columns>
+						<t:Column width="11rem" visible="false"> 
+							<Label text="slipid" />
+							<t:template>
+								<Text text="{slipI>slipid}" wrapping="false" />
+							</t:template>
+						</t:Column>
+						<t:Column width="5rem">
+							<Label text="순번" />
+							<t:template>
+								<Text text="{slipI>Prnum}" wrapping="false" />
+							</t:template>
+						</t:Column>
+						<t:Column width="11rem">
+							<Label text="계정코드" />
+							<t:template>
+								<Text text="{slipI>Accocode}({slipI>Acconm})" wrapping="false" />
+							</t:template>
+						</t:Column>
+						<!-- <t:Column width="9rem">
+							<Label text="차/대변" />
+							<t:template>
+								<Text text="{slipI>dcindicator}" wrapping="false" />
+							</t:template>
+						</t:Column> -->
+						<t:Column width="9rem">
+							<Label text="차변" />
+							<t:template>
+								<Input id="idDetailTableInput1" 
+										value="{
+											parts: [
+												{ path: 'slipI>Dcindicator' },
+												{ path: 'slipI>Amt' },
+												{ path: 'slipI>Tax' }
+											],
+											formatter: '.formatter.dcindicator3Text'
+											}" 
+										enabled="false" 
+										change="onChange"/>
+								<!-- <Text text="{
+									parts: [
+										{ path: 'slipI>Dcindicator' },
+										{ path: 'slipI>Amt' },
+										{ path: 'slipI>Tax' }
+									],
+									formatter: '.formatter.dcindicator3Text'
+									}" wrapping="false" /> -->
+							</t:template>
+						</t:Column>
+						<t:Column width="9rem">
+							<Label text="대변" />
+							<t:template>
+								<Input id="idDetailTableInput2" 
+										value="{
+											parts: [
+												{ path: 'slipI>Dcindicator' },
+												{ path: 'slipI>Amt' },
+												{ path: 'slipI>Tax' }
+											],
+											formatter: '.formatter.dcindicator4Text'
+											}" 
+										enabled="false"
+										change="onChange" />
+								<!-- <Text text="{
+									parts: [
+										{ path: 'slipI>Dcindicator' },
+										{ path: 'slipI>Amt' },
+										{ path: 'slipI>Tax' }
+									],
+									formatter: '.formatter.dcindicator4Text'
+									}" wrapping="false" /> -->
+							</t:template>
+						</t:Column>
+						<t:Column width="9rem">
+							<Label text="통화" />
+							<t:template>
+								<Text text="{slipI>Curkey}" wrapping="false" />
+							</t:template>
+						</t:Column>
+					</t:columns>
+			</t:Table> 
+			<!-- <t:Table
+				id="idProductsTable"
+				rows="{/Products}"
+				selectionMode="MultiToggle"
+				visibleRowCount="7"
+				paste="onPaste"
+				ariaLabelledBy="title"
+				rowSelectionChange="onRowSelectionChange">
+				<t:extension>
+					<OverflowToolbar style="Clear">
+						<Title text="Products"/>
+						<ToolbarSpacer ></ToolbarSpacer>
+						<Button text="Add" icon="sap-icon://add" press="onAdd"></Button>
+						<Button text="Delete" icon="sap-icon://delete" press="onDelete"></Button>
+					</OverflowToolbar>
+				</t:extension>
+				<t:columns>
+					<t:Column hAlign="Right">
+						<Label text="ProductID" />
+						<t:template>
+							<Text text="{ProductID}" wrapping="false" /> 
+						</t:template>
+					</t:Column>
+					<t:Column width="200px">
+						<Label text="ProductName" />
+						<t:template>
+							<Text text="{ProductName}" wrapping="false" /> 
+						</t:template>
+					</t:Column>
+					<t:Column hAlign="Right" >
+						<Label text="SupplierID" />
+						<t:template>
+							<Text text="{SupplierID}" wrapping="false" /> 
+						</t:template>
+					</t:Column>
+					<t:Column hAlign="Right" >
+						<Label text="CategoryID" />
+						<t:template>
+							<Text text="{CategoryID}" wrapping="false" /> 
+						</t:template>
+					</t:Column>
+					<t:Column >
+						<Label text="QuantityPerUnit" />
+						<t:template>
+							<Text text="{QuantityPerUnit}" wrapping="false" /> 
+						</t:template>
+					</t:Column>
+					<t:Column hAlign="Right" >
+						<Label text="UnitPrice" />
+						<t:template>
+							<Text text="{UnitPrice}" wrapping="false" /> 
+						</t:template>
+					</t:Column>
+					<t:Column hAlign="Right" >
+						<Label text="UnitsInStock" />
+						<t:template>
+							<Text text="{UnitsInStock}" wrapping="false" /> 
+						</t:template>
+					</t:Column>
+					<t:Column hAlign="Right" >
+						<Label text="UnitsOnOrder" />
+						<t:template>
+							<Text text="{UnitsOnOrder}" wrapping="false" /> 
+						</t:template>
+					</t:Column>
+					<t:Column hAlign="Right" >
+						<Label text="ReorderLevel" />
+						<t:template>
+							<Text text="{ReorderLevel}" wrapping="false" /> 
+						</t:template>
+					</t:Column>
+					<t:Column hAlign="Center">
+						<Label text="Discontinued" />
+						<t:template>
+							<Text 
+                                text="{ 
+                                    path : 'Discontinued',
+                                    formatter: '.formatter.transformDiscontinued'
+                                    }"  /> 
+                            <Text text="{= ${Discontinued} === true ? 'Yes' : 'No'}" />
+						</t:template>
+					</t:Column>
+					<t:Column hAlign="Center" >
+						<Label text="Status" />
+						<t:template>
+                            <core:Icon src="sap-icon://thumb-up"  color="#111111"/>
+							<core:Icon 
+                                src="{=${UnitPrice} >= 15 ? 'sap-icon://thumb-up' : 'sap-icon://thumb-down' }"
+                                color="{= ${UnitPrice} &gt; 15 ? 'rgb(27, 234, 33)' : 'rgb(234, 52, 27 )' }">
+                            </core:Icon>
+						</t:template>
+					</t:Column>
+				</t:columns>
+				<t:rowActionTemplate>
+					<t:RowAction>
+						<t:RowActionItem type="Delete" press="onRowDelete" icon="sap-icon://decline" />
+						<t:RowActionItem type="Delete" press="onRowDelete" icon="sap-icon://decline" />
+						<t:RowActionItem type="Delete" press="onRowDelete" icon="sap-icon://decline" />
+					</t:RowAction>
+				</t:rowActionTemplate>
+			</t:Table> -->
+        </content>
+		<beginButton>
+			<Button text="변경사항 저장" press=".onSave"></Button>
+		</beginButton>
+
+        <endButton>
+            <Button text="close" press=".onClose"></Button>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>
