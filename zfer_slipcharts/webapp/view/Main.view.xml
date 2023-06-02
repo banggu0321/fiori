@@ -48,7 +48,7 @@
                     </l:BlockLayoutCell>
                 </l:BlockLayoutRow>
                 <l:BlockLayoutRow>
-                    <l:BlockLayoutCell width="1">
+                    <l:BlockLayoutCell width="2">
                         <Toolbar>
                             <Title text="매출" level="H1" />
                         </Toolbar>
@@ -63,12 +63,12 @@
                         </Tree>
                     </l:BlockLayoutCell>
                     <l:BlockLayoutCell 
-                        width="6"
+                        width="9"
                         title="매출 실적"
                         titleAlignment="Center"
                         titleLevel="H6">
                         <HBox >
-                            <VBox width="50%" class="sapUiMediumMarginEnd">
+                            <VBox width="55%" class="sapUiMediumMarginEnd">
                                 <t:Table
                                     id="idTable1"
                                     rows="{slipAll>/ilist}"
@@ -83,7 +83,7 @@
                                         </OverflowToolbar> -->
                                     </t:extension>
                                     <t:columns>
-                                        <t:Column width="5rem" hAlign="Center">
+                                        <t:Column width="4rem" hAlign="Center">
                                             <Label text="협력사" />
                                             <t:template >
                                                 <Text text="{slipAll>Partid}" wrapping="false" />
@@ -107,7 +107,7 @@
                                                 <!-- inverted="true" <Text text="{slipAll>Total}" wrapping="false" /> -->
                                             </t:template>
                                         </t:Column>
-                                        <t:Column width="6rem" hAlign="Center">
+                                        <t:Column width="7rem" hAlign="Center">
                                             <Label text="1월" />
                                             <t:template>
                                                 <ObjectNumber
@@ -122,7 +122,7 @@
                                                     unit=" "/>
                                             </t:template>
                                         </t:Column>
-                                        <t:Column width="6rem" hAlign="Center">
+                                        <t:Column width="7rem" hAlign="Center">
                                             <Label text="2월" />
                                             <t:template>
                                                 <ObjectNumber
@@ -137,7 +137,7 @@
                                                     unit=" "/>
                                             </t:template>
                                         </t:Column>
-                                        <t:Column width="6rem" hAlign="Center">
+                                        <t:Column width="7rem" hAlign="Center">
                                             <Label text="3월" />
                                             <t:template>
                                                 <ObjectNumber
@@ -152,7 +152,7 @@
                                                     unit=" "/>
                                             </t:template>
                                         </t:Column>
-                                        <t:Column width="6rem" hAlign="Center">
+                                        <t:Column width="7rem" hAlign="Center">
                                             <Label text="4월" />
                                             <t:template>
                                                 <ObjectNumber
@@ -167,7 +167,7 @@
                                                     unit=" "/>
                                             </t:template>
                                         </t:Column>
-                                        <t:Column width="6rem" hAlign="Center">
+                                        <t:Column width="7rem" hAlign="Center">
                                             <Label text="5월" />
                                             <t:template>
                                                 <ObjectNumber
@@ -182,7 +182,7 @@
                                                     unit=" "/>
                                             </t:template>
                                         </t:Column>
-                                        <t:Column width="6rem" hAlign="Center">
+                                        <t:Column width="7rem" hAlign="Center">
                                             <Label text="6월" />
                                             <t:template>
                                                 <ObjectNumber
@@ -197,7 +197,7 @@
                                                     unit=" "/>
                                             </t:template>
                                         </t:Column>
-                                        <t:Column width="6rem" hAlign="Center">
+                                        <t:Column width="7rem" hAlign="Center">
                                             <Label text="7월" />
                                             <t:template>
                                                 <ObjectNumber
@@ -212,7 +212,7 @@
                                                     unit=" "/>
                                             </t:template>
                                         </t:Column>
-                                        <t:Column width="6rem" hAlign="Center">
+                                        <t:Column width="7rem" hAlign="Center">
                                             <Label text="8월" />
                                             <t:template>
                                                 <ObjectNumber
@@ -227,7 +227,7 @@
                                                     unit=" "/>
                                             </t:template>
                                         </t:Column>
-                                        <t:Column width="6rem" hAlign="Center">
+                                        <t:Column width="7rem" hAlign="Center">
                                             <Label text="9월" />
                                             <t:template>
                                                 <ObjectNumber
@@ -242,7 +242,7 @@
                                                     unit=" "/>
                                             </t:template>
                                         </t:Column>
-                                        <t:Column width="6rem" hAlign="Center">
+                                        <t:Column width="7rem" hAlign="Center">
                                             <Label text="10월" />
                                             <t:template>
                                                 <ObjectNumber
@@ -257,7 +257,7 @@
                                                     unit=" "/>
                                             </t:template>
                                         </t:Column>
-                                        <t:Column width="6rem" hAlign="Center">
+                                        <t:Column width="7rem" hAlign="Center">
                                             <Label text="11월" />
                                             <t:template>
                                                 <ObjectNumber
@@ -272,7 +272,7 @@
                                                     unit=" "/>
                                             </t:template>
                                         </t:Column>
-                                        <t:Column width="6rem" hAlign="Center">
+                                        <t:Column width="7rem" hAlign="Center">
                                             <Label text="12월" />
                                             <t:template>
                                                 <ObjectNumber
@@ -305,20 +305,21 @@
                                     </t:footer>
                                 </t:Table>
                             </VBox>
-                            <VBox>
+                            <VBox width="45%" >
                                 <viz:Popover id="idViewPopover1"/>
                                 <viz:VizFrame
                                     id="idViewChart1"
                                     vizType="line" uiConfig="{applicationSet:'fiori'}"
                                     visible="true"
-                                    height = "250px">
+                                    height = "250px"
+                                    width="100%">
                                 </viz:VizFrame>
                             </VBox>
                         </HBox>
                     </l:BlockLayoutCell>
                 </l:BlockLayoutRow>
                 <l:BlockLayoutRow>
-                    <l:BlockLayoutCell width="1">
+                    <l:BlockLayoutCell width="2">
                         <Toolbar>
                             <Title text="매입" level="H1" />
                         </Toolbar>
@@ -333,12 +334,12 @@
                         </Tree>
                     </l:BlockLayoutCell>
                     <l:BlockLayoutCell
-                        width="6"
+                        width="9"
                         title="매입 실적"
                         titleAlignment="Center"
                         titleLevel="H6">
                         <HBox >
-                            <VBox width="50%" class="sapUiMediumMarginEnd">
+                            <VBox width="55%" class="sapUiMediumMarginEnd">
                                 <t:Table
                                     id="idTable2"
                                     rows="{slipAll>/olist}"
@@ -353,7 +354,7 @@
                                         </OverflowToolbar> -->
                                     </t:extension>
                                     <t:columns>
-                                        <t:Column width="5rem" hAlign="Center">
+                                        <t:Column width="4rem" hAlign="Center">
                                             <Label text="협력사" />
                                             <t:template >
                                                 <Text text="{slipAll>Partid}" wrapping="false" />
@@ -377,7 +378,7 @@
                                                 <!-- <Text text="{slipAll>Total}" wrapping="false" /> -->
                                             </t:template>
                                         </t:Column>
-                                        <t:Column width="6rem" hAlign="Center">
+                                        <t:Column width="7rem" hAlign="Center">
                                             <Label text="1월" />
                                             <t:template>
                                                 <ObjectNumber
@@ -392,7 +393,7 @@
                                                     unit=" "/>
                                             </t:template>
                                         </t:Column>
-                                        <t:Column width="6rem" hAlign="Center">
+                                        <t:Column width="7rem" hAlign="Center">
                                             <Label text="2월" />
                                             <t:template>
                                                 <ObjectNumber
@@ -407,7 +408,7 @@
                                                     unit=" "/>
                                             </t:template>
                                         </t:Column>
-                                        <t:Column width="6rem" hAlign="Center">
+                                        <t:Column width="7rem" hAlign="Center">
                                             <Label text="3월" />
                                             <t:template>
                                                 <ObjectNumber
@@ -422,7 +423,7 @@
                                                     unit=" "/>
                                             </t:template>
                                         </t:Column>
-                                        <t:Column width="6rem" hAlign="Center">
+                                        <t:Column width="7rem" hAlign="Center">
                                             <Label text="4월" />
                                             <t:template>
                                                 <ObjectNumber
@@ -437,7 +438,7 @@
                                                     unit=" "/>
                                             </t:template>
                                         </t:Column>
-                                        <t:Column width="6rem" hAlign="Center">
+                                        <t:Column width="7rem" hAlign="Center">
                                             <Label text="5월" />
                                             <t:template>
                                                 <ObjectNumber
@@ -452,7 +453,7 @@
                                                     unit=" "/>
                                             </t:template>
                                         </t:Column>
-                                        <t:Column width="6rem" hAlign="Center">
+                                        <t:Column width="7rem" hAlign="Center">
                                             <Label text="6월" />
                                             <t:template>
                                                 <ObjectNumber
@@ -467,7 +468,7 @@
                                                     unit=" "/>
                                             </t:template>
                                         </t:Column>
-                                        <t:Column width="6rem" hAlign="Center">
+                                        <t:Column width="7rem" hAlign="Center">
                                             <Label text="7월" />
                                             <t:template>
                                                 <ObjectNumber
@@ -482,7 +483,7 @@
                                                     unit=" "/>
                                             </t:template>
                                         </t:Column>
-                                        <t:Column width="6rem" hAlign="Center">
+                                        <t:Column width="7rem" hAlign="Center">
                                             <Label text="8월" />
                                             <t:template>
                                                 <ObjectNumber
@@ -497,7 +498,7 @@
                                                     unit=" "/>
                                             </t:template>
                                         </t:Column>
-                                        <t:Column width="6rem" hAlign="Center">
+                                        <t:Column width="7rem" hAlign="Center">
                                             <Label text="9월" />
                                             <t:template>
                                                 <ObjectNumber
@@ -512,7 +513,7 @@
                                                     unit=" "/>
                                             </t:template>
                                         </t:Column>
-                                        <t:Column width="6rem" hAlign="Center">
+                                        <t:Column width="7rem" hAlign="Center">
                                             <Label text="10월" />
                                             <t:template>
                                                 <ObjectNumber
@@ -527,7 +528,7 @@
                                                     unit=" "/>
                                             </t:template>
                                         </t:Column>
-                                        <t:Column width="6rem" hAlign="Center">
+                                        <t:Column width="7rem" hAlign="Center">
                                             <Label text="11월" />
                                             <t:template>
                                                 <ObjectNumber
@@ -542,7 +543,7 @@
                                                     unit=" "/>
                                             </t:template>
                                         </t:Column>
-                                        <t:Column width="6rem" hAlign="Center">
+                                        <t:Column width="7rem" hAlign="Center">
                                             <Label text="12월" />
                                             <t:template>
                                                 <ObjectNumber
@@ -574,13 +575,14 @@
                                     </t:footer>
                                 </t:Table> 
                             </VBox>
-                            <VBox>  
+                            <VBox width="45%" >  
                                 <viz:Popover id="idViewPopover2"/>
                                 <viz:VizFrame
                                     id="idViewChart2"
                                     vizType="line" uiConfig="{applicationSet:'fiori'}"
                                     visible="true"
-                                    height = "250px">
+                                    height = "250px"
+                                    width="100%">
                                 </viz:VizFrame>
                             </VBox>
                         </HBox>

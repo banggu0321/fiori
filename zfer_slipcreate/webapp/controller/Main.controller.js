@@ -67,15 +67,20 @@ sap.ui.define([
                 this.getOwnerComponent().getModel().read("/employeeSet", {
                     success: function(oReturn) {
                         this.empid = oReturn.results[0].Employeeid;
-                        this.byId("idEmp").setText('사번 : '+oReturn.results[0].Employeeid);
-                        this.byId("idDept").setText('부서 : '+oReturn.results[0].Deptname);
+                        this.byId("idEmp").setText('사번 : '+ oReturn.results[0].Employeeid);
+                        this.byId("idDept").setText('부서 : '+ oReturn.results[0].Branchname + ' ' + oReturn.results[0].Deptname);
                         this.byId("idName").setText('이름 : '+ oReturn.results[0].Name + " " +oReturn.results[0].Rankname);
                         this.byId("idTel").setText(
                             oReturn.results[0].Telno.substr(0, 3) +"-" +oReturn.results[0].Telno.substr(4, 4) +"-" +oReturn.results[0].Telno.substr(7, 4));
                         this.byId("idEmail").setText(oReturn.results[0].Email);
                         // this.byId("idAtUserName").setText(`${oReturn.results[0].Name}(${this.empid})`);
                         // this.byId("idAtDept").setText(`${oReturn.results[0].Deptname}`);
-                        this.byId("idLabeluname").setText(`${oReturn.results[0].Deptname} ${oReturn.results[0].Name} ${oReturn.results[0].Rankname}(${oReturn.results[0].Employeeid})`);
+                        this.byId("idLabeluname").setText(`${oReturn.results[0].Branchname} ${oReturn.results[0].Deptname} ${oReturn.results[0].Name} ${oReturn.results[0].Rankname}(${oReturn.results[0].Employeeid})`);
+                        if(_rootPath){
+                            this.byId("idLoginImage").setSrc(_rootPath+'/image/employee/'+oReturn.results[0].Sapid+'.png');
+                        }else{
+                            this.byId("idLoginImage").setSrc('/image/employee/'+oReturn.results[0].Sapid+'.png');
+                        }
                     }.bind(this)
                 });
                 this._getdata();

@@ -50,15 +50,46 @@
 		<f:header>
 			<f:DynamicPageHeader pinnable="true">
 				<HBox>
+                    <FlexBox wrap="Wrap" fitContainer="true" height="100px" width="350px">
+                        <Image id="idLoginImage" src=""
+                            height="100%" width="100%"/>
+                        <!-- <core:Icon src="sap-icon://customer" size="100px" class="sapUiMediumMarginEnd"/> -->
+                        <!-- <Avatar src="/model/TJ.png"
+                            class="sapUiMediumMarginEnd sapUiSmallMarginBottom" displaySize="L" /> -->
+                    </FlexBox>
+                    <VBox class="sapUiLargeMarginBegin sapUiTinyMarginEnd sapUiTinyMarginBottom sapUiTinyMarginTop" width="150%">
+                        <Title text="Employee Information" class="sapUiTinyMarginBottom" />
+						<Text id="idEmp" text="{/employeeSet/Employeeid}" class="sapUiTinyMarginBottom"
+							width="12rem" />
+						<Text id="idDept" width="100%"  />
+						<Text id="idName" width="100%" />
+						<Text id="idRank" width="100%" text="{/LoginSet/Rankname} " />
+                    </VBox>
+                    <VBox class="sapUiLargeMarginBegin sapUiTinyMarginEnd sapUiTinyMarginBottom sapUiTinyMarginTop " width="150%">
+                        <Title text="Contact Information" class="sapUiTinyMarginBottom" />
+
+                        <HBox class="sapUiTinyMarginBottom">
+                            <core:Icon src="sap-icon://outgoing-call" />
+                            <Text id="idTel" text="{/employeeSet/Telno}" class="sapUiSmallMarginBegin" />
+                        </HBox>
+                        <HBox>
+                            <core:Icon src="sap-icon://email" />
+                            <Text id="idEmail" text="{/employeeSet/Email}" class="sapUiSmallMarginBegin" />
+                        </HBox>
+                    </VBox>
+                </HBox>
+				<!-- <HBox>
 					<FlexBox wrap="Wrap" fitContainer="true">
 						<core:Icon src="sap-icon://customer" size="100px" class="sapUiMediumMarginEnd"/>
+						<Image id="idLoginImage" src=""/>
 					</FlexBox>
 					<VBox class="sapUiLargeMarginEnd sapUiTinyMarginBottom" width="150%">
-						<Title id="idEmp" text="{/employeeSet/Employeeid}" class="sapUiTinyMarginBottom"
+						<Title text="Employee Information" class="sapUiTinyMarginBottom" />
+						<Text id="idEmp" text="{/employeeSet/Employeeid}" class="sapUiTinyMarginBottom"
 							width="12rem" />
-						<Text id="idDept" width="100%" text="{/employeeSet/Deptname}" />
-						<Text id="idName" width="100%" text="{/employeeSet/Name}" />
-						<!-- <Text id="idRank" width="100%" text="{/LoginSet/Rankname} " /> -->
+						<Text id="idDept" width="100%"  />
+						<Text id="idName" width="100%" />
+						<Text id="idRank" width="100%" text="{/LoginSet/Rankname} " />
 					</VBox>
 					<VBox class="sapUiLargeMarginEnd sapUiTinyMarginBottom" width="150%">
 						<Title text="Contact Information" class="sapUiTinyMarginBottom" />
@@ -71,7 +102,7 @@
 							<Text id="idEmail" text="{/employeeSet/Email}" class="sapUiSmallMarginBegin" />
 						</HBox>
 					</VBox>
-				</HBox>
+				</HBox> -->
 				<layout:HorizontalLayout allowWrapping="true">
 					<layout:VerticalLayout class="sapUiMediumMarginEnd">
 						<!-- <ObjectAttribute title="사용자명" text="Warehouse A"/>
@@ -143,14 +174,14 @@
 						<ToolbarSpacer/>
 						<Button
 							icon="sap-icon://activities"
-							text="All Necessary"
+							text="All Urgent"
 							tooltip="Select Row Creation Required"
 							press="SelectRequiredIndices"/>
 						<Button
-							icon="sap-icon://filter"
-							text="Filter Off"
-							tooltip="Clear all sortings"
-							press="clearAllSortings"/>
+                            icon="sap-icon://clear-filter"
+                            text="Clear"
+                            tooltip="Clear all sortings"
+                            press="clearAllSortings"/>
 						<Button
 							icon="sap-icon://decline"
 							text="Deselect All"

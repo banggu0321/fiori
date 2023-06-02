@@ -2,6 +2,8 @@
  * eslint-disable @sap/ui5-jsdocs/no-jsdoc
  */
 
+var _rootPath = jQuery.sap.getModulePath("ER.zferslipcreate").split('/~')[0];
+
 sap.ui.define([
         "sap/ui/core/UIComponent",
         "sap/ui/Device",
