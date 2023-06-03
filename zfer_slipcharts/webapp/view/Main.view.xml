@@ -74,7 +74,7 @@
                                     rows="{slipAll>/ilist}"
                                     rowActionCount="1"
                                     selectionMode="None"
-                                    visibleRowCountMode="Auto"
+                                    visibleRowCount = '3'
                                     paste="onPaste"
                                     ariaLabelledBy="title">
                                     <t:extension>

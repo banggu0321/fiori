@@ -49,9 +49,14 @@ sap.ui.define([
                         var oDatai = oReturn.results[i];
                         var j = i + 1;
                         var oDataj = oReturn.results[j] === undefined ? { Partcode : ''} : oReturn.results[j] ;
-                        if(oDatai.Inoutcome === 'I'){
+                        if(oDatai.Inoutcome === 'I' || oDatai.Partid === 'PAT00'){
                             // aPartnerI.push({Patid : oDatai.Partid ,text: oDatai.Partcode+"-"+oDatai.Partid+"("+oDatai.Partname+")"});
-                            if(oDatai.Partcode === oDataj.Partcode){
+                            if(oDatai.Partid === 'PAT00'){
+                                aPartnerI.push({text: oDatai.Partid+"("+oDatai.Partname+")"});
+                                aPartnercodeI.push({text: oDatai.Partcode+"("+oDatai.Partcodedesc+")",nodes:aPartnerI});
+                                aPartnerI = [];
+                            }
+                            else if(oDatai.Partcode === oDataj.Partcode){
                                 aPartnerI.push({text: oDatai.Partid+"("+oDatai.Partname+")"});
                             }else{
                                 aPartnerI.push({text: oDatai.Partid+"("+oDatai.Partname+")"});
@@ -212,7 +217,7 @@ sap.ui.define([
                 }
                 var oColDataset = new FlattenedDataset({
                     dimensions : [
-                        {name : "Month" , value : "{slipAll>Month}"}],
+                        {name : "Month" , value : "{slipAll>Month}월"}],
                     measures : aMeasureD, 
                     data : {
                         path : "slipAll>/ichart2list"
@@ -242,7 +247,7 @@ sap.ui.define([
                         gap : { barSpacing : 0.01, groupSpacing:0.01, innerGroupSpacing:0.01 },
                         gridline:{size:0.5},
                         background:{border:{strokeWidth : 0.1}},
-                        colorPalette : ['#56BDF7', '#C68CFF', '#80F4FF', '#5CE6A1', '#F2F249', '#FF9966', '#FAF4C0', '#A6A6A6', '#FF99CC', '#FF8066']
+                        colorPalette :['#56BDF7', '#C68CFF', '#80F4FF', '#4DFFA6', '#FFF04D', '#FF9966', '#CCCCCC', '#808080', '#FF99CC', '#FF8066']
 
                     },
                     legend : {
@@ -272,7 +277,7 @@ sap.ui.define([
                 }
                 var oColDataset = new FlattenedDataset({
                     dimensions : [
-                        {name : "Month" , value : "{slipAll>Month}"}],
+                        {name : "Month" , value : "{slipAll>Month}월"}],
                     measures : aMeasureD, 
                     data : {
                         path : "slipAll>/ochart2list"
@@ -302,7 +307,7 @@ sap.ui.define([
                         gap : { barSpacing : 0.01, groupSpacing:0.01, innerGroupSpacing:0.01 },
                         gridline:{size:0.5},
                         background:{border:{strokeWidth : 0.1}},
-                        colorPalette : [ '#FF8066', '#FF99CC', '#A6A6A6', '#FAF4C0', '#FF9966', '#F2F249', '#5CE6A1', '#80F4FF', '#C68CFF', '#56BDF7' ]
+                        colorPalette :['#FF8066', '#FF99CC', '#808080', '#CCCCCC', '#FF9966', '#FFF04D', '#4DFFA6', '#80F4FF', '#C68CFF', '#56BDF7']
                     },
                     legend : {
                         hoverShadow : { visible: true, color:'#BFBFBF'},

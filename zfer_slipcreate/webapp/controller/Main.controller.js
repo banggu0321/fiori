@@ -682,7 +682,9 @@ sap.ui.define([
                 }
             },
             onPressAcceptBtn : function(){
-                this._popupconfirm("전표를 생성", function (bConfirm) {
+                let index = this.oTable.getSelectedIndices();
+                var sPopup = index.length + "개의 전표를 생성";
+                this._popupconfirm( sPopup , function (bConfirm) {
                     if (bConfirm) {
                         // var aSlipHData = this.oslipH.getData().hlist;
                         // var aSlipIData = this.oslipI.getData().ilist;
@@ -692,7 +694,7 @@ sap.ui.define([
                         var promises = [];
         
                         // debugger;
-                        let index = this.oTable.getSelectedIndices(); // [0,4,7]
+                         // [0,4,7]
         
                         if (index.length === 0) {
                             MessageToast.show("행을 선택해주세요!");
@@ -712,7 +714,7 @@ sap.ui.define([
                                     break;
                                 }
                             }
-                            debugger;
+                            // debugger;
                             // oSlipCreateHData = this.oSlipBefore.getData().blist[skey];
                             
                             oSlipCreateHData.Prfdate = new Date(oSlipCreateHData.Prfdate);
@@ -765,6 +767,7 @@ sap.ui.define([
                                 this._getdata();
                                 this.oSlipBefore.refresh();
                                 this.oTable.clearSelection();
+                                this.clearAllSortings();
                             }
                         }.bind(this));
                     }
@@ -792,6 +795,7 @@ sap.ui.define([
                     this.oTable.addSelectionInterval(i, i);
                   }
                 }
+                this.oSlipBefore.setProperty("/totalcount", aData.length);
             },
             clearAllSortings: function(oEvent) {
                 this.oTable.getBinding().sort(null);
