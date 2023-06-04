@@ -53,14 +53,14 @@ sap.ui.define([
                             // aPartnerI.push({Patid : oDatai.Partid ,text: oDatai.Partcode+"-"+oDatai.Partid+"("+oDatai.Partname+")"});
                             if(oDatai.Partid === 'PAT00'){
                                 aPartnerI.push({text: oDatai.Partid+"("+oDatai.Partname+")"});
-                                aPartnercodeI.push({text: oDatai.Partcode+"("+oDatai.Partcodedesc+")",nodes:aPartnerI});
+                                aPartnercodeI.push({text: oDatai.Partcode+"["+"대여"+"]",nodes:aPartnerI});
                                 aPartnerI = [];
                             }
                             else if(oDatai.Partcode === oDataj.Partcode){
                                 aPartnerI.push({text: oDatai.Partid+"("+oDatai.Partname+")"});
                             }else{
                                 aPartnerI.push({text: oDatai.Partid+"("+oDatai.Partname+")"});
-                                aPartnercodeI.push({text: oDatai.Partcode+"("+oDatai.Partcodedesc+")",nodes:aPartnerI});
+                                aPartnercodeI.push({text: oDatai.Partcode+"["+oDatai.Partcodedesc+"]",nodes:aPartnerI});
                                 aPartnerI = [];
                             }
                         }else{
@@ -69,7 +69,7 @@ sap.ui.define([
                                 aPartnerO.push({text: oDatai.Partid+"("+oDatai.Partname+")"});
                             }else{
                                 aPartnerO.push({text: oDatai.Partid+"("+oDatai.Partname+")"});
-                                aPartnercodeO.push({text:oDatai.Partcode+"("+oDatai.Partcodedesc+")",nodes:aPartnerO});
+                                aPartnercodeO.push({text:oDatai.Partcode+"["+oDatai.Partcodedesc+"]",nodes:aPartnerO});
                                 aPartnerO = [];
                             }
                         }

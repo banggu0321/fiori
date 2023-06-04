@@ -375,9 +375,21 @@ sap.ui.define([
             },
             _sortStatus:function(){
                 this.oSlipBefore.getData().blist.sort(function(a, b) {
-                    return b.Status.localeCompare(a.Status);
+                    var statusComparison = b.Status.localeCompare(a.Status);
+                    if (statusComparison === 0) {
+                        // debugger;
+                        // return Date( a.Prfdate.localeCompare(b.Prfdate);
+                        var dateA = new Date(a.Prfdate);
+                        var dateB = new Date(b.Prfdate);
+                        return dateA - dateB;
+                    }
+                    return statusComparison;
                 });
                 this.oSlipBefore.setData(this.oSlipBefore.getData().blist);
+                // this.oSlipBefore.getData().blist.sort(function(a, b) {
+                //     return b.Status.localeCompare(a.Status);
+                // });
+                // this.oSlipBefore.setData(this.oSlipBefore.getData().blist);
             },
             getToday : function(){
                 var date = new Date();
@@ -798,6 +810,7 @@ sap.ui.define([
                 this.oSlipBefore.setProperty("/totalcount", aData.length);
             },
             clearAllSortings: function(oEvent) {
+                debugger;
                 this.oTable.getBinding().sort(null);
                 this._resetSortingState();
             },

@@ -130,6 +130,7 @@
 										<DateRangeSelection
 											id="idDateRangeSelection"
 											class="DRS1"
+											placeholder="yyyy/MM/dd"
 											value= "{
 												'type': 'sap.ui.model.type.DateInterval',
 												'formatOptions': {
