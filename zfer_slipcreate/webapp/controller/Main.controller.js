@@ -89,6 +89,7 @@ sap.ui.define([
                 // odata model 변수 세팅
                 this.oModel = this.getOwnerComponent().getModel(); //oData
                 this.oModel.setUseBatch(false);
+                this.otypeList = this.getView().getModel("typeList");
                 //json model 변수 세팅
                 this.oSlipBefore = this.getView().getModel("slipBefore"); //slipBefore
                 //json model 변수 세팅
@@ -825,6 +826,25 @@ sap.ui.define([
             },
             clearSelection : function(){
                 this.oTable.clearSelection();
+            },
+            onSelectChange : function(oEvent){
+                debugger;
+                var alist = this.otypeList.getData().list;
+            
+                for(var i = 0; i < alist.length ; i++){
+                    if(oEvent.getSource().getValue() === alist[i].type){
+                        this.byId("idComboBox1").setValueState("None");
+                        break;
+                    }else if(oEvent.getSource().getValue() === " ") {
+                        this.byId("idComboBox1").setValueState("None");
+                        return;
+                    }else{
+                        this.byId("idComboBox1").setValueState("Error");
+                    }
+                }
+                // this.otypeList.getData().list.forEach(function(item){
+                    
+                // }.bind(this));
             }
         });
     });

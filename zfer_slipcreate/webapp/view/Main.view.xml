@@ -116,6 +116,7 @@
 										<ComboBox
 											id="idComboBox1"
 											showSecondaryValues="true"
+											selectionChange="onSelectChange"
 											items="{
 												path: 'typeList>/list',
 												templateShareable: true
