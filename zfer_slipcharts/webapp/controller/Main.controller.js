@@ -50,7 +50,6 @@ sap.ui.define([
                         var j = i + 1;
                         var oDataj = oReturn.results[j] === undefined ? { Partcode : ''} : oReturn.results[j] ;
                         if(oDatai.Inoutcome === 'I' || oDatai.Partid === 'PAT00'){
-                            // aPartnerI.push({Patid : oDatai.Partid ,text: oDatai.Partcode+"-"+oDatai.Partid+"("+oDatai.Partname+")"});
                             if(oDatai.Partid === 'PAT00'){
                                 aPartnerI.push({text: oDatai.Partid+"("+oDatai.Partname+")"});
                                 aPartnercodeI.push({text: oDatai.Partcode+"["+"대여"+"]",nodes:aPartnerI});
