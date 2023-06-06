@@ -118,10 +118,9 @@
 											showSecondaryValues="true"
 											selectionChange="onSelectChange"
 											items="{
-												path: 'typeList>/list',
-												templateShareable: true
+												path: 'typeList>/list'
 											}">
-											<core:ListItem key="{typeList>type}" text="{typeList>type}" additionalText="{CustomerID}" />
+											<core:ListItem key="{typeList>type}" text="{typeList>type}" />
 										</ComboBox>
 									</fb:control>
 								</fb:FilterGroupItem>

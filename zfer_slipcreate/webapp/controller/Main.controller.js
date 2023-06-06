@@ -406,31 +406,53 @@ sap.ui.define([
                 // var oTable = this.byId("idSlipbeforeTable");
                 var aFilter = [];
                 var sFilter1 = '';
-
-                switch(oComboBox.getSelectedKey()){
-                    case '오토필' : 
-                        sFilter1 = 'MON';
-                        break;
-                    case '대여' : 
-                        sFilter1 = 'REN';
-                        break;
-                    case '배터리판매' : 
-                        sFilter1 = 'BON';
-                        break;
-                };
-
-                if (sFilter1) {
-                    aFilter.push(new Filter("Docnum", "Contains", sFilter1));
-                    // debugger;
-                };
-                // debugger;
-                if (oDateRange.getValue()){
-                    aFilter.push(new Filter("Prfdate", "BT", oDateRange.getFrom(), oDateRange.getTo()));
-                    // debugger;
-                };
+                var sError = 0;
+                var alist = this.otypeList.getData().list;
                 
-                this.oTable.getBinding("rows").filter(aFilter);
-                this.oSlipBefore.setProperty("/totalcount", this.oTable.getBinding("rows").getLength());
+                if(!oComboBox.getValue()){
+                    // oComboBox.setValueState("None");
+                    // return;
+                }else{
+                    for(var i = 0; i < alist.length ; i++){
+                        if(oComboBox.getValue() === alist[i].type){
+                            // oComboBox.setValueState("None");
+                            // break;
+                        }else{  //
+                            // oComboBox.setValueState("Error");
+                            sError += 1 ; 
+                        }
+                    }
+                }
+
+                if( sError !== alist.length || sError === 0){ //값있음~
+                    switch(oComboBox.getSelectedKey()){
+                        case '오토필' : 
+                            sFilter1 = 'MON';
+                            break;
+                        case '대여' : 
+                            sFilter1 = 'REN';
+                            break;
+                        case '배터리판매' : 
+                            sFilter1 = 'BON';
+                            break;
+                    };
+    
+                    if (sFilter1) {
+                        aFilter.push(new Filter("Docnum", "Contains", sFilter1));
+                    };
+    
+                    if (oDateRange.getValue()){
+                        aFilter.push(new Filter("Prfdate", "BT", oDateRange.getFrom(), oDateRange.getTo()));
+                    };
+                    
+                    this.oTable.getBinding("rows").filter(aFilter);
+                    this.oSlipBefore.setProperty("/totalcount", this.oTable.getBinding("rows").getLength());
+                    oComboBox.setValueState("None");
+                }else{
+                    oComboBox.setValueState("Error");
+                }
+                
+                
                 // this.oTable.getBinding("rows").getLength()
                 // debugger;
                    
@@ -774,9 +796,10 @@ sap.ui.define([
         
                             if(sError > 0){
                                 // debugger;
-                                MessageToast.show("전표 생성 에러");
+                                // MessageToast.show("전표 생성 에러");
+                                console.log("전표 생성 에러");
                             }else{
-                                MessageToast.show("전표 생성 완료");
+                                MessageToast.show("전표 생성이 완료되었습니다.");
                                 this._getdata();
                                 this.oSlipBefore.refresh();
                                 this.oTable.clearSelection();
@@ -828,20 +851,22 @@ sap.ui.define([
                 this.oTable.clearSelection();
             },
             onSelectChange : function(oEvent){
-                debugger;
-                var alist = this.otypeList.getData().list;
-            
-                for(var i = 0; i < alist.length ; i++){
-                    if(oEvent.getSource().getValue() === alist[i].type){
-                        this.byId("idComboBox1").setValueState("None");
-                        break;
-                    }else if(oEvent.getSource().getValue() === " ") {
-                        this.byId("idComboBox1").setValueState("None");
-                        return;
-                    }else{
-                        this.byId("idComboBox1").setValueState("Error");
-                    }
-                }
+                var oComboBox = this.byId("idComboBox1");
+                // var alist = this.otypeList.getData().list;
+                
+                // if(!oComboBox.getValue()){
+                    oComboBox.setValueState("None");
+                //     return;
+                // }else{
+                //     for(var i = 0; i < alist.length ; i++){
+                //         if(oEvent.getSource().getValue() === alist[i].type){
+                //             oComboBox.setValueState("None");
+                //             break;
+                //         }else{
+                //             this.byId("idComboBox1").setValueState("Error");
+                //         }
+                //     }
+                // }
                 // this.otypeList.getData().list.forEach(function(item){
                     
                 // }.bind(this));
